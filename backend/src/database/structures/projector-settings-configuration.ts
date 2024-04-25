@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { TextStrategy } from './text-strategy.enum';
 
-export class ProjectorStateConfigurationDto {
+export class ProjectorSettingsConfigurationDto {
   @ApiProperty()
   backgroundColor: string;
   @ApiProperty()
@@ -29,4 +30,11 @@ export class ProjectorStateConfigurationDto {
   screenWidth: number;
   @ApiProperty()
   screenHeight: number;
+  @ApiProperty()
+  lineHeight: string;
+  @ApiProperty({
+    enum: TextStrategy,
+    enumName: 'TextStrategy',
+  })
+  textStrategy: TextStrategy;
 }

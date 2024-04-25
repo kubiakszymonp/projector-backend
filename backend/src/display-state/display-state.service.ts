@@ -7,6 +7,7 @@ import { DisplayState } from 'src/database/entities/display-state.entity';
 import { ProjectorSettings } from 'src/database/entities/projector-settings.entity';
 import { UpdateDisplayStateDto } from './dto/update-display-state.dto';
 import { TextUnit } from 'src/database/entities/text-unit.entity';
+import { TextStrategy } from 'src/database/structures/text-strategy.enum';
 
 @Injectable()
 export class DisplayStateService {
@@ -90,11 +91,21 @@ export class DisplayStateService {
     projectorSettings: ProjectorSettings,
     song: Song,
   ) {
-    const songDivider = new SongDivider(
-      projectorSettings.charactersInLine,
-      projectorSettings.linesOnPage,
-      song,
-    );
+    let songDivider: SongDivider;
+
+    if (projectorSettings.textStrategy === TextStrategy.AUTOMATIC) {
+      songDivider = new SongDivider(
+        1000,
+        1000,
+        song,
+      );
+    } else {
+      songDivider = new SongDivider(
+        projectorSettings.charactersInLine,
+        projectorSettings.linesOnPage,
+        song,
+      );
+    }
 
     // if current part has more pages, go to the next page
     if (

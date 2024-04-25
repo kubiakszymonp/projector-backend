@@ -32,7 +32,7 @@ import { DisplayState } from 'src/database/entities/display-state.entity';
 import { RepositoryFactory } from 'src/database/repository.factory';
 import { DisplayType } from 'src/database/structures/display-type.enum';
 
-const CHUNK_DURATION = 0.3;
+const CHUNK_DURATION = 0.5;
 const m3u8PREFIX = `#EXTM3U
 #EXT-X-VERSION:3
 #EXT-X-TARGETDURATION:${CHUNK_DURATION}
@@ -40,7 +40,7 @@ const m3u8PREFIX = `#EXTM3U
 #EXT-X-PLAYLIST-TYPE:VOD\n`;
 const HLS_DIRECTORY = '../upload/hls';
 const PLAYLIST_NAME = 'playlist.m3u8';
-const DELETE_CHUNK_AFTER_MILLIS = 1000 * 20;
+const DELETE_CHUNK_AFTER_MILLIS = 1000 * 60;
 
 @ApiTags('uploaded-files')
 @Controller('uploaded-files')
@@ -155,7 +155,14 @@ export class UploadedFilesController {
     await this.displayStateRepository.save(newDisplayState);
 
     // check if directory exists
-    if (!stat(this.getChunkDirectory(organization.id))) {
+    try {
+      const exists = await stat(this.getChunkDirectory(organization.id));
+      if (!exists.isDirectory()) {
+        await mkdir(this.getChunkDirectory(organization.id), {
+          recursive: true,
+        });
+      }
+    } catch (e) {
       await mkdir(this.getChunkDirectory(organization.id), {
         recursive: true,
       });
@@ -185,9 +192,11 @@ export class UploadedFilesController {
         `ffmpeg -i ${inputPath} -c:v libx264 -preset ultrafast -tune zerolatency -c:a aac -b:a 192k -f mpegts ${outputPath}`,
       );
 
+      const duration = this.getVideoDuration(outputPath);
+
       appendFile(
         playlistPath,
-        `#EXTINF:${CHUNK_DURATION},
+        `#EXTINF:${duration},
       chunks/${fileName}.ts\n`,
       );
 
@@ -227,5 +236,17 @@ export class UploadedFilesController {
         }
       });
     });
+  }
+
+  private getVideoDuration(inputPath) {
+    try {
+      const command = `ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${inputPath}"`;
+      const duration = execSync(command).toString().trim();
+      console.log({ duration });
+      return parseFloat(duration);
+    } catch (e) {
+      console.error('Error extracting video duration:', e);
+      return null;
+    }
   }
 }

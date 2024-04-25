@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { Organization } from './organization.entity';
 import { BaseEntity } from './base-entity';
+import { TextStrategy } from '../structures/text-strategy.enum';
 
 @Entity()
 export class ProjectorSettings extends BaseEntity {
@@ -46,6 +47,12 @@ export class ProjectorSettings extends BaseEntity {
   @Column()
   screenHeight: number;
 
+  @Column()
+  lineHeight: string;
+
+  @Column()
+  textStrategy: TextStrategy;
+
   @OneToOne(() => Organization)
   @JoinColumn()
   organization: Organization;
@@ -68,3 +75,5 @@ defaultProjectorSettings.charactersInLine = 40;
 defaultProjectorSettings.linesOnPage = 20;
 defaultProjectorSettings.screenWidth = 1920;
 defaultProjectorSettings.screenHeight = 1080;
+defaultProjectorSettings.lineHeight = '1';
+defaultProjectorSettings.textStrategy = TextStrategy.FIXED_LINES;

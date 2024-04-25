@@ -9,8 +9,8 @@ export const databaseConnectionProvider = {
       // relative path to the database file
       database: environment.DATABASE_URL,
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-      synchronize: true,
-      logging: true,
+      synchronize: environment.DATABASE_SYNCHRONIZE,
+      logging: environment.DATABASE_LOGGING,
       dropSchema: environment.DROP_SCHEMA,
     });
 

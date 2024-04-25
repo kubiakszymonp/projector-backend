@@ -1,0 +1,5 @@
+export enum TextStrategy {
+  FIXED_LINES = 'FIXED_LINES',
+  AUTOMATIC = 'AUTOMATIC',
+  EXAMPLE_TEXT = 'EXAMPLE_TEXT',
+}

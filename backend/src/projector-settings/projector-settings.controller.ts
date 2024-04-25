@@ -1,12 +1,12 @@
 import { Controller, Body, Patch, UseGuards, Get, Param } from '@nestjs/common';
 import { ProjectorSettingsService } from './projector-settings.service';
-import { ProjectorSettingsDto } from './dto/projector-settings.dto';
 import {
   RequestOrganization,
   RequestOrganizationType,
 } from 'src/auth/request-organization';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { ProjectorSettingsConfigurationDto } from 'src/database/structures/projector-settings-configuration';
 
 @ApiBearerAuth()
 @ApiTags('projector-settings')
@@ -20,7 +20,7 @@ export class ProjectorSettingsController {
   @Patch()
   update(
     @RequestOrganization() organization: RequestOrganizationType,
-    @Body() updateProjectorSettingDto: ProjectorSettingsDto,
+    @Body() updateProjectorSettingDto: ProjectorSettingsConfigurationDto,
   ) {
     return this.projectorSettingsService.update(
       organization.id,
@@ -32,14 +32,14 @@ export class ProjectorSettingsController {
   @Get()
   getSetting(
     @RequestOrganization() organization: RequestOrganizationType,
-  ): Promise<ProjectorSettingsDto> {
+  ): Promise<ProjectorSettingsConfigurationDto> {
     return this.projectorSettingsService.get(organization.id);
   }
 
   @Get(':organizationId')
   getSettingsByOrganizationId(
     @Param('organizationId') organizationId: number,
-  ): Promise<ProjectorSettingsDto> {
+  ): Promise<ProjectorSettingsConfigurationDto> {
     return this.projectorSettingsService.get(organizationId);
   }
 }

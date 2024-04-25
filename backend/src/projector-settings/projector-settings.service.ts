@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { ProjectorSettingsDto } from './dto/projector-settings.dto';
 import { RepositoryFactory } from 'src/database/repository.factory';
 import { Repository } from 'typeorm';
 import { ProjectorSettings } from 'src/database/entities/projector-settings.entity';
+import { ProjectorSettingsConfigurationDto } from 'src/database/structures/projector-settings-configuration';
 
 @Injectable()
 export class ProjectorSettingsService {
@@ -14,7 +14,7 @@ export class ProjectorSettingsService {
 
   async update(
     organizationId: number,
-    updateProjectorSettingDto: ProjectorSettingsDto,
+    updateProjectorSettingDto: ProjectorSettingsConfigurationDto,
   ) {
     const newProjectorSettings = this.projectorSettingsRepository.create({
       ...updateProjectorSettingDto,

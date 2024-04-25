@@ -7,6 +7,8 @@ import { DisplayState } from 'src/database/entities/display-state.entity';
 import { Song, SongDivider } from 'song-parser';
 import { DisplayType } from 'src/database/structures/display-type.enum';
 import { TextUnit } from 'src/database/entities/text-unit.entity';
+import { TextStrategy } from 'src/database/structures/text-strategy.enum';
+import { TextUnitState } from 'src/database/structures/projector-state-text-state';
 
 @Injectable()
 export class ProjectorService {
@@ -45,11 +47,7 @@ export class ProjectorService {
       where: { id: currentTextState.textUnitId },
     });
 
-    let songToBeDisplayed: Song;
-
     if (
-      !textUnit ||
-      currentTextState.textUnitId === 0 ||
       displayState.displayType === DisplayType.NONE ||
       displayState.displayType === DisplayType.MEDIA ||
       displayState.displayType === DisplayType.HLS
@@ -61,38 +59,20 @@ export class ProjectorService {
         lines: [],
         uploadedFile: displayState.uploadedFile,
       };
+    } else {
+      return {
+        displayType: displayState.displayType,
+        settings: projectorSettings,
+        textState: displayState.textState,
+        lines: this.getLines(
+          projectorSettings.textStrategy,
+          currentTextState,
+          textUnit,
+          projectorSettings,
+        ),
+        uploadedFile: displayState.uploadedFile,
+      };
     }
-
-    let partId = currentTextState.textUnitPart;
-    let partPage = currentTextState.textUnitPartPage;
-
-    if (displayState.displayType === DisplayType.EXAMPLE) {
-      songToBeDisplayed = new Song(
-        `[randomlabel]\n${this.generateRandomTextWithSpaces(200)}`,
-      );
-      partId = 0;
-      partPage = 0;
-    }
-
-    if (displayState.displayType === DisplayType.TEXT) {
-      songToBeDisplayed = new Song(textUnit.content);
-    }
-
-    const songDivider = new SongDivider(
-      projectorSettings.charactersInLine,
-      projectorSettings.linesOnPage,
-      songToBeDisplayed,
-    );
-
-    const displayPage = songDivider.getDisplayPageForPart(partId, partPage);
-
-    return {
-      displayType: displayState.displayType,
-      settings: projectorSettings,
-      textState: displayState.textState,
-      lines: displayPage.lines,
-      uploadedFile: displayState.uploadedFile,
-    };
   }
 
   private getRandomLatinLetter() {
@@ -114,5 +94,58 @@ export class ProjectorService {
       () =>
         this.getRandomLatinLetter() + this.generateSpaceWithProbability(0.25),
     ).join('');
+  }
+
+  private getLines(
+    textStrategy: TextStrategy,
+    textUnitState: TextUnitState,
+    textUnit: TextUnit,
+    projectorSettings: ProjectorSettings,
+  ) {
+    let partId = textUnitState.textUnitPart;
+    let partPage = textUnitState.textUnitPartPage;
+    let songToBeDisplayed: Song;
+    let songDivider: SongDivider;
+
+    if (!textUnit) {
+      songToBeDisplayed = new Song(``);
+      songDivider = new SongDivider(
+        projectorSettings.charactersInLine,
+        projectorSettings.linesOnPage,
+        songToBeDisplayed,
+      );
+    }
+
+    if (textStrategy === TextStrategy.EXAMPLE_TEXT) {
+      songToBeDisplayed = new Song(
+        `[randomlabel]\n${this.generateRandomTextWithSpaces(200)}`,
+      );
+      partId = 0;
+      partPage = 0;
+      songDivider = new SongDivider(
+        projectorSettings.charactersInLine,
+        projectorSettings.linesOnPage,
+        songToBeDisplayed,
+      );
+    }
+
+    if (textStrategy === TextStrategy.FIXED_LINES && textUnit) {
+      songToBeDisplayed = new Song(textUnit.content);
+      songDivider = new SongDivider(
+        projectorSettings.charactersInLine,
+        projectorSettings.linesOnPage,
+        songToBeDisplayed,
+      );
+    }
+
+    if (textStrategy === TextStrategy.AUTOMATIC && textUnit) {
+      songToBeDisplayed = new Song(textUnit.content);
+      songDivider = new SongDivider(10000, 100, songToBeDisplayed);
+      partPage = 0;
+    }
+
+    const displayPage = songDivider.getDisplayPageForPart(partId, partPage);
+
+    return displayPage.lines;
   }
 }
