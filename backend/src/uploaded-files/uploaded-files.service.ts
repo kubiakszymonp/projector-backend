@@ -7,13 +7,14 @@ import { existsSync, mkdirSync, rmSync, writeFileSync } from 'fs';
 import { RenameUploadedFileDto } from './dto/rename-uploaded-file.dto';
 import { DisplayState } from 'src/database/entities/display-state.entity';
 import { DisplayType } from 'src/database/structures/display-type.enum';
+import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 
 @Injectable()
 export class UploadedFilesService {
   private readonly uploadedFilesRepository: Repository<UploadedFile>;
   private readonly displayStateRepository: Repository<DisplayState>;
 
-  constructor(repoFactory: RepositoryFactory) {
+  constructor(repoFactory: RepositoryFactory, private projectorLastUpdateService: ProjectorLastUpdateService) {
     this.uploadedFilesRepository = repoFactory.getRepository(UploadedFile);
     this.displayStateRepository = repoFactory.getRepository(DisplayState);
   }
@@ -106,5 +107,6 @@ export class UploadedFilesService {
     });
 
     await this.displayStateRepository.save(newDisplayState);
+    this.projectorLastUpdateService.setLastUpdate(organizationId);
   }
 }

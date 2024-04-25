@@ -6,6 +6,7 @@ import { DisplayState } from 'src/database/entities/display-state.entity';
 import * as fs from 'fs';
 import * as path from 'path';
 import { TextUnit } from 'src/database/entities/text-unit.entity';
+import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 
 export const RELATIVE_PATH = '../../../songs';
 export const FILE_EXTENSION = '.txt';
@@ -15,7 +16,10 @@ export class TextUnitService {
   private textUnitRepository: Repository<TextUnit>;
   private displayStateRepository: Repository<DisplayState>;
 
-  constructor(repoFactory: RepositoryFactory) {
+  constructor(
+    repoFactory: RepositoryFactory,
+    private projectorLastUpdateService: ProjectorLastUpdateService,
+  ) {
     this.textUnitRepository = repoFactory.getRepository(TextUnit);
     this.displayStateRepository = repoFactory.getRepository(DisplayState);
   }
@@ -25,6 +29,7 @@ export class TextUnitService {
       content: createTextUnitDto.content,
       title: createTextUnitDto.title,
       organization: { id: organizationId },
+      tags: createTextUnitDto.tags,
     });
   }
 
@@ -35,6 +40,7 @@ export class TextUnitService {
         { organization: { id: IsNull() } },
       ],
       order: { updatedAt: 'desc' },
+      relations: ['tags'],
     });
     return result;
   }
@@ -42,12 +48,13 @@ export class TextUnitService {
   findOne(id: number) {
     return this.textUnitRepository.findOne({
       where: { id },
+      relations: ['tags'],
     });
   }
 
-  update(id: number, updateTextUnitDto: TextUnitDto) {
+  async update(id: number, updateTextUnitDto: TextUnitDto) {
     const textUnit = this.textUnitRepository.create(updateTextUnitDto);
-    return this.textUnitRepository.update({ id }, textUnit);
+    return await this.textUnitRepository.save({ id, ...textUnit });
   }
 
   remove(id: number) {
@@ -83,7 +90,8 @@ export class TextUnitService {
 
     const updated = this.displayStateRepository.create(displayState);
 
-    return this.displayStateRepository.save(updated);
+    await this.displayStateRepository.save(updated);
+    this.projectorLastUpdateService.setLastUpdate(organizationId);
   }
 
   async loadTextUnitsFromDisc() {

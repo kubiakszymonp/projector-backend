@@ -15,4 +15,6 @@ export class GetProjectorStateDto {
   lines: string[];
   @ApiProperty()
   uploadedFile: UploadedFileDto | null;
+  @ApiProperty()
+  lastUpdateTime: number;
 }

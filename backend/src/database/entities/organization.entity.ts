@@ -5,6 +5,7 @@ import { TextUnit } from './text-unit.entity';
 import { OrganizationData } from '../structures/organization-data';
 import { BaseEntity } from './base-entity';
 import { UploadedFile } from './uploaded-file.entity';
+import { TextUnitTag } from './text-unit-tag.entity';
 
 @Entity()
 export class Organization extends BaseEntity {
@@ -16,6 +17,9 @@ export class Organization extends BaseEntity {
 
   @OneToMany(() => TextUnit, (textUnit) => textUnit.organization)
   textUnits: TextUnit[];
+
+  @OneToMany(() => TextUnitTag, (textUnitTag) => textUnitTag.organization)
+  textUnitTags: TextUnitTag[];
 
   @OneToMany(() => UploadedFile, (uploadedFile) => uploadedFile.organization)
   uploadedFiles: UploadedFile[];

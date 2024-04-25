@@ -3,11 +3,15 @@ import { RepositoryFactory } from 'src/database/repository.factory';
 import { Repository } from 'typeorm';
 import { ProjectorSettings } from 'src/database/entities/projector-settings.entity';
 import { ProjectorSettingsConfigurationDto } from 'src/database/structures/projector-settings-configuration';
+import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 
 @Injectable()
 export class ProjectorSettingsService {
   private projectorSettingsRepository: Repository<ProjectorSettings>;
-  constructor(repoFactory: RepositoryFactory) {
+  constructor(
+    repoFactory: RepositoryFactory,
+    private projectorLastUpdateService: ProjectorLastUpdateService,
+  ) {
     this.projectorSettingsRepository =
       repoFactory.getRepository(ProjectorSettings);
   }
@@ -21,6 +25,7 @@ export class ProjectorSettingsService {
       organization: { id: organizationId },
     });
     await this.projectorSettingsRepository.save(newProjectorSettings);
+    this.projectorLastUpdateService.setLastUpdate(organizationId);
   }
 
   async get(organizationId: number): Promise<ProjectorSettings> {

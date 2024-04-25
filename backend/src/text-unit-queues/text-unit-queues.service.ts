@@ -4,13 +4,14 @@ import { Repository } from 'typeorm';
 import { DisplayState } from 'src/database/entities/display-state.entity';
 import { TextUnitQueue } from 'src/database/entities/text-unit-queue.entity';
 import { TextUnitQueueDto } from './dto/text-unit-queue.dto';
+import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 
 @Injectable()
 export class TextUnitQueuesService {
   private textUnitQueueRepository: Repository<TextUnitQueue>;
   private displayStateRepository: Repository<DisplayState>;
 
-  constructor(repositoryFactory: RepositoryFactory) {
+  constructor(repositoryFactory: RepositoryFactory, private projectorLastUpdateService: ProjectorLastUpdateService) {
     this.textUnitQueueRepository =
       repositoryFactory.getRepository(TextUnitQueue);
     this.displayStateRepository = repositoryFactory.getRepository(DisplayState);
@@ -90,6 +91,7 @@ export class TextUnitQueuesService {
     const newProjectorState =
       this.displayStateRepository.create(projectorState);
 
-    this.displayStateRepository.update(projectorState.id, newProjectorState);
+    await this.displayStateRepository.update(projectorState.id, newProjectorState);
+    this.projectorLastUpdateService.setLastUpdate(organizationId);
   }
 }

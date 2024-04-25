@@ -22,6 +22,7 @@ export class ProjectorSettingsController {
     @RequestOrganization() organization: RequestOrganizationType,
     @Body() updateProjectorSettingDto: ProjectorSettingsConfigurationDto,
   ) {
+    
     return this.projectorSettingsService.update(
       organization.id,
       updateProjectorSettingDto,

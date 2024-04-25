@@ -8,6 +8,7 @@ import { ProjectorSettings } from 'src/database/entities/projector-settings.enti
 import { UpdateDisplayStateDto } from './dto/update-display-state.dto';
 import { TextUnit } from 'src/database/entities/text-unit.entity';
 import { TextStrategy } from 'src/database/structures/text-strategy.enum';
+import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 
 @Injectable()
 export class DisplayStateService {
@@ -15,7 +16,7 @@ export class DisplayStateService {
   private textUnitRepository: Repository<TextUnit>;
   private projectorSettingsRepository: Repository<ProjectorSettings>;
 
-  constructor(repoFactory: RepositoryFactory) {
+  constructor(repoFactory: RepositoryFactory, private projectorLastUpdateService: ProjectorLastUpdateService) {
     this.projectorStateRepository = repoFactory.getRepository(DisplayState);
     this.textUnitRepository = repoFactory.getRepository(TextUnit);
     this.projectorSettingsRepository =
@@ -40,6 +41,7 @@ export class DisplayStateService {
     });
 
     await this.projectorStateRepository.save(newProjectorState);
+    this.projectorLastUpdateService.setLastUpdate(organizationId);
   }
 
   async get(organizationId: number) {
@@ -84,6 +86,7 @@ export class DisplayStateService {
     }
 
     await this.projectorStateRepository.save(projectorState);
+    this.projectorLastUpdateService.setLastUpdate(organizationId);
   }
 
   private goToNextPage(

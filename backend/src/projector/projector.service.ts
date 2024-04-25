@@ -9,6 +9,7 @@ import { DisplayType } from 'src/database/structures/display-type.enum';
 import { TextUnit } from 'src/database/entities/text-unit.entity';
 import { TextStrategy } from 'src/database/structures/text-strategy.enum';
 import { TextUnitState } from 'src/database/structures/projector-state-text-state';
+import { ProjectorLastUpdateService } from './projector-last-update.service';
 
 @Injectable()
 export class ProjectorService {
@@ -16,7 +17,7 @@ export class ProjectorService {
   private displayStateRepository: Repository<DisplayState>;
   private textUnitRepository: Repository<TextUnit>;
 
-  constructor(repoFactory: RepositoryFactory) {
+  constructor(repoFactory: RepositoryFactory, private projectorLastUpdateService: ProjectorLastUpdateService) {
     this.projectorSettingsRepository =
       repoFactory.getRepository(ProjectorSettings);
     this.displayStateRepository = repoFactory.getRepository(DisplayState);
@@ -58,6 +59,7 @@ export class ProjectorService {
         textState: displayState.textState,
         lines: [],
         uploadedFile: displayState.uploadedFile,
+        lastUpdateTime:  this.projectorLastUpdateService.getLastUpdate(organizationId)
       };
     } else {
       return {
@@ -71,6 +73,7 @@ export class ProjectorService {
           projectorSettings,
         ),
         uploadedFile: displayState.uploadedFile,
+        lastUpdateTime:  this.projectorLastUpdateService.getLastUpdate(organizationId)
       };
     }
   }

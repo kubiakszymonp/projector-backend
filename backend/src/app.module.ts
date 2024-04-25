@@ -11,6 +11,7 @@ import { ProjectorModule } from './projector/projector.module';
 import { UploadedFilesModule } from './uploaded-files/uploaded-files.module';
 import { TextUnitQueue } from './database/entities/text-unit-queue.entity';
 import { TextUnitQueuesModule } from './text-unit-queues/text-unit-queues.module';
+import { TextUnitTagModule } from './text-unit-tag/text-unit-tag.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { TextUnitQueuesModule } from './text-unit-queues/text-unit-queues.module
     ProjectorSettingsModule,
     ProjectorModule,
     UploadedFilesModule,
+    TextUnitTagModule,
   ],
   controllers: [AppController],
   providers: [AppService],
