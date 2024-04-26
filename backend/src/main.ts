@@ -26,12 +26,15 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     httpsOptions,
   });
-  app.useStaticAssets(join(__dirname, '../..', 'upload'), {
-    prefix: '/upload',
-    setHeaders: (res) => {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-    },
-  });
+
+  if (!environment.PROD) {
+    app.useStaticAssets(join(__dirname, '../..', 'upload'), {
+      prefix: '/upload',
+      setHeaders: (res) => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+      },
+    });
+  }
 
   app.setGlobalPrefix('api');
 

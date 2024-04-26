@@ -9,8 +9,8 @@ const devWindows = {
   CERT_PATH: '../cert/cert.pem',
   KEY_PATH: '../cert/key.pem',
   ENABLE_HTTPS: false,
+  PROD: false,
 };
-
 
 const deploy = {
   DATABASE_URL: __dirname + '../../../database/db.sqlite',
@@ -23,6 +23,7 @@ const deploy = {
   CERT_PATH: '../cert/cert.pem',
   KEY_PATH: '../cert/key.pem',
   ENABLE_HTTPS: false,
+  PROD: true,
 };
 
 export const environment = deploy;
