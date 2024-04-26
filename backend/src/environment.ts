@@ -26,8 +26,8 @@ const deploy = {
   KEY_PATH: '../cert/key.pem',
   ENABLE_HTTPS: false,
   PROD: true,
-  FFMPEG_PATH: '/home/ec2-user/ffmpeg-release-amd64-static/ffmpeg/ffmpeg',
-  FFPROBE_PATH: '/home/ec2-user/ffmpeg-release-amd64-static/ffmpeg/ffprobe',
+  FFMPEG_PATH: '/home/ec2-user/ffmpeg-release-amd64-static/ffmpeg',
+  FFPROBE_PATH: '/home/ec2-user/ffmpeg-release-amd64-static/ffprobe',
 };
 
 export const environment = deploy;
