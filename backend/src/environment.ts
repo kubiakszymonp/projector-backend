@@ -11,6 +11,7 @@ const devWindows = {
   ENABLE_HTTPS: false,
   PROD: false,
   FFMPEG_PATH: 'ffmpeg',
+  FFPROBE_PATH: 'ffprobe',
 };
 
 const deploy = {
@@ -26,6 +27,7 @@ const deploy = {
   ENABLE_HTTPS: false,
   PROD: true,
   FFMPEG_PATH: '/home/ec2-user/ffmpeg-release-amd64-static/ffmpeg/ffmpeg',
+  FFPROBE_PATH: '/home/ec2-user/ffmpeg-release-amd64-static/ffmpeg/ffprobe',
 };
 
 export const environment = deploy;

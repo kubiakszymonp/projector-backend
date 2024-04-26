@@ -31,6 +31,7 @@ import { Repository } from 'typeorm';
 import { DisplayState } from 'src/database/entities/display-state.entity';
 import { RepositoryFactory } from 'src/database/repository.factory';
 import { DisplayType } from 'src/database/structures/display-type.enum';
+import { environment } from 'src/environment';
 
 const CHUNK_DURATION = 0.5;
 const m3u8PREFIX = `#EXTM3U
@@ -189,7 +190,7 @@ export class UploadedFilesController {
       const outputPath = chunkDirectory + `/${fileName}.ts`;
 
       execSync(
-        `ffmpeg -i ${inputPath} -c:v libx264 -preset ultrafast -tune zerolatency -c:a aac -b:a 192k -f mpegts ${outputPath}`,
+        `${environment.FFMPEG_PATH} -i ${inputPath} -c:v libx264 -preset ultrafast -tune zerolatency -c:a aac -b:a 192k -f mpegts ${outputPath}`,
       );
 
       const duration = this.getVideoDuration(outputPath);
@@ -250,7 +251,7 @@ export class UploadedFilesController {
 
   private getVideoDuration(inputPath) {
     try {
-      const command = `ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${inputPath}"`;
+      const command = `${environment.FFPROBE_PATH} -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${inputPath}"`;
       const duration = execSync(command).toString().trim();
       console.log({ duration });
       return parseFloat(duration);
