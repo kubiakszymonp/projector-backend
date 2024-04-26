@@ -10,6 +10,7 @@ const devWindows = {
   KEY_PATH: '../cert/key.pem',
   ENABLE_HTTPS: false,
   PROD: false,
+  FFMPEG_PATH: 'ffmpeg',
 };
 
 const deploy = {
@@ -24,6 +25,7 @@ const deploy = {
   KEY_PATH: '../cert/key.pem',
   ENABLE_HTTPS: false,
   PROD: true,
+  FFMPEG_PATH: '/home/ec2-user/ffmpeg-release-amd64-static/ffmpeg/ffmpeg',
 };
 
 export const environment = deploy;
