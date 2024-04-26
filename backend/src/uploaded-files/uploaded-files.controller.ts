@@ -223,19 +223,23 @@ export class UploadedFilesController {
   }
 
   private async clearOldChunks() {
-    const organizationIds = await readdir(HLS_DIRECTORY);
-    organizationIds.forEach(async (organizationId) => {
-      const chunkDirectory = this.getChunkDirectory(parseInt(organizationId));
-      const files = await readdir(chunkDirectory);
-      const currentTime = new Date().getTime();
-      files.forEach((file) => {
-        const fileNameWithoutExtension = file.split('.')[0];
-        const fileNumber = parseInt(fileNameWithoutExtension);
-        if (currentTime - fileNumber > DELETE_CHUNK_AFTER_MILLIS) {
-          rm(`${chunkDirectory}/${file}`);
-        }
+    try {
+      const organizationIds = await readdir(HLS_DIRECTORY);
+      organizationIds.forEach(async (organizationId) => {
+        const chunkDirectory = this.getChunkDirectory(parseInt(organizationId));
+        const files = await readdir(chunkDirectory);
+        const currentTime = new Date().getTime();
+        files.forEach((file) => {
+          const fileNameWithoutExtension = file.split('.')[0];
+          const fileNumber = parseInt(fileNameWithoutExtension);
+          if (currentTime - fileNumber > DELETE_CHUNK_AFTER_MILLIS) {
+            rm(`${chunkDirectory}/${file}`);
+          }
+        });
       });
-    });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   private getVideoDuration(inputPath) {
