@@ -32,6 +32,7 @@ import { DisplayState } from 'src/database/entities/display-state.entity';
 import { RepositoryFactory } from 'src/database/repository.factory';
 import { DisplayType } from 'src/database/structures/display-type.enum';
 import { environment } from 'src/environment';
+import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 
 const CHUNK_DURATION = 0.5;
 const m3u8PREFIX = `#EXTM3U
@@ -50,6 +51,7 @@ export class UploadedFilesController {
   constructor(
     private readonly uploadedFilesService: UploadedFilesService,
     repoFactory: RepositoryFactory,
+    private projectorLastUpdateService: ProjectorLastUpdateService
   ) {
     setInterval(() => {
       this.clearOldChunks();
@@ -137,6 +139,7 @@ export class UploadedFilesController {
     });
 
     await this.displayStateRepository.save(newDisplayState);
+    this.projectorLastUpdateService.setLastUpdate(organization.id);
   }
 
   @UseGuards(AuthGuard)
@@ -170,6 +173,7 @@ export class UploadedFilesController {
     }
 
     await writeFile(this.getPlaylistPath(organization.id), m3u8PREFIX);
+    this.projectorLastUpdateService.setLastUpdate(organization.id);
   }
 
   @UseGuards(AuthGuard)
