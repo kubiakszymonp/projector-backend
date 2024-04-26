@@ -14,10 +14,14 @@ const loadTextUnits = (app: INestApplication) => {
 };
 
 async function bootstrap() {
-  const httpsOptions = {
-    key: readFileSync('../src/cert/key.pem'),
-    cert: readFileSync('../src/cert/cert.pem'),
-  };
+  let httpsOptions = undefined;
+
+  if (environment.ENABLE_HTTPS) {
+    httpsOptions = {
+      key: readFileSync('../cert/key.pem'),
+      cert: readFileSync('../cert/cert.pem'),
+    };
+  }
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     httpsOptions,
