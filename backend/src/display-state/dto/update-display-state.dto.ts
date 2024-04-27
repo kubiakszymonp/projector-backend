@@ -12,4 +12,8 @@ export class UpdateDisplayStateDto {
   @ApiProperty()
   @IsOptional()
   textState?: TextUnitState;
+
+  @ApiProperty()
+  @IsOptional()
+  emptyDisplay?: boolean;
 }

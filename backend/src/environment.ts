@@ -8,7 +8,7 @@ const devWindows = {
   FILE_UPLOAD_PATH: __dirname + '../../../uploads/',
   CERT_PATH: '../cert/cert.pem',
   KEY_PATH: '../cert/key.pem',
-  ENABLE_HTTPS: false,
+  ENABLE_HTTPS: true,
   PROD: false,
   FFMPEG_PATH: 'ffmpeg',
   FFPROBE_PATH: 'ffprobe',
@@ -30,4 +30,4 @@ const deploy = {
   FFPROBE_PATH: '/home/ec2-user/ffmpeg-release-amd64-static/ffprobe',
 };
 
-export const environment = deploy;
+export const environment = devWindows;

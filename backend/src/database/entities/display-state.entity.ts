@@ -14,6 +14,9 @@ export class DisplayState extends BaseEntity {
   @Column('simple-json')
   textState: TextState;
 
+  @Column()
+  emptyDisplay: boolean;
+
   @OneToOne(() => Organization)
   @JoinColumn()
   organization: Organization;

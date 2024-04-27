@@ -51,7 +51,7 @@ export class UploadedFilesController {
   constructor(
     private readonly uploadedFilesService: UploadedFilesService,
     repoFactory: RepositoryFactory,
-    private projectorLastUpdateService: ProjectorLastUpdateService
+    private projectorLastUpdateService: ProjectorLastUpdateService,
   ) {
     setInterval(() => {
       this.clearOldChunks();
@@ -135,7 +135,7 @@ export class UploadedFilesController {
 
     const newDisplayState = this.displayStateRepository.create({
       ...displayState,
-      displayType: DisplayType.NONE,
+      emptyDisplay: true,
     });
 
     await this.displayStateRepository.save(newDisplayState);
@@ -244,13 +244,9 @@ export class UploadedFilesController {
               rm(`${chunkDirectory}/${file}`);
             }
           });
-        } catch (e) {
-          console.error(e);
-        }
+        } catch (e) {}
       });
-    } catch (e) {
-      console.error(e);
-    }
+    } catch (e) {}
   }
 
   private getVideoDuration(inputPath) {

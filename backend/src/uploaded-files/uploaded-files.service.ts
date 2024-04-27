@@ -8,6 +8,7 @@ import { RenameUploadedFileDto } from './dto/rename-uploaded-file.dto';
 import { DisplayState } from 'src/database/entities/display-state.entity';
 import { DisplayType } from 'src/database/structures/display-type.enum';
 import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
+import { rm, stat } from 'fs/promises';
 
 @Injectable()
 export class UploadedFilesService {
@@ -39,8 +40,8 @@ export class UploadedFilesService {
 
   async removeStoredFile(url: string) {
     const pathToRemove = `../upload/${url}`;
-    if (existsSync(pathToRemove)) {
-      rmSync(pathToRemove);
+    if (await stat(pathToRemove)) {
+      await rm(pathToRemove);
     }
   }
 
@@ -66,7 +67,7 @@ export class UploadedFilesService {
     if (displayState.uploadedFile.id === id) {
       await this.displayStateRepository.update(displayState.id, {
         uploadedFile: null,
-        displayType: DisplayType.NONE,
+        emptyDisplay: true,
       });
     }
 

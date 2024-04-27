@@ -36,7 +36,8 @@ export class OrganizationsService {
       this.projectStateRepository.create({
         organization: organization,
         textState: defaultProjectorStateTextState,
-        displayType: DisplayType.NONE,
+        displayType: DisplayType.TEXT,
+        emptyDisplay: true,
       }),
     );
 

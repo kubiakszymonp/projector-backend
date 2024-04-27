@@ -17,7 +17,10 @@ export class ProjectorService {
   private displayStateRepository: Repository<DisplayState>;
   private textUnitRepository: Repository<TextUnit>;
 
-  constructor(repoFactory: RepositoryFactory, private projectorLastUpdateService: ProjectorLastUpdateService) {
+  constructor(
+    repoFactory: RepositoryFactory,
+    private projectorLastUpdateService: ProjectorLastUpdateService,
+  ) {
     this.projectorSettingsRepository =
       repoFactory.getRepository(ProjectorSettings);
     this.displayStateRepository = repoFactory.getRepository(DisplayState);
@@ -49,20 +52,22 @@ export class ProjectorService {
     });
 
     if (
-      displayState.displayType === DisplayType.NONE ||
       displayState.displayType === DisplayType.MEDIA ||
       displayState.displayType === DisplayType.HLS
     ) {
       return {
+        emptyDisplay: displayState.emptyDisplay,
         displayType: displayState.displayType,
         settings: projectorSettings,
         textState: displayState.textState,
         lines: [],
         uploadedFile: displayState.uploadedFile,
-        lastUpdateTime:  this.projectorLastUpdateService.getLastUpdate(organizationId)
+        lastUpdateTime:
+          this.projectorLastUpdateService.getLastUpdate(organizationId),
       };
     } else {
       return {
+        emptyDisplay: displayState.emptyDisplay,
         displayType: displayState.displayType,
         settings: projectorSettings,
         textState: displayState.textState,
@@ -73,7 +78,8 @@ export class ProjectorService {
           projectorSettings,
         ),
         uploadedFile: displayState.uploadedFile,
-        lastUpdateTime:  this.projectorLastUpdateService.getLastUpdate(organizationId)
+        lastUpdateTime:
+          this.projectorLastUpdateService.getLastUpdate(organizationId),
       };
     }
   }

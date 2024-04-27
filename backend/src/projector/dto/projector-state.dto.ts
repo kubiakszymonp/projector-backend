@@ -8,6 +8,8 @@ export class GetProjectorStateDto {
   @ApiProperty()
   displayType: DisplayType;
   @ApiProperty()
+  emptyDisplay: boolean;
+  @ApiProperty()
   textState: TextUnitState;
   @ApiProperty()
   settings: ProjectorSettingsConfigurationDto;
