@@ -1,4 +1,4 @@
-export const CHUNK_DURATION = 0.5;
+export const CHUNK_DURATION = 0.6;
 export const m3u8PREFIX = `#EXTM3U
 #EXT-X-VERSION:3
 #EXT-X-TARGETDURATION:${CHUNK_DURATION}

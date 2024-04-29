@@ -7,6 +7,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { TextUnit } from 'src/database/entities/text-unit.entity';
 import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
+import { DisplayType } from 'src/database/structures/display-type.enum';
 
 export const RELATIVE_PATH = '../../../songs';
 export const FILE_EXTENSION = '.txt';
@@ -41,7 +42,6 @@ export class TextUnitService {
       ],
       order: { updatedAt: 'desc' },
       relations: ['tags'],
-      
     });
     return result;
   }
@@ -88,6 +88,7 @@ export class TextUnitService {
     displayState.textState.textUnitId = textUnitId;
     displayState.textState.textUnitPart = 0;
     displayState.textState.textUnitPartPage = 0;
+    displayState.displayType = DisplayType.TEXT;
 
     const updated = this.displayStateRepository.create(displayState);
 

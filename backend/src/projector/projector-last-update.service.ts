@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { ProjectorGateway } from './projector.gateway';
 
 @Injectable()
 export class ProjectorLastUpdateService {
   private organizationProjectorLastUpdates: OrganizationProjectorLastUpdate[] =
     [];
+
+  constructor(private projectorGateway: ProjectorGateway) {}
 
   public setLastUpdate(organizationId: number | string) {
     const entry = this.findByOrganizationId(organizationId);
@@ -13,6 +16,7 @@ export class ProjectorLastUpdateService {
     } else {
       this.setLastUpdateForOrganization(organizationId);
     }
+    this.projectorGateway.emitChangeEvent(String(organizationId));
   }
 
   public getLastUpdate(organizationId: number | string) {

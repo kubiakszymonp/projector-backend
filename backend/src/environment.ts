@@ -30,4 +30,4 @@ const deploy = {
   FFPROBE_PATH: '/home/ec2-user/ffmpeg-release-amd64-static/ffprobe',
 };
 
-export const environment = deploy;
+export const environment = devWindows;
