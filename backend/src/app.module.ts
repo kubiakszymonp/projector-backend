@@ -12,6 +12,7 @@ import { UploadedFilesModule } from './uploaded-files/uploaded-files.module';
 import { TextUnitQueue } from './database/entities/text-unit-queue.entity';
 import { TextUnitQueuesModule } from './text-unit-queues/text-unit-queues.module';
 import { TextUnitTagModule } from './text-unit-tag/text-unit-tag.module';
+import { LiveStreamingModule } from './live-streaming/live-streaming.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { TextUnitTagModule } from './text-unit-tag/text-unit-tag.module';
     ProjectorModule,
     UploadedFilesModule,
     TextUnitTagModule,
+    LiveStreamingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
