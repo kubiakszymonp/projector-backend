@@ -7,6 +7,7 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ProjectorSettingsConfigurationDto } from 'src/database/structures/projector-settings-configuration';
+import { PartialProjectorSettingsConfigurationDto } from './dto/partial-projector-settings.dto';
 
 @ApiBearerAuth()
 @ApiTags('projector-settings')
@@ -14,15 +15,15 @@ import { ProjectorSettingsConfigurationDto } from 'src/database/structures/proje
 export class ProjectorSettingsController {
   constructor(
     private readonly projectorSettingsService: ProjectorSettingsService,
-  ) {}
+  ) { }
 
   @UseGuards(AuthGuard)
   @Patch()
   update(
     @RequestOrganization() organization: RequestOrganizationType,
-    @Body() updateProjectorSettingDto: ProjectorSettingsConfigurationDto,
+    @Body() updateProjectorSettingDto: PartialProjectorSettingsConfigurationDto,
   ) {
-    
+
     return this.projectorSettingsService.update(
       organization.id,
       updateProjectorSettingDto,
