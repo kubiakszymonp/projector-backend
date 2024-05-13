@@ -104,6 +104,7 @@ export class UploadedFilesService {
     const newDisplayState = this.displayStateRepository.create({
       ...displayState,
       displayType: DisplayType.MEDIA,
+      emptyDisplay: false,
       uploadedFile,
     });
 

@@ -13,6 +13,12 @@ import { TextUnitQueue } from './database/entities/text-unit-queue.entity';
 import { TextUnitQueuesModule } from './text-unit-queues/text-unit-queues.module';
 import { TextUnitTagModule } from './text-unit-tag/text-unit-tag.module';
 import { LiveStreamingModule } from './live-streaming/live-streaming.module';
+import { OrganizationAuthResolver } from './organization-auth/organization-auth.resolver';
+import { TextUnitResourcesResolver } from './text-unit-resources/text-unit-resources.resolver';
+import { ProjectorManagementResolver } from './projector-management/projector-management.resolver';
+import { OrganizationAuthModule } from './organization-auth/organization-auth.module';
+import { TextUnitResourcesModule } from './text-unit-resources/text-unit-resources.module';
+import { ProjectorManagementModule } from './projector-management/projector-management.module';
 
 @Module({
   imports: [
@@ -27,8 +33,11 @@ import { LiveStreamingModule } from './live-streaming/live-streaming.module';
     UploadedFilesModule,
     TextUnitTagModule,
     LiveStreamingModule,
+    OrganizationAuthModule,
+    TextUnitResourcesModule,
+    ProjectorManagementModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, OrganizationAuthResolver, TextUnitResourcesResolver, ProjectorManagementResolver],
 })
 export class AppModule {}

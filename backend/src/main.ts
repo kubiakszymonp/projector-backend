@@ -7,6 +7,7 @@ import { environment } from './environment';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { readFileSync } from 'fs';
+import { IoAdapter } from '@nestjs/platform-socket.io';
 
 const loadTextUnits = (app: INestApplication) => {
   const textUnitService = app.get(TextUnitService);
@@ -61,6 +62,8 @@ async function bootstrap() {
   if (environment.LOAD_TEXT_UNITS) {
     await loadTextUnits(app);
   }
+  
+  app.useWebSocketAdapter(new IoAdapter(app.getHttpServer()));
 
   await app.listen(environment.PORT);
 }

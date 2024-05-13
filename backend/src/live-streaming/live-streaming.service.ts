@@ -51,6 +51,7 @@ export class LiveStreamingService {
     const newDisplayState = this.displayStateRepository.create({
       ...displayState,
       displayType: DisplayType.HLS,
+      emptyDisplay: false
     });
 
     await this.displayStateRepository.save(newDisplayState);

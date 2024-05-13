@@ -30,8 +30,8 @@ export class ProjectorSettingsService {
     }
 
     const newProjectorSettings = this.projectorSettingsRepository.create({
-      ...updateProjectorSettingDto,
       ...projectorSettings,
+      ...updateProjectorSettingDto,
       organization: { id: organizationId },
     });
     await this.projectorSettingsRepository.save(newProjectorSettings);

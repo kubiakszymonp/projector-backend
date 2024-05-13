@@ -7,20 +7,20 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway(81, {
+@WebSocketGateway({
   cors: {
     origin: '*',
   },
+
 })
 export class ProjectorGateway
-  implements OnGatewayConnection, OnGatewayDisconnect
-{
+  implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server;
   private clientMap = new Map<string, Set<string>>(); // To track clients by organization
 
   handleConnection(client: Socket): void {
     const orgId = client.handshake.query.organizationId as string;
-    
+
     if (!orgId) {
       client.disconnect(true);
       return;
