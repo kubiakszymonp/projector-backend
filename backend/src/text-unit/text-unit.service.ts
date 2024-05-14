@@ -7,7 +7,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { TextUnit } from 'src/database/entities/text-unit.entity';
 import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
-import { DisplayType } from 'src/database/structures/display-type.enum';
+import { DisplayType } from 'src/projector-management/enums/display-type.enum';
 
 export const RELATIVE_PATH = '../../../songs';
 export const FILE_EXTENSION = '.txt';

@@ -6,7 +6,7 @@ import {
 } from 'src/auth/request-organization';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { ProjectorSettingsConfigurationDto } from 'src/database/structures/projector-settings-configuration';
+import { ProjectorSettingsConfigurationDto } from 'src/projector-management/structures/projector-settings-configuration';
 import { PartialProjectorSettingsConfigurationDto } from './dto/partial-projector-settings.dto';
 
 @ApiBearerAuth()

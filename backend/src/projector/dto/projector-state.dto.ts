@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { DisplayType } from 'src/database/structures/display-type.enum';
-import { ProjectorSettingsConfigurationDto } from 'src/database/structures/projector-settings-configuration';
-import { TextUnitState } from 'src/database/structures/projector-state-text-state';
+import { DisplayType } from 'src/projector-management/enums/display-type.enum';
+import { ProjectorSettingsConfigurationDto } from 'src/projector-management/structures/projector-settings-configuration';
+import { TextUnitState } from 'src/projector-management/structures/projector-state-text-state';
 import { UploadedFileDto } from 'src/uploaded-files/dto/uploaded-file.dto';
 
 export class GetProjectorStateDto {

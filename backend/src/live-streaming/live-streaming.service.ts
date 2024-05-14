@@ -8,7 +8,7 @@ import {
   PLAYLIST_NAME,
   m3u8PREFIX,
 } from './consts';
-import { DisplayType } from 'src/database/structures/display-type.enum';
+import { DisplayType } from 'src/projector-management/enums/display-type.enum';
 import { Repository } from 'typeorm';
 import { DisplayState } from 'src/database/entities/display-state.entity';
 import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';

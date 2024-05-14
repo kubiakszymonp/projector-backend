@@ -2,7 +2,7 @@ import { BadGatewayException, Injectable } from '@nestjs/common';
 import { RepositoryFactory } from 'src/database/repository.factory';
 import { Repository } from 'typeorm';
 import { ProjectorSettings } from 'src/database/entities/projector-settings.entity';
-import { ProjectorSettingsConfigurationDto } from 'src/database/structures/projector-settings-configuration';
+import { ProjectorSettingsConfigurationDto } from 'src/projector-management/structures/projector-settings-configuration';
 import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 import { PartialProjectorSettingsConfigurationDto } from './dto/partial-projector-settings.dto';
 

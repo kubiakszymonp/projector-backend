@@ -3,8 +3,8 @@ import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { RepositoryFactory } from 'src/database/repository.factory';
 import { Repository } from 'typeorm';
 import { Organization } from 'src/database/entities/organization.entity';
-import { defaultProjectorStateTextState } from 'src/database/structures/projector-state-text-state';
-import { DisplayType } from 'src/database/structures/display-type.enum';
+import { defaultProjectorStateTextState } from 'src/projector-management/structures/projector-state-text-state';
+import { DisplayType } from 'src/projector-management/enums/display-type.enum';
 import { DisplayState } from 'src/database/entities/display-state.entity';
 import {
   ProjectorSettings,

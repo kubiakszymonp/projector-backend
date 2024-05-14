@@ -19,7 +19,6 @@ export class TextUnitTag extends BaseEntity {
 
   organizationId: number | null;
 
-  //   @ManyToMany(() => TextUnit, (textUnit) => textUnit.tags)
   @ManyToMany(() => TextUnit)
   textUnits: TextUnit[];
 }

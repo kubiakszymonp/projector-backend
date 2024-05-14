@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { TextStrategy } from './text-strategy.enum';
+import { TextStrategy } from '../enums/text-strategy.enum';
 
 export class ProjectorSettingsConfigurationDto {
   @ApiProperty()

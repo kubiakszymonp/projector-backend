@@ -6,7 +6,7 @@ import { RepositoryFactory } from 'src/database/repository.factory';
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'fs';
 import { RenameUploadedFileDto } from './dto/rename-uploaded-file.dto';
 import { DisplayState } from 'src/database/entities/display-state.entity';
-import { DisplayType } from 'src/database/structures/display-type.enum';
+import { DisplayType } from 'src/projector-management/enums/display-type.enum';
 import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 import { rm, stat } from 'fs/promises';
 

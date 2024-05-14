@@ -30,4 +30,19 @@ const deploy = {
   FFPROBE_PATH: '/home/ec2-user/ffmpeg-release-amd64-static/ffprobe',
 };
 
-export const environment = devWindows;
+export const ENVIRONMENT: {
+  DATABASE_URL: string;
+  DATABASE_SYNCHRONIZE: boolean;
+  DATABASE_LOGGING: boolean;
+  DROP_SCHEMA: boolean;
+  LOAD_TEXT_UNITS: boolean;
+  PORT: number;
+  FILE_UPLOAD_PATH: string;
+  CERT_PATH: string;
+  KEY_PATH: string;
+  ENABLE_HTTPS: boolean;
+  PROD: boolean;
+  FFMPEG_PATH: string;
+  FFPROBE_PATH: string;
+  JWT_SECRET: string;
+} = { ...process.env, ...devWindows } as any;

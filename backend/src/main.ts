@@ -3,11 +3,11 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { TextUnitService } from './text-unit/text-unit.service';
-import { environment } from './environment';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { readFileSync } from 'fs';
 import { IoAdapter } from '@nestjs/platform-socket.io';
+import { ENVIRONMENT } from './environment';
 
 const loadTextUnits = (app: INestApplication) => {
   const textUnitService = app.get(TextUnitService);
@@ -17,7 +17,7 @@ const loadTextUnits = (app: INestApplication) => {
 async function bootstrap() {
   let httpsOptions = undefined;
 
-  if (environment.ENABLE_HTTPS) {
+  if (ENVIRONMENT.ENABLE_HTTPS) {
     httpsOptions = {
       key: readFileSync('../cert/key.pem'),
       cert: readFileSync('../cert/cert.pem'),
@@ -28,7 +28,7 @@ async function bootstrap() {
     httpsOptions,
   });
 
-  if (!environment.PROD) {
+  if (!ENVIRONMENT.PROD) {
     app.useStaticAssets(join(__dirname, '../..', 'upload'), {
       prefix: '/upload',
       setHeaders: (res) => {
@@ -59,12 +59,12 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
 
-  if (environment.LOAD_TEXT_UNITS) {
+  if (ENVIRONMENT.LOAD_TEXT_UNITS) {
     await loadTextUnits(app);
   }
   
   app.useWebSocketAdapter(new IoAdapter(app.getHttpServer()));
 
-  await app.listen(environment.PORT);
+  await app.listen(ENVIRONMENT.PORT);
 }
 bootstrap();

@@ -5,10 +5,10 @@ import { Repository } from 'typeorm';
 import { ProjectorSettings } from 'src/database/entities/projector-settings.entity';
 import { DisplayState } from 'src/database/entities/display-state.entity';
 import { Song, SongDivider } from 'song-parser';
-import { DisplayType } from 'src/database/structures/display-type.enum';
+import { DisplayType } from 'src/projector-management/enums/display-type.enum';
 import { TextUnit } from 'src/database/entities/text-unit.entity';
-import { TextStrategy } from 'src/database/structures/text-strategy.enum';
-import { TextUnitState } from 'src/database/structures/projector-state-text-state';
+import { TextStrategy } from 'src/projector-management/enums/text-strategy.enum';
+import { TextUnitState } from 'src/projector-management/structures/projector-state-text-state';
 import { ProjectorLastUpdateService } from './projector-last-update.service';
 
 @Injectable()

@@ -30,7 +30,7 @@ import { appendFile, mkdir, readdir, rm, stat, writeFile } from 'fs/promises';
 import { Repository } from 'typeorm';
 import { DisplayState } from 'src/database/entities/display-state.entity';
 import { RepositoryFactory } from 'src/database/repository.factory';
-import { DisplayType } from 'src/database/structures/display-type.enum';
+import { DisplayType } from 'src/projector-management/enums/display-type.enum';
 import { environment } from 'src/environment';
 import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 

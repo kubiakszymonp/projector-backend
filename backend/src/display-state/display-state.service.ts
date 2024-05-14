@@ -7,7 +7,7 @@ import { DisplayState } from 'src/database/entities/display-state.entity';
 import { ProjectorSettings } from 'src/database/entities/projector-settings.entity';
 import { UpdateDisplayStateDto } from './dto/update-display-state.dto';
 import { TextUnit } from 'src/database/entities/text-unit.entity';
-import { TextStrategy } from 'src/database/structures/text-strategy.enum';
+import { TextStrategy } from 'src/projector-management/enums/text-strategy.enum';
 import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 
 @Injectable()
