@@ -4,10 +4,10 @@ import { Repository } from 'typeorm';
 import { MovePageDirection, MovePageDto } from './dto/move-page.dto';
 import { UpdateDisplayStateDto } from './dto/update-display-state.dto';
 import { TextStrategy } from 'src/projector-management/enums/text-strategy.enum';
-import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 import { DisplayState } from './entities/display-state.entity';
 import { TextUnit } from 'src/text-unit-resources/entities/text-unit.entity';
 import { ProjectorSettings } from './entities/projector-settings.entity';
+import { ProjectorLastUpdateService } from './projector-last-update.service';
 
 @Injectable()
 export class DisplayStateService {
@@ -48,7 +48,7 @@ export class DisplayStateService {
 
   async movePage(organizationId: number, movePageDto: MovePageDto) {
     const projectorState = await this.projectorStateRepository.findOne({
-      where: { organizationId},
+      where: { organizationId },
     });
 
     if (!projectorState) {

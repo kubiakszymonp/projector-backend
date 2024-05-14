@@ -21,7 +21,6 @@ import { UploadedFileDto } from './dto/uploaded-file.dto';
 import { SetCurrentUploadedFileDto } from './dto/set-current-uploaded-file.dto';
 import { Repository } from 'typeorm';
 import { DisplayType } from 'src/projector-management/enums/display-type.enum';
-import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 import { DisplayState } from './entities/display-state.entity';
 import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
 import { AuthenticationData } from 'src/common/request-organization';
@@ -32,9 +31,7 @@ import { JwtAuthenticationData } from 'src/common/jwt-payload';
 export class UploadedFilesController {
 
   constructor(
-    private displayStateRepository: Repository<DisplayState>,
     private readonly uploadedFilesService: UploadedFilesService,
-    private projectorLastUpdateService: ProjectorLastUpdateService,
   ) {
   }
 

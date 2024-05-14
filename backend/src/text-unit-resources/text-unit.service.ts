@@ -1,33 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { IsNull, Repository } from 'typeorm';
 import { TextUnitDto } from './dto/text-unit.dto';
-import { DisplayState } from 'src/database/entities/display-state.entity';
 import * as fs from 'fs';
 import * as path from 'path';
-import { TextUnit } from 'src/database/entities/text-unit.entity';
-import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 import { DisplayType } from 'src/projector-management/enums/display-type.enum';
+import { DisplayState } from 'src/projector-management/entities/display-state.entity';
+import { ProjectorLastUpdateService } from 'src/projector-management/projector-last-update.service';
+import { TextUnit } from './entities/text-unit.entity';
 
 export const RELATIVE_PATH = '../../../songs';
 export const FILE_EXTENSION = '.txt';
 
 @Injectable()
 export class TextUnitService {
-  private textUnitRepository: Repository<TextUnit>;
-  private displayStateRepository: Repository<DisplayState>;
+  ;
 
   constructor(
+    private textUnitRepository: Repository<TextUnit>,
+    private displayStateRepository: Repository<DisplayState>,
     private projectorLastUpdateService: ProjectorLastUpdateService,
   ) {
-    this.textUnitRepository = repoFactory.getRepository(TextUnit);
-    this.displayStateRepository = repoFactory.getRepository(DisplayState);
   }
 
   async create(organizationId: number, createTextUnitDto: TextUnitDto) {
     await this.textUnitRepository.save({
       content: createTextUnitDto.content,
       title: createTextUnitDto.title,
-      organization: { id: organizationId },
+      organizationId,
       tags: createTextUnitDto.tags,
     });
   }
@@ -35,8 +34,8 @@ export class TextUnitService {
   async findAll(organizationId: number) {
     const result = await this.textUnitRepository.find({
       where: [
-        { organization: { id: organizationId } },
-        { organization: { id: IsNull() } },
+        { organizationId },
+        { organizationId: IsNull() },
       ],
       order: { updatedAt: 'desc' },
       relations: ['tags'],
@@ -62,7 +61,7 @@ export class TextUnitService {
 
   async getCurrentTextUnit(organizationId: number) {
     const projectorState = await this.displayStateRepository.findOne({
-      where: { organization: { id: organizationId } },
+      where: { organizationId },
     });
 
     if (!projectorState) {
@@ -76,7 +75,7 @@ export class TextUnitService {
 
   async setCurrentTextUnit(textUnitId: number, organizationId: number) {
     const displayState = await this.displayStateRepository.findOne({
-      where: { organization: { id: organizationId } },
+      where: { organizationId },
     });
 
     if (!displayState) {

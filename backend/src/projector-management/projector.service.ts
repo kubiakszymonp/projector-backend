@@ -1,35 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { GetProjectorStateDto } from './dto/projector-state.dto';
-import { RepositoryFactory } from 'src/database/repository.factory';
 import { Repository } from 'typeorm';
-import { ProjectorSettings } from 'src/database/entities/projector-settings.entity';
-import { DisplayState } from 'src/database/entities/display-state.entity';
 import { Song, SongDivider } from 'song-parser';
 import { DisplayType } from 'src/projector-management/enums/display-type.enum';
-import { TextUnit } from 'src/database/entities/text-unit.entity';
 import { TextStrategy } from 'src/projector-management/enums/text-strategy.enum';
 import { TextUnitState } from 'src/projector-management/structures/projector-state-text-state';
 import { ProjectorLastUpdateService } from './projector-last-update.service';
+import { TextUnit } from 'src/text-unit-resources/entities/text-unit.entity';
+import { DisplayState } from './entities/display-state.entity';
+import { ProjectorSettings } from './entities/projector-settings.entity';
 
 @Injectable()
 export class ProjectorService {
-  private projectorSettingsRepository: Repository<ProjectorSettings>;
-  private displayStateRepository: Repository<DisplayState>;
-  private textUnitRepository: Repository<TextUnit>;
+
 
   constructor(
-    repoFactory: RepositoryFactory,
+    private projectorSettingsRepository: Repository<ProjectorSettings>,
+    private displayStateRepository: Repository<DisplayState>,
+    private textUnitRepository: Repository<TextUnit>,
     private projectorLastUpdateService: ProjectorLastUpdateService,
   ) {
-    this.projectorSettingsRepository =
-      repoFactory.getRepository(ProjectorSettings);
-    this.displayStateRepository = repoFactory.getRepository(DisplayState);
-    this.textUnitRepository = repoFactory.getRepository(TextUnit);
   }
 
   async getState(organizationId: number): Promise<GetProjectorStateDto> {
     const projectorSettings = await this.projectorSettingsRepository.findOne({
-      where: { organization: { id: organizationId } },
+      where: { organizationId },
     });
 
     if (!projectorSettings) {
@@ -37,7 +32,7 @@ export class ProjectorService {
     }
 
     const displayState = await this.displayStateRepository.findOne({
-      where: { organization: { id: organizationId } },
+      where: { organizationId },
       relations: ['uploadedFile'],
     });
 

@@ -1,22 +1,17 @@
 import { Column, Entity, JoinColumn, ManyToMany, ManyToOne } from 'typeorm';
-import { Organization } from './organization.entity';
-import { BaseEntity } from './base-entity';
+
 import { TextUnit } from './text-unit.entity';
+import { AppBaseEntity } from 'src/common/base-entity';
 
 @Entity()
-export class TextUnitTag extends BaseEntity {
+export class TextUnitTag extends AppBaseEntity {
   @Column()
   name: string;
 
   @Column()
   description: string;
 
-  @ManyToOne(() => Organization, (organization) => organization.textUnitTags, {
-    nullable: true,
-  })
-  @JoinColumn({ name: 'organizationId' })
-  organization: Organization | null;
-
+  @Column()
   organizationId: number | null;
 
   @ManyToMany(() => TextUnit)

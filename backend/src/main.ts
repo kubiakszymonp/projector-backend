@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { TextUnitService } from './text-unit/text-unit.service';
+import { TextUnitService } from './text-unit-resources/text-unit.service';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { readFileSync } from 'fs';
@@ -62,7 +62,7 @@ async function bootstrap() {
   if (ENVIRONMENT.LOAD_TEXT_UNITS) {
     await loadTextUnits(app);
   }
-  
+
   app.useWebSocketAdapter(new IoAdapter(app.getHttpServer()));
 
   await app.listen(ENVIRONMENT.PORT);

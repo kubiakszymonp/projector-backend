@@ -4,10 +4,10 @@ import { Repository } from 'typeorm';
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'fs';
 import { RenameUploadedFileDto } from './dto/rename-uploaded-file.dto';
 import { DisplayType } from 'src/projector-management/enums/display-type.enum';
-import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 import { rm, stat } from 'fs/promises';
 import { UploadedFile } from './entities/uploaded-file.entity';
 import { DisplayState } from './entities/display-state.entity';
+import { ProjectorLastUpdateService } from './projector-last-update.service';
 
 @Injectable()
 export class UploadedFilesService {

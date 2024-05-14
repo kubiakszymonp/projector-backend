@@ -1,8 +1,8 @@
 import { BadGatewayException, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 import { PartialProjectorSettingsConfigurationDto } from './dto/partial-projector-settings.dto';
 import { ProjectorSettings } from './entities/projector-settings.entity';
+import { ProjectorLastUpdateService } from './projector-last-update.service';
 
 @Injectable()
 export class ProjectorSettingsService {

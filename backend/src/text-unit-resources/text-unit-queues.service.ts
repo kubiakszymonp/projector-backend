@@ -1,26 +1,23 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { RepositoryFactory } from 'src/database/repository.factory';
+import { DisplayState } from 'src/projector-management/entities/display-state.entity';
+import { ProjectorLastUpdateService } from 'src/projector-management/projector-last-update.service';
 import { Repository } from 'typeorm';
-import { DisplayState } from 'src/database/entities/display-state.entity';
-import { TextUnitQueue } from 'src/database/entities/text-unit-queue.entity';
 import { TextUnitQueueDto } from './dto/text-unit-queue.dto';
-import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
+import { TextUnitQueue } from './entities/text-unit-queue.entity';
 
 @Injectable()
 export class TextUnitQueuesService {
-  private textUnitQueueRepository: Repository<TextUnitQueue>;
-  private displayStateRepository: Repository<DisplayState>;
 
-  constructor(repositoryFactory: RepositoryFactory, private projectorLastUpdateService: ProjectorLastUpdateService) {
-    this.textUnitQueueRepository =
-      repositoryFactory.getRepository(TextUnitQueue);
-    this.displayStateRepository = repositoryFactory.getRepository(DisplayState);
+
+  constructor(private textUnitQueueRepository: Repository<TextUnitQueue>,
+    private displayStateRepository: Repository<DisplayState>,
+    private projectorLastUpdateService: ProjectorLastUpdateService) {
   }
 
   create(createTextUnitQueue: TextUnitQueueDto, organizationId: number) {
     const textUnitQueue = this.textUnitQueueRepository.create({
       ...createTextUnitQueue,
-      organization: { id: organizationId },
+      organizationId,
     });
     delete textUnitQueue.id;
     return this.textUnitQueueRepository.save(textUnitQueue);
@@ -28,7 +25,7 @@ export class TextUnitQueuesService {
 
   findAll(organizationId: number) {
     return this.textUnitQueueRepository.find({
-      where: { organization: { id: organizationId } },
+      where: { organizationId },
       order: { updatedAt: 'desc' },
     });
   }
@@ -51,7 +48,7 @@ export class TextUnitQueuesService {
 
   async getCurrentTextUnitQueue(organizationId: number) {
     const projectorState = await this.displayStateRepository.findOne({
-      where: { organization: { id: organizationId } },
+      where: { organizationId },
       relations: { textUnitQueue: true },
     });
 
@@ -71,7 +68,7 @@ export class TextUnitQueuesService {
     textUnitQueueId: number,
   ) {
     const projectorState = await this.displayStateRepository.findOne({
-      where: { organization: { id: organizationId } },
+      where: { organizationId },
     });
 
     if (!projectorState) {

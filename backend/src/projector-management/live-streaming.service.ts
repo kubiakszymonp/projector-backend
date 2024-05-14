@@ -3,10 +3,10 @@ import { execSync } from 'child_process';
 import { appendFile, mkdir, readdir, rm, stat, writeFile } from 'fs/promises';
 import { DisplayType } from 'src/projector-management/enums/display-type.enum';
 import { Repository } from 'typeorm';
-import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 import { DisplayState } from './entities/display-state.entity';
 import { ENVIRONMENT } from 'src/environment';
 import { DELETE_CHUNK_AFTER_MILLIS, HLS_DIRECTORY, PLAYLIST_NAME, m3u8PREFIX } from 'src/common/consts';
+import { ProjectorLastUpdateService } from './projector-last-update.service';
 
 @Injectable()
 export class LiveStreamingService {

@@ -8,43 +8,41 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { TextUnitTagService } from './text-unit-tag.service';
-import { AuthGuard } from 'src/auth/auth.guard';
 import { ApiTags } from '@nestjs/swagger';
-import {
-  RequestOrganization,
-  RequestOrganizationType,
-} from 'src/auth/request-organization';
+import { JwtAuthenticationData } from 'src/common/jwt-payload';
+import { AuthenticationData } from 'src/common/request-organization';
+import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
 import { TextUnitTagDto } from './dto/text-unit-tag.dto';
+import { TextUnitTagService } from './text-unit-tag.service';
 
 @ApiTags('text-unit-tag')
 @UseGuards(AuthGuard)
 @Controller('text-unit-tag')
 export class TextUnitTagController {
-  constructor(private readonly textUnitTagService: TextUnitTagService) {}
+  constructor(private readonly textUnitTagService: TextUnitTagService) { }
 
   @Post()
   create(
     @Body() createTextUnitTagDto: TextUnitTagDto,
-   @AuthenticationData() authenticationData: JwtAuthenticationData,
+    @AuthenticationData() authenticationData: JwtAuthenticationData,
   ) {
     return this.textUnitTagService.create(
       createTextUnitTagDto,
-      +organization.id,
+      +authenticationData.organizationId,
     );
   }
 
   @Get()
   findAll(
-   @AuthenticationData() authenticationData: JwtAuthenticationData,
+    @AuthenticationData() authenticationData: JwtAuthenticationData,
   ): Promise<TextUnitTagDto[]> {
-    return this.textUnitTagService.findAll(+organization.id);
+    return this.textUnitTagService.findAll(+authenticationData.organizationId);
   }
 
   @Get(':id')
   findOne(
     @Param('id') id: string,
-   @AuthenticationData() authenticationData: JwtAuthenticationData,
+    @AuthenticationData() authenticationData: JwtAuthenticationData,
   ): Promise<TextUnitTagDto> {
     return this.textUnitTagService.findOne(+id);
   }
