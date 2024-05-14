@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { SetCurrentTextUnitDto } from './dto/set-current-text-unit.dto';
+import { SetCurrentTextUnitDto } from '../projector-management/dto/set-current-text-unit.dto';
 import { TextUnitDto } from './dto/text-unit.dto';
 import { TextUnitService } from './text-unit.service';
 import { AuthenticationData } from 'src/common/authentication-data';

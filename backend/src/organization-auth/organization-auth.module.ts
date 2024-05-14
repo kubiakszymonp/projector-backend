@@ -1,15 +1,19 @@
 import { Module } from '@nestjs/common';
-import { OrganizationAuthService } from './organization-auth.service';
-import { OrganizationAuthController } from './organization-auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { ENVIRONMENT } from 'src/environment';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Organization } from './entities/organization.entity';
 import { User } from './entities/user.entity';
+import { OrganizationController } from './controllers/organizations.controller';
+import { UserController } from './controllers/users.controller';
+import { AuthController } from './controllers/auth.controller';
+import { OrganizationsService } from './services/organizations.service';
+import { UsersService } from './services/users.service';
+import { AuthService } from './services/auth.service';
 
 @Module({
-  controllers: [OrganizationAuthController],
-  providers: [OrganizationAuthService],
+  controllers: [OrganizationController, UserController, AuthController],
+  providers: [OrganizationsService, UsersService, AuthService],
   imports: [
     JwtModule.register({
       global: true,

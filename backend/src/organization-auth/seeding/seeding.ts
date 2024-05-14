@@ -1,9 +1,10 @@
 import { Role } from "../enums/role.enum";
-import { OrganizationAuthService } from "../organization-auth.service";
+import { OrganizationsService } from "../services/organizations.service";
+import { UsersService } from "../services/users.service";
 
-export const seedUsers = async (organizationAuthService: OrganizationAuthService) => {
+export const seedUsers = async (usersService: UsersService) => {
 
-    const nonAdminUser = await organizationAuthService.createUser({
+    const nonAdminUser = await usersService.createUser({
         email: "kubiakszymon@gmail.com",
         name: "Szymon",
         organizationId: 1,
@@ -11,7 +12,7 @@ export const seedUsers = async (organizationAuthService: OrganizationAuthService
         role: Role.USER,
     });
 
-    const adminUser = await organizationAuthService.createUser({
+    const adminUser = await usersService.createUser({
         email: "test@admin.com",
         name: "Admin",
         organizationId: null,
@@ -20,8 +21,8 @@ export const seedUsers = async (organizationAuthService: OrganizationAuthService
     });
 };
 
-export const seedOrganizations = async (organizationAuthService: OrganizationAuthService) => {
-    const organization = await organizationAuthService.createOrganization({
+export const seedOrganizations = async (organizationsService: OrganizationsService) => {
+    const organization = await organizationsService.createOrganization({
         contactData: "Ostrów Wielkopolski, Konopnickiej 18/9",
         paymentData: "Płatność gotówką",
         phoneNumber: "123456789",

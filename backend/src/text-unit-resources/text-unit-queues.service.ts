@@ -3,13 +3,13 @@ import { DisplayState } from 'src/projector-management/entities/display-state.en
 import { ProjectorLastUpdateService } from 'src/projector-management/projector-last-update.service';
 import { Repository } from 'typeorm';
 import { TextUnitQueueDto } from './dto/text-unit-queue.dto';
-import { TextUnitQueue } from './entities/text-unit-queue.entity';
+import { DisplayQueue } from './entities/display-queue.entity';
 
 @Injectable()
 export class TextUnitQueuesService {
 
 
-  constructor(private textUnitQueueRepository: Repository<TextUnitQueue>,
+  constructor(private textUnitQueueRepository: Repository<DisplayQueue>,
     private displayStateRepository: Repository<DisplayState>,
     private projectorLastUpdateService: ProjectorLastUpdateService) {
   }
