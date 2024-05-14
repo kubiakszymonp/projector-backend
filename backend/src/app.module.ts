@@ -10,6 +10,7 @@ import { Organization } from './organization-auth/entities/organization.entity';
 import { TextUnit } from './text-unit-resources/entities/text-unit.entity';
 import { DisplayQueue } from './text-unit-resources/entities/display-queue.entity';
 import { TextUnitTag } from './text-unit-resources/entities/text-unit-tag.entity';
+import { QueueTextUnit } from './text-unit-resources/entities/queue-text-unit.entity';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { TextUnitTag } from './text-unit-resources/entities/text-unit-tag.entity
       type: 'sqlite',
       // relative path to the database file
       database: ENVIRONMENT.DATABASE_URL,
-      entities: [User, Organization, TextUnit, DisplayQueue, TextUnitTag],
+      entities: [User, Organization, TextUnit, DisplayQueue, TextUnitTag, QueueTextUnit],
       synchronize: ENVIRONMENT.DATABASE_SYNCHRONIZE,
       logging: ENVIRONMENT.DATABASE_LOGGING,
       dropSchema: ENVIRONMENT.DROP_SCHEMA,

@@ -8,14 +8,20 @@ export class TextUnit extends AppBaseEntity {
   @Column()
   content: string;
 
-  @Column()
-  description: string;
+  @Column({
+    nullable: true
+  })
+  description?: string;
 
-  @Column()
-  transposition: number;
+  @Column({
+    nullable: true
+  })
+  transposition?: number;
 
-  @Column()
-  organizationId: number | null;
+  @Column({
+    nullable: true
+  })
+  organizationId?: number;
 
   @Column()
   title: string;

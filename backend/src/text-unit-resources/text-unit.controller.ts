@@ -10,11 +10,13 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { SetCurrentTextUnitDto } from '../projector-management/dto/set-current-text-unit.dto';
-import { TextUnitDto } from './dto/text-unit.dto';
 import { TextUnitService } from './text-unit.service';
 import { AuthenticationData } from 'src/common/authentication-data';
 import { JwtAuthenticationData } from 'src/common/jwt-payload';
 import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
+import { CreateTextUnitDto } from './dto/create/create-text-unit.dto';
+import { GetTextUnitDto } from './dto/get/get-text-unit.dto';
+import { UpdateTextUnitDto } from './dto/update/update-text-unit.dto';
 
 @ApiTags('text-units')
 @UseGuards(AuthGuard)
@@ -24,7 +26,7 @@ export class TextUnitController {
 
   @Post()
   create(
-    @Body() createTextUnitDto: TextUnitDto,
+    @Body() createTextUnitDto: CreateTextUnitDto,
     @AuthenticationData() authenticationData: JwtAuthenticationData,
   ): void {
     this.textUnitService.create(authenticationData.organizationId, createTextUnitDto);
@@ -33,17 +35,17 @@ export class TextUnitController {
   @Get()
   async findAll(
     @AuthenticationData() authenticationData: JwtAuthenticationData,
-  ): Promise<TextUnitDto[]> {
+  ) {
     return this.textUnitService.findAll(authenticationData.organizationId);
   }
 
   @Get('/by-id/:id')
-  findOne(@Param('id') id: string): Promise<TextUnitDto> {
+  findOne(@Param('id') id: string) {
     return this.textUnitService.findOne(+id);
   }
 
   @Patch()
-  update(@Body() updateTextUnitDto: TextUnitDto) {
+  update(@Body() updateTextUnitDto: UpdateTextUnitDto) {
     this.textUnitService.update(+updateTextUnitDto.id, updateTextUnitDto);
   }
 

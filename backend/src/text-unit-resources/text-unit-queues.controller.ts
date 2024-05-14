@@ -13,8 +13,8 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
 import { AuthenticationData } from 'src/common/authentication-data';
 import { JwtAuthenticationData } from 'src/common/jwt-payload';
-import { TextUnitQueueDto } from './dto/text-unit-queue.dto';
 import { SetCurrentTextUnitQueueDto } from '../projector-management/dto/set-current-text-unit-queue.dto';
+import { CreateDisplayQueueDto } from './dto/create/create-display-queue.dto';
 
 @ApiTags('text-unit-queues')
 @Controller('text-unit-queues')
@@ -25,7 +25,7 @@ export class TextUnitQueuesController {
   @Post()
   create(
     @AuthenticationData() authenticationData: JwtAuthenticationData,
-    @Body() createTextUnitQueueDto: TextUnitQueueDto,
+    @Body() createTextUnitQueueDto: CreateDisplayQueueDto,
   ) {
     return this.textUnitQueuesService.create(
       createTextUnitQueueDto,

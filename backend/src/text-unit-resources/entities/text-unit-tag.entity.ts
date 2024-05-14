@@ -11,8 +11,10 @@ export class TextUnitTag extends AppBaseEntity {
   @Column()
   description: string;
 
-  @Column()
-  organizationId: number | null;
+  @Column({
+    nullable: true
+  })
+  organizationId?: number;
 
   @ManyToMany(() => TextUnit)
   textUnits: TextUnit[];
