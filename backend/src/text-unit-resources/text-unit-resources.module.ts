@@ -10,6 +10,8 @@ import { DisplayQueue } from './entities/display-queue.entity';
 import { QueueTextUnit } from './entities/queue-text-unit.entity';
 import { TextUnitTag } from './entities/text-unit-tag.entity';
 import { TextUnit } from './entities/text-unit.entity';
+import { ENVIRONMENT } from 'src/environment';
+import { seedTextUnits } from './seeding/seeding';
 
 
 @Module({
@@ -17,4 +19,15 @@ import { TextUnit } from './entities/text-unit.entity';
   providers: [DisplayQueuesService, TextUnitTagService, TextUnitService],
   imports: [TypeOrmModule.forFeature([DisplayQueue, QueueTextUnit, TextUnitTag, TextUnit])]
 })
-export class TextUnitResourcesModule { }
+export class TextUnitResourcesModule {
+
+  constructor(
+    private displayQueuesService: DisplayQueuesService,
+    private textUnitTagService: TextUnitTagService,
+    private textUnitService: TextUnitService) {
+
+    if (ENVIRONMENT.SEED_TEXT_UNITS) {
+      seedTextUnits(this.textUnitService);
+    }
+  }
+}

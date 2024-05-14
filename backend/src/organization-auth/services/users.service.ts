@@ -15,9 +15,6 @@ export class UsersService {
     constructor(
         @InjectRepository(User) private userRepository: Repository<User>
     ) {
-        if (ENVIRONMENT.SEED_ORGANIZATIONS) {
-            seedUsers(this);
-        }
     }
 
     async createUser(user: CreateUserDto) {

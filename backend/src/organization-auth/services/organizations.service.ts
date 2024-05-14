@@ -13,9 +13,6 @@ export class OrganizationsService {
     constructor(
         @InjectRepository(Organization) private organizationRepository: Repository<Organization>,
     ) {
-        if (ENVIRONMENT.SEED_ORGANIZATIONS) {
-            seedOrganizations(this);
-        }
     }
 
     async createOrganization(createOrganizationDto: CreateOrganizationDto) {

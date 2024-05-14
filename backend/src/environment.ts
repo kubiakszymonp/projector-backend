@@ -16,7 +16,9 @@ const devWindows = {
   ROOT_USER_PASSWORD: 'test',
   SEED_ORGANIZATIONS: true,
   SEED_USERS: true,
+  SEED_TEXT_UNITS: true,
   JWT_SECRET: '5b56bvn9053jvq34v43rvc4ewckewr90vu2894uVU40CUWEDOPKPE93R90V20403ir0v2309T698419V94-TVQREFJAOP4TBAUP985Y',
+  
 };
 
 const deploy = {
@@ -37,6 +39,7 @@ const deploy = {
   ROOT_USER_PASSWORD: 'test',
   SEED_ORGANIZATIONS: true,
   SEED_USERS: true,
+  SEED_TEXT_UNITS: true,
   JWT_SECRET: '5b56bvn9053jvq34v43rvc4ewckewr90vu2894uVU40CUWEDOPKPE93R90V20403ir0v2309T698419V94-TVQREFJAOP4TBAUP985Y',
 };
 
@@ -59,4 +62,5 @@ export const ENVIRONMENT: {
   ROOT_USER_PASSWORD: string;
   SEED_ORGANIZATIONS: boolean;
   SEED_USERS: boolean;
+  SEED_TEXT_UNITS: boolean;
 } = { ...process.env, ...devWindows } as any;

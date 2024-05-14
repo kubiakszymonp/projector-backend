@@ -23,13 +23,15 @@ export class TextUnitService {
   }
 
   async create(organizationId: number, createTextUnitDto: CreateTextUnitDto) {
-    await this.textUnitRepository.save({
+    const result = await this.textUnitRepository.save({
       content: createTextUnitDto.content,
       title: createTextUnitDto.title,
       organizationId,
       tags: createTextUnitDto.textUnitTagIds.map((id) => ({ id })),
       queueTextUnits: createTextUnitDto.displayQueueIds.map((id) => ({ id })),
     });
+
+    return result;
   }
 
   async findAll(organizationId: number) {

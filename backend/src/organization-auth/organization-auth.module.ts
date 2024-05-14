@@ -10,6 +10,7 @@ import { AuthController } from './controllers/auth.controller';
 import { OrganizationsService } from './services/organizations.service';
 import { UsersService } from './services/users.service';
 import { AuthService } from './services/auth.service';
+import { seedOrganizations, seedUsers } from './seeding/seeding';
 
 @Module({
   controllers: [OrganizationController, UserController, AuthController],
@@ -23,4 +24,14 @@ import { AuthService } from './services/auth.service';
     TypeOrmModule.forFeature([Organization, User])
   ]
 })
-export class OrganizationAuthModule { }
+export class OrganizationAuthModule {
+
+  constructor(private organizationsService: OrganizationsService, private usersService: UsersService) {
+    if (ENVIRONMENT.SEED_ORGANIZATIONS) {
+      seedOrganizations(organizationsService);
+    }
+    if (ENVIRONMENT.SEED_ORGANIZATIONS) {
+      seedUsers(usersService);
+    }
+  }
+}
