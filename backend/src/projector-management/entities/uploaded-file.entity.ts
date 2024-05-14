@@ -1,9 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { BaseEntity } from './base-entity';
-import { Organization } from './organization.entity';
+import { Column, Entity } from 'typeorm';
+import { AppBaseEntity } from 'src/common/base-entity';
 
 @Entity()
-export class UploadedFile extends BaseEntity {
+export class UploadedFile extends AppBaseEntity {
   @Column()
   mimeType: string;
 
@@ -12,12 +11,6 @@ export class UploadedFile extends BaseEntity {
 
   @Column()
   url: string;
-
-  @ManyToOne(() => Organization, (organization) => organization.uploadedFiles, {
-    nullable: true,
-  })
-  @JoinColumn({ name: 'organizationId' })
-  organization: Organization | null;
 
   organizationId: number | null;
 

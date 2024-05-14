@@ -1,9 +1,10 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { Role } from '../enums/role.enum';
 import { Organization } from './organization.entity';
+import { AppBaseEntity } from 'src/common/base-entity';
 
 @Entity()
-export class User extends BaseEntity {
+export class User extends AppBaseEntity {
 
   @Column()
   name: string;

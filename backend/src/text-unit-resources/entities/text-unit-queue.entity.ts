@@ -1,8 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
-import { Organization } from './organization.entity';
-import { BaseEntity } from './base-entity';
-import { DisplayState } from './display-state.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { AppBaseEntity } from 'src/common/base-entity';
+import { DisplayState } from 'src/projector-management/entities/display-state.entity';
 
 export class QueueTextUnit {
   @ApiProperty()
@@ -17,16 +16,12 @@ export class TextUnitQueueContent {
 }
 
 @Entity()
-export class TextUnitQueue extends BaseEntity {
+export class TextUnitQueue extends AppBaseEntity {
   @Column()
   name: string;
 
   @Column()
   description: string;
-
-  @ManyToOne(() => Organization, (organization) => organization.textUnitQueues)
-  @JoinColumn({ name: 'organizationId' })
-  organization: Organization;
 
   organizationId: number | null;
 

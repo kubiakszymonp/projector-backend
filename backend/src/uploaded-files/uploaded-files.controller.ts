@@ -29,9 +29,7 @@ import { Response } from 'express';
 import { appendFile, mkdir, readdir, rm, stat, writeFile } from 'fs/promises';
 import { Repository } from 'typeorm';
 import { DisplayState } from 'src/database/entities/display-state.entity';
-import { RepositoryFactory } from 'src/database/repository.factory';
 import { DisplayType } from 'src/projector-management/enums/display-type.enum';
-import { environment } from 'src/environment';
 import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 
 @ApiTags('uploaded-files')
@@ -40,7 +38,6 @@ export class UploadedFilesController {
   private displayStateRepository: Repository<DisplayState>;
   constructor(
     private readonly uploadedFilesService: UploadedFilesService,
-    repoFactory: RepositoryFactory,
     private projectorLastUpdateService: ProjectorLastUpdateService,
   ) {
     this.displayStateRepository = repoFactory.getRepository(DisplayState);

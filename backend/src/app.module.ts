@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { OrganizationsModule } from './organizations/organizations.module';
 import { DisplayStateModule } from './display-state/display-state.module';
 import { TextUnitModule } from './text-unit/text-unit.module';
 import { ProjectorSettingsModule } from './projector-settings/projector-settings.module';
@@ -15,6 +14,8 @@ import { TextUnitResourcesModule } from './text-unit-resources/text-unit-resourc
 import { ProjectorManagementModule } from './projector-management/projector-management.module';
 import { ConfigModule } from '@nestjs/config';
 import { Type } from 'class-transformer';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ENVIRONMENT } from './environment';
 
 @Module({
   imports: [
@@ -22,12 +23,12 @@ import { Type } from 'class-transformer';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       // relative path to the database file
-      database: environment.DATABASE_URL,
+      database: ENVIRONMENT.DATABASE_URL,
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-      synchronize: environment.DATABASE_SYNCHRONIZE,
-      logging: environment.DATABASE_LOGGING,
-      dropSchema: environment.DROP_SCHEMA,
-    })
+      synchronize: ENVIRONMENT.DATABASE_SYNCHRONIZE,
+      logging: ENVIRONMENT.DATABASE_LOGGING,
+      dropSchema: ENVIRONMENT.DROP_SCHEMA,
+    }),
     // OrganizationsModule,
     // DisplayStateModule,
     // TextUnitModule,

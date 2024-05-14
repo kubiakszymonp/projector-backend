@@ -1,13 +1,12 @@
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
-import { Organization } from './organization.entity';
-import { DisplayType } from '../structures/display-type.enum';
 import { TextUnitState as TextState } from '../structures/projector-state-text-state';
-import { BaseEntity } from './base-entity';
-import { TextUnitQueue } from './text-unit-queue.entity';
 import { UploadedFile } from './uploaded-file.entity';
+import { AppBaseEntity } from 'src/common/base-entity';
+import { TextUnitQueue } from 'src/text-unit-resources/entities/text-unit-queue.entity';
+import { DisplayType } from '../enums/display-type.enum';
 
 @Entity()
-export class DisplayState extends BaseEntity {
+export class DisplayState extends AppBaseEntity {
   @Column()
   displayType: DisplayType;
 
@@ -17,9 +16,8 @@ export class DisplayState extends BaseEntity {
   @Column()
   emptyDisplay: boolean;
 
-  @OneToOne(() => Organization)
-  @JoinColumn()
-  organization: Organization;
+  @Column()
+  organizationId: number | null;
 
   @OneToOne(() => TextUnitQueue)
   @JoinColumn()
