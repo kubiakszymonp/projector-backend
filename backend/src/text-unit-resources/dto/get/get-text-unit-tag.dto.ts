@@ -2,8 +2,16 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsOptional } from "class-validator";
 import e from "express";
 import { CreateTextUnitTagDto } from "../create/create-text-unit-tag.dto";
+import { BaseDto } from "src/common/base-dto.dto";
 
-export class GetTextUnitTagDto extends CreateTextUnitTagDto {
+export class GetTextUnitTagDto extends BaseDto {
     @ApiProperty()
-    id: number;
+    name: string;
+
+    @ApiProperty()
+    description: string;
+
+    @ApiProperty()
+    @IsOptional()
+    organizationId?: number;
 }

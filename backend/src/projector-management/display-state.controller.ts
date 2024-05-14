@@ -41,4 +41,46 @@ export class DisplayStateController {
   ) {
     return this.displayStateService.get(+authenticationData.organizationId);
   }
+
+  
+  // @UseGuards(AuthGuard)
+  // @Get('/current')
+  // getCurrentTextUnit(
+  //   @AuthenticationData() authenticationData: JwtAuthenticationData,
+  // ): Promise<TextUnitDto> {
+  //   return this.textUnitService.getCurrentTextUnit(+authenticationData.organizationId);
+  // }
+
+  // @UseGuards(AuthGuard)
+  // @Patch('/current')
+  // setCurrentTextUnit(
+  //   @Body() setCurrentTextUnitDto: SetCurrentTextUnitDto,
+  //   @AuthenticationData() authenticationData: JwtAuthenticationData,
+  // ) {
+  //   return this.textUnitService.setCurrentTextUnit(
+  //     setCurrentTextUnitDto.id,
+  //     +authenticationData.organizationId,
+  //   );
+  // }
+
+
+    // @UseGuards(AuthGuard)
+  // @Patch('current')
+  // setCurrentTextUnitQueue(
+  //   @AuthenticationData() authenticationData: JwtAuthenticationData,
+  //   @Body() setCurrentTextUnitQueueDto: SetCurrentTextUnitQueueDto,
+  // ) {
+  //   return this.textUnitQueuesService.setCurrentTextUnitQueue(
+  //     +authenticationData.organizationId,
+  //     setCurrentTextUnitQueueDto.id,
+  //   );
+  // }
+
+  // @UseGuards(AuthGuard)
+  // @Get('current')
+  // getCurrentTextUnitQueue(
+  //   @AuthenticationData() authenticationData: JwtAuthenticationData,
+  // ): Promise<TextUnitQueueDto> {
+  //   return this.textUnitQueuesService.getCurrentTextUnitQueue(+authenticationData.organizationId);
+  // }
 }

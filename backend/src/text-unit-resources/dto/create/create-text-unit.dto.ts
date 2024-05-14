@@ -16,7 +16,7 @@ export class CreateTextUnitDto {
 
     @ApiProperty()
     @IsOptional()
-    transposition?: string;
+    transposition?: number;
 
     @ApiProperty()
     @IsArray()

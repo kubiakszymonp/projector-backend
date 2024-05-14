@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { IsNull, Repository } from 'typeorm';
-import { TextUnitDto } from './dto/text-unit.dto';
 import * as fs from 'fs';
 import * as path from 'path';
 import { DisplayType } from 'src/projector-management/enums/display-type.enum';
 import { DisplayState } from 'src/projector-management/entities/display-state.entity';
 import { ProjectorLastUpdateService } from 'src/projector-management/projector-last-update.service';
-import { TextUnit } from './entities/text-unit.entity';
+import { TextUnit } from '../entities/text-unit.entity';
+import { CreateTextUnitDto } from '../dto/create/create-text-unit.dto';
+import { UpdateTextUnitDto } from '../dto/update/update-text-unit.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 
 export const RELATIVE_PATH = '../../../songs';
 export const FILE_EXTENSION = '.txt';
@@ -16,18 +18,17 @@ export class TextUnitService {
   ;
 
   constructor(
-    private textUnitRepository: Repository<TextUnit>,
-    private displayStateRepository: Repository<DisplayState>,
-    private projectorLastUpdateService: ProjectorLastUpdateService,
+    @InjectRepository(TextUnit) private textUnitRepository: Repository<TextUnit>
   ) {
   }
 
-  async create(organizationId: number, createTextUnitDto: TextUnitDto) {
+  async create(organizationId: number, createTextUnitDto: CreateTextUnitDto) {
     await this.textUnitRepository.save({
       content: createTextUnitDto.content,
       title: createTextUnitDto.title,
       organizationId,
-      tags: createTextUnitDto.tags,
+      tags: createTextUnitDto.textUnitTagIds.map((id) => ({ id })),
+      queueTextUnits: createTextUnitDto.displayQueueIds.map((id) => ({ id })),
     });
   }
 
@@ -50,28 +51,37 @@ export class TextUnitService {
     });
   }
 
-  async update(id: number, updateTextUnitDto: TextUnitDto) {
-    const textUnit = this.textUnitRepository.create(updateTextUnitDto);
-    return await this.textUnitRepository.save({ id, ...textUnit });
+  async update(id: number, updateTextUnitDto: UpdateTextUnitDto) {
+
+    const textUnit = this.textUnitRepository.create({
+      content: updateTextUnitDto.content,
+      title: updateTextUnitDto.title,
+      transposition: updateTextUnitDto.transposition,
+      id,
+      queueTextUnits: updateTextUnitDto.displayQueueIds.map((id) => ({ id })),
+      tags: updateTextUnitDto.textUnitTagIds.map((id) => ({ id })),
+    });
+
+    return await this.textUnitRepository.save(textUnit);
   }
 
   remove(id: number) {
     return this.textUnitRepository.delete({ id });
   }
 
-  async getCurrentTextUnit(organizationId: number) {
-    const projectorState = await this.displayStateRepository.findOne({
-      where: { organizationId },
-    });
+  // async getCurrentTextUnit(organizationId: number) {
+  //   const projectorState = await this.displayStateRepository.findOne({
+  //     where: { organizationId },
+  //   });
 
-    if (!projectorState) {
-      throw new Error('No projector state found');
-    }
+  //   if (!projectorState) {
+  //     throw new Error('No projector state found');
+  //   }
 
-    return this.textUnitRepository.findOne({
-      where: { id: projectorState.textState.textUnitId },
-    });
-  }
+  //   return this.textUnitRepository.findOne({
+  //     where: { id: projectorState.textState.textUnitId },
+  //   });
+  // }
 
   // async setCurrentTextUnit(textUnitId: number, organizationId: number) {
   //   const displayState = await this.displayStateRepository.findOne({
