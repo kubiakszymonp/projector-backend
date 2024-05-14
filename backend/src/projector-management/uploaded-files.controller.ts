@@ -15,32 +15,27 @@ import {
 import { UploadedFilesService } from './uploaded-files.service';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
-import {
-  RequestOrganization,
-  RequestOrganizationType,
-} from 'src/auth/request-organization';
-import { AuthGuard } from 'src/auth/auth.guard';
 import { CreateUploadedFileDto } from './dto/create-uploaded-file.dto';
 import { RenameUploadedFileDto } from './dto/rename-uploaded-file.dto';
 import { UploadedFileDto } from './dto/uploaded-file.dto';
 import { SetCurrentUploadedFileDto } from './dto/set-current-uploaded-file.dto';
-import { execSync } from 'child_process';
-import { Response } from 'express';
-import { appendFile, mkdir, readdir, rm, stat, writeFile } from 'fs/promises';
 import { Repository } from 'typeorm';
-import { DisplayState } from 'src/database/entities/display-state.entity';
 import { DisplayType } from 'src/projector-management/enums/display-type.enum';
 import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
+import { DisplayState } from './entities/display-state.entity';
+import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
+import { AuthenticationData } from 'src/common/request-organization';
+import { JwtAuthenticationData } from 'src/common/jwt-payload';
 
 @ApiTags('uploaded-files')
 @Controller('uploaded-files')
 export class UploadedFilesController {
-  private displayStateRepository: Repository<DisplayState>;
+
   constructor(
+    private displayStateRepository: Repository<DisplayState>,
     private readonly uploadedFilesService: UploadedFilesService,
     private projectorLastUpdateService: ProjectorLastUpdateService,
   ) {
-    this.displayStateRepository = repoFactory.getRepository(DisplayState);
   }
 
   @UseGuards(AuthGuard)
@@ -49,7 +44,7 @@ export class UploadedFilesController {
   @UseInterceptors(FilesInterceptor('files', 100))
   uploadMultipleFiles(
     @UploadedFiles() files: Array<Express.Multer.File>,
-    @RequestOrganization() organization: RequestOrganizationType,
+    @AuthenticationData() authenticationData: JwtAuthenticationData,
   ) {
     return this.uploadedFilesService.upload(
       files.map((file) => {
@@ -58,7 +53,7 @@ export class UploadedFilesController {
           file.mimetype,
           file.size,
           file.buffer,
-          organization.id,
+          authenticationData.organizationId,
         );
       }),
     );
@@ -73,37 +68,37 @@ export class UploadedFilesController {
   @UseGuards(AuthGuard)
   @Get()
   getFilesForOrganization(
-    @RequestOrganization() organization: RequestOrganizationType,
+    @AuthenticationData() authenticationData: JwtAuthenticationData,
   ): Promise<UploadedFileDto[]> {
-    return this.uploadedFilesService.getFilesForOrganization(organization.id);
+    return this.uploadedFilesService.getFilesForOrganization(authenticationData.organizationId);
   }
 
   @UseGuards(AuthGuard)
   @Delete(':id')
   remove(
     @Param('id') id: string,
-    @RequestOrganization() organization: RequestOrganizationType,
+    @AuthenticationData() authenticationData: JwtAuthenticationData,
   ) {
-    return this.uploadedFilesService.remove(+id, +organization.id);
+    return this.uploadedFilesService.remove(+id, +authenticationData.organizationId);
   }
 
   @UseGuards(AuthGuard)
   @Get('/current')
   getCurrentFileForOrganization(
-    @RequestOrganization() organization: RequestOrganizationType,
+    @AuthenticationData() authenticationData: JwtAuthenticationData,
   ): Promise<UploadedFileDto> {
-    return this.uploadedFilesService.getCurrentFile(+organization.id);
+    return this.uploadedFilesService.getCurrentFile(+authenticationData.organizationId);
   }
 
   @UseGuards(AuthGuard)
   @Patch('/current')
   setCurrentUploadedFile(
     @Body() setCurrentUploadedFileDto: SetCurrentUploadedFileDto,
-    @RequestOrganization() organization: RequestOrganizationType,
+    @AuthenticationData() authenticationData: JwtAuthenticationData,
   ) {
     return this.uploadedFilesService.setCurrentFile(
       +setCurrentUploadedFileDto.id,
-      +organization.id,
+      +authenticationData.organizationId,
     );
   }
 }

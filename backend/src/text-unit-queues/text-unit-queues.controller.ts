@@ -26,7 +26,7 @@ export class TextUnitQueuesController {
 
   @Post()
   create(
-    @RequestOrganization() organization: RequestOrganizationType,
+   @AuthenticationData() authenticationData: JwtAuthenticationData,
     @Body() createTextUnitQueueDto: TextUnitQueueDto,
   ) {
     return this.textUnitQueuesService.create(
@@ -37,7 +37,7 @@ export class TextUnitQueuesController {
 
   @Get()
   findAll(
-    @RequestOrganization() organization: RequestOrganizationType,
+   @AuthenticationData() authenticationData: JwtAuthenticationData,
   ): Promise<TextUnitQueueDto[]> {
     return this.textUnitQueuesService.findAll(organization.id);
   }
@@ -63,7 +63,7 @@ export class TextUnitQueuesController {
   @UseGuards(AuthGuard)
   @Patch('current')
   setCurrentTextUnitQueue(
-    @RequestOrganization() organization: RequestOrganizationType,
+   @AuthenticationData() authenticationData: JwtAuthenticationData,
     @Body() setCurrentTextUnitQueueDto: SetCurrentTextUnitQueueDto,
   ) {
     return this.textUnitQueuesService.setCurrentTextUnitQueue(
@@ -75,7 +75,7 @@ export class TextUnitQueuesController {
   @UseGuards(AuthGuard)
   @Get('current')
   getCurrentTextUnitQueue(
-    @RequestOrganization() organization: RequestOrganizationType,
+   @AuthenticationData() authenticationData: JwtAuthenticationData,
   ): Promise<TextUnitQueueDto> {
     return this.textUnitQueuesService.getCurrentTextUnitQueue(+organization.id);
   }

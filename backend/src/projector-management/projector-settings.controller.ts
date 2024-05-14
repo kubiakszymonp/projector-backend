@@ -1,13 +1,11 @@
 import { Controller, Body, Patch, UseGuards, Get, Param } from '@nestjs/common';
 import { ProjectorSettingsService } from './projector-settings.service';
-import {
-  RequestOrganization,
-  RequestOrganizationType,
-} from 'src/auth/request-organization';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guard';
 import { ProjectorSettingsConfigurationDto } from 'src/projector-management/structures/projector-settings-configuration';
 import { PartialProjectorSettingsConfigurationDto } from './dto/partial-projector-settings.dto';
+import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
+import { AuthenticationData } from 'src/common/request-organization';
+import { JwtAuthenticationData } from 'src/common/jwt-payload';
 
 @ApiBearerAuth()
 @ApiTags('projector-settings')
@@ -20,12 +18,12 @@ export class ProjectorSettingsController {
   @UseGuards(AuthGuard)
   @Patch()
   update(
-    @RequestOrganization() organization: RequestOrganizationType,
+    @AuthenticationData() authenticationData: JwtAuthenticationData,
     @Body() updateProjectorSettingDto: PartialProjectorSettingsConfigurationDto,
   ) {
 
     return this.projectorSettingsService.update(
-      organization.id,
+      authenticationData.organizationId,
       updateProjectorSettingDto,
     );
   }
@@ -33,9 +31,9 @@ export class ProjectorSettingsController {
   @UseGuards(AuthGuard)
   @Get()
   getSetting(
-    @RequestOrganization() organization: RequestOrganizationType,
+    @AuthenticationData() authenticationData: JwtAuthenticationData,
   ): Promise<ProjectorSettingsConfigurationDto> {
-    return this.projectorSettingsService.get(organization.id);
+    return this.projectorSettingsService.get(authenticationData.organizationId);
   }
 
   @Get(':organizationId')

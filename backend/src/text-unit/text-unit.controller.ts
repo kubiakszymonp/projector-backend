@@ -27,14 +27,14 @@
 //   @Post()
 //   create(
 //     @Body() createTextUnitDto: TextUnitDto,
-//     @RequestOrganization() organization: RequestOrganizationType,
+//    @AuthenticationData() authenticationData: JwtAuthenticationData,
 //   ): void {
 //     this.textUnitService.create(organization.id, createTextUnitDto);
 //   }
 
 //   @Get()
 //   async findAll(
-//     @RequestOrganization() organization: RequestOrganizationType,
+//    @AuthenticationData() authenticationData: JwtAuthenticationData,
 //   ): Promise<TextUnitDto[]> {
 //     return this.textUnitService.findAll(organization.id);
 //   }
@@ -57,7 +57,7 @@
 //   @UseGuards(AuthGuard)
 //   @Get('/current')
 //   getCurrentTextUnit(
-//     @RequestOrganization() organization: RequestOrganizationType,
+//    @AuthenticationData() authenticationData: JwtAuthenticationData,
 //   ): Promise<TextUnitDto> {
 //     return this.textUnitService.getCurrentTextUnit(+organization.id);
 //   }
@@ -66,7 +66,7 @@
 //   @Patch('/current')
 //   setCurrentTextUnit(
 //     @Body() setCurrentTextUnitDto: SetCurrentTextUnitDto,
-//     @RequestOrganization() organization: RequestOrganizationType,
+//    @AuthenticationData() authenticationData: JwtAuthenticationData,
 //   ) {
 //     return this.textUnitService.setCurrentTextUnit(
 //       setCurrentTextUnitDto.id,

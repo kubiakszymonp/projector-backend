@@ -1,10 +1,9 @@
+import { AppBaseEntity } from 'src/common/base-entity';
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
-import { Organization } from './organization.entity';
-import { BaseEntity } from './base-entity';
-import { TextStrategy } from '../structures/text-strategy.enum';
+import { TextStrategy } from '../enums/text-strategy.enum';
 
 @Entity()
-export class ProjectorSettings extends BaseEntity {
+export class ProjectorSettings extends AppBaseEntity {
   @Column()
   backgroundColor: string;
 
@@ -53,9 +52,8 @@ export class ProjectorSettings extends BaseEntity {
   @Column()
   textStrategy: TextStrategy;
 
-  @OneToOne(() => Organization)
-  @JoinColumn()
-  organization: Organization;
+  @Column()
+  organizationId: number | null;
 }
 
 export const defaultProjectorSettings: ProjectorSettings =

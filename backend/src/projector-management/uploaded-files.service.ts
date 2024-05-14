@@ -1,23 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUploadedFileDto } from './dto/create-uploaded-file.dto';
 import { Repository } from 'typeorm';
-import { UploadedFile } from 'src/database/entities/uploaded-file.entity';
-import { RepositoryFactory } from 'src/database/repository.factory';
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'fs';
 import { RenameUploadedFileDto } from './dto/rename-uploaded-file.dto';
-import { DisplayState } from 'src/database/entities/display-state.entity';
 import { DisplayType } from 'src/projector-management/enums/display-type.enum';
 import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
 import { rm, stat } from 'fs/promises';
+import { UploadedFile } from './entities/uploaded-file.entity';
+import { DisplayState } from './entities/display-state.entity';
 
 @Injectable()
 export class UploadedFilesService {
-  private readonly uploadedFilesRepository: Repository<UploadedFile>;
-  private readonly displayStateRepository: Repository<DisplayState>;
 
-  constructor(repoFactory: RepositoryFactory, private projectorLastUpdateService: ProjectorLastUpdateService) {
-    this.uploadedFilesRepository = repoFactory.getRepository(UploadedFile);
-    this.displayStateRepository = repoFactory.getRepository(DisplayState);
+  constructor(private readonly uploadedFilesRepository: Repository<UploadedFile>,
+    private readonly displayStateRepository: Repository<DisplayState>,
+    private projectorLastUpdateService: ProjectorLastUpdateService) {
+
   }
 
   async upload(uploadedFileDtos: CreateUploadedFileDto[]) {
@@ -53,14 +51,14 @@ export class UploadedFilesService {
 
   async getFilesForOrganization(organizationId: number) {
     return this.uploadedFilesRepository.find({
-      where: { organization: { id: organizationId } },
+      where: { organizationId },
       order: { createdAt: 'DESC' },
     });
   }
 
   async remove(id: number, organizationId: number) {
     const displayState = await this.displayStateRepository.findOne({
-      where: { organization: { id: organizationId } },
+      where: { organizationId },
       relations: ['uploadedFile'],
     });
 
@@ -81,7 +79,7 @@ export class UploadedFilesService {
 
   async getCurrentFile(organizationId: number) {
     const displayState = await this.displayStateRepository.findOne({
-      where: { organization: { id: organizationId } },
+      where: { organizationId },
       relations: ['uploadedFile'],
     });
     if (displayState.displayType === DisplayType.MEDIA)
@@ -90,7 +88,7 @@ export class UploadedFilesService {
 
   async setCurrentFile(fileId: number, organizationId: number) {
     const displayState = await this.displayStateRepository.findOne({
-      where: { organization: { id: organizationId } },
+      where: { organizationId },
     });
 
     const uploadedFile = await this.uploadedFilesRepository.findOne({

@@ -21,7 +21,7 @@ export class ProjectorController {
   @UseGuards(AuthGuard)
   @Get()
   getProjectorState(
-    @RequestOrganization() organization: RequestOrganizationType,
+   @AuthenticationData() authenticationData: JwtAuthenticationData,
   ): Promise<GetProjectorStateDto> {
     return this.projectorService.getState(organization.id);
   }

@@ -12,6 +12,7 @@ export class UploadedFile extends AppBaseEntity {
   @Column()
   url: string;
 
+  @Column()
   organizationId: number | null;
 
   @Column()

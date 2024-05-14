@@ -26,7 +26,7 @@ export class TextUnitTagController {
   @Post()
   create(
     @Body() createTextUnitTagDto: TextUnitTagDto,
-    @RequestOrganization() organization: RequestOrganizationType,
+   @AuthenticationData() authenticationData: JwtAuthenticationData,
   ) {
     return this.textUnitTagService.create(
       createTextUnitTagDto,
@@ -36,7 +36,7 @@ export class TextUnitTagController {
 
   @Get()
   findAll(
-    @RequestOrganization() organization: RequestOrganizationType,
+   @AuthenticationData() authenticationData: JwtAuthenticationData,
   ): Promise<TextUnitTagDto[]> {
     return this.textUnitTagService.findAll(+organization.id);
   }
@@ -44,7 +44,7 @@ export class TextUnitTagController {
   @Get(':id')
   findOne(
     @Param('id') id: string,
-    @RequestOrganization() organization: RequestOrganizationType,
+   @AuthenticationData() authenticationData: JwtAuthenticationData,
   ): Promise<TextUnitTagDto> {
     return this.textUnitTagService.findOne(+id);
   }

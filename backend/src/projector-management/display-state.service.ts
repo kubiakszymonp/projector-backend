@@ -1,26 +1,22 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Song, SongDivider } from 'song-parser';
-import { RepositoryFactory } from 'src/database/repository.factory';
 import { Repository } from 'typeorm';
 import { MovePageDirection, MovePageDto } from './dto/move-page.dto';
-import { DisplayState } from 'src/database/entities/display-state.entity';
-import { ProjectorSettings } from 'src/database/entities/projector-settings.entity';
 import { UpdateDisplayStateDto } from './dto/update-display-state.dto';
-import { TextUnit } from 'src/database/entities/text-unit.entity';
 import { TextStrategy } from 'src/projector-management/enums/text-strategy.enum';
 import { ProjectorLastUpdateService } from 'src/projector/projector-last-update.service';
+import { DisplayState } from './entities/display-state.entity';
+import { TextUnit } from 'src/text-unit-resources/entities/text-unit.entity';
+import { ProjectorSettings } from './entities/projector-settings.entity';
 
 @Injectable()
 export class DisplayStateService {
-  private projectorStateRepository: Repository<DisplayState>;
-  private textUnitRepository: Repository<TextUnit>;
-  private projectorSettingsRepository: Repository<ProjectorSettings>;
 
-  constructor(repoFactory: RepositoryFactory, private projectorLastUpdateService: ProjectorLastUpdateService) {
-    this.projectorStateRepository = repoFactory.getRepository(DisplayState);
-    this.textUnitRepository = repoFactory.getRepository(TextUnit);
-    this.projectorSettingsRepository =
-      repoFactory.getRepository(ProjectorSettings);
+
+  constructor(private projectorStateRepository: Repository<DisplayState>,
+    private textUnitRepository: Repository<TextUnit>,
+    private projectorSettingsRepository: Repository<ProjectorSettings>,
+    private projectorLastUpdateService: ProjectorLastUpdateService) {
   }
 
   async update(
@@ -28,7 +24,7 @@ export class DisplayStateService {
     updateDisplayDto: UpdateDisplayStateDto,
   ) {
     const projectorState = await this.projectorStateRepository.findOne({
-      where: { organization: { id: organizationId } },
+      where: { organizationId },
     });
 
     if (!projectorState) {
@@ -46,13 +42,13 @@ export class DisplayStateService {
 
   async get(organizationId: number) {
     return this.projectorStateRepository.findOne({
-      where: { organization: { id: organizationId } },
+      where: { organizationId },
     });
   }
 
   async movePage(organizationId: number, movePageDto: MovePageDto) {
     const projectorState = await this.projectorStateRepository.findOne({
-      where: { organization: { id: organizationId } },
+      where: { organizationId},
     });
 
     if (!projectorState) {
@@ -60,13 +56,14 @@ export class DisplayStateService {
     }
 
     const projectorSettings = await this.projectorSettingsRepository.findOne({
-      where: { organization: { id: organizationId } },
+      where: { organizationId },
     });
 
     if (!projectorSettings) {
       throw new NotFoundException('No projector settings found');
     }
 
+    // TODO
     const currentTextUnit = await this.textUnitRepository.findOne({
       where: { id: projectorState.textState.textUnitId },
     });
@@ -113,7 +110,7 @@ export class DisplayStateService {
     // if current part has more pages, go to the next page
     if (
       songDivider.getNumberOfPagesForPart(displayState.textState.textUnitPart) -
-        1 >
+      1 >
       displayState.textState.textUnitPartPage
     ) {
       displayState.textState.textUnitPartPage++;
