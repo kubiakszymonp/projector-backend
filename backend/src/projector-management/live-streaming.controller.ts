@@ -12,7 +12,7 @@ import { LiveStreamingService } from './live-streaming.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthenticationData } from 'src/common/request-organization';
+import { AuthenticationData } from 'src/common/authentication-data';
 import { JwtAuthenticationData } from 'src/common/jwt-payload';
 import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
 import { PLAYLIST_NAME } from 'src/common/consts';

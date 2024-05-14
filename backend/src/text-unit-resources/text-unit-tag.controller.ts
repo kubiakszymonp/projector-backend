@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthenticationData } from 'src/common/jwt-payload';
-import { AuthenticationData } from 'src/common/request-organization';
+import { AuthenticationData } from 'src/common/authentication-data';
 import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
 import { TextUnitTagDto } from './dto/text-unit-tag.dto';
 import { TextUnitTagService } from './text-unit-tag.service';

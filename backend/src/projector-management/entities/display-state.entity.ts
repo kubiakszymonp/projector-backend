@@ -19,9 +19,8 @@ export class DisplayState extends AppBaseEntity {
   @Column()
   organizationId: number | null;
 
-  @OneToOne(() => TextUnitQueue)
-  @JoinColumn()
-  textUnitQueue: TextUnitQueue;
+  @Column()
+  textUnitQueueId: number | null;
 
   @OneToOne(() => UploadedFile)
   @JoinColumn()

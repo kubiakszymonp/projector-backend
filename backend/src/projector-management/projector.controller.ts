@@ -3,7 +3,7 @@ import { ProjectorService } from './projector.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { GetProjectorStateDto } from './dto/projector-state.dto';
 import { ProjectorLastUpdateService } from './projector-last-update.service';
-import { AuthenticationData } from 'src/common/request-organization';
+import { AuthenticationData } from 'src/common/authentication-data';
 import { JwtAuthenticationData } from 'src/common/jwt-payload';
 import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
 

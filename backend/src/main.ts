@@ -2,17 +2,11 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { TextUnitService } from './text-unit-resources/text-unit.service';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { readFileSync } from 'fs';
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import { ENVIRONMENT } from './environment';
-
-const loadTextUnits = (app: INestApplication) => {
-  const textUnitService = app.get(TextUnitService);
-  return textUnitService.loadTextUnitsFromDisc();
-};
 
 async function bootstrap() {
   let httpsOptions = undefined;
@@ -58,10 +52,6 @@ async function bootstrap() {
   });
 
   app.useGlobalPipes(new ValidationPipe());
-
-  if (ENVIRONMENT.LOAD_TEXT_UNITS) {
-    await loadTextUnits(app);
-  }
 
   app.useWebSocketAdapter(new IoAdapter(app.getHttpServer()));
 

@@ -4,7 +4,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { MovePageDto } from './dto/move-page.dto';
 import { UpdateDisplayStateDto } from './dto/update-display-state.dto';
 import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
-import { AuthenticationData } from 'src/common/request-organization';
+import { AuthenticationData } from 'src/common/authentication-data';
 import { JwtAuthenticationData } from 'src/common/jwt-payload';
 
 @ApiBearerAuth()

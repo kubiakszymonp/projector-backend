@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
+import { Column, Entity, OneToOne } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { AppBaseEntity } from 'src/common/base-entity';
 import { DisplayState } from 'src/projector-management/entities/display-state.entity';
@@ -27,10 +27,4 @@ export class TextUnitQueue extends AppBaseEntity {
 
   @Column('simple-json')
   content: TextUnitQueueContent;
-
-  @OneToOne(
-    () => DisplayState,
-    (projectorState) => projectorState.textUnitQueue,
-  )
-  projectorState: DisplayState;
 }

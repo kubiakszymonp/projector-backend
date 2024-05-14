@@ -136,4 +136,50 @@ export class DisplayStateService {
       projectorState.textState.textUnitPartPage = 0;
     }
   }
+
+  // async getCurrentTextUnitQueue(organizationId: number) {
+  //   const projectorState = await this.displayStateRepository.findOne({
+  //     where: { organizationId },
+  //     relations: { textUnitQueue: true },
+  //   });
+
+  //   if (!projectorState) {
+  //     throw new NotFoundException('No projector state found');
+  //   }
+
+  //   const textUnitQueue = await this.textUnitQueueRepository.findOne({
+  //     where: { id: projectorState?.textUnitQueue?.id },
+  //   });
+
+  //   return textUnitQueue;
+  // }
+
+  // async setCurrentTextUnitQueue(
+  //   organizationId: number,
+  //   textUnitQueueId: number,
+  // ) {
+  //   const projectorState = await this.displayStateRepository.findOne({
+  //     where: { organizationId },
+  //   });
+
+  //   if (!projectorState) {
+  //     throw new NotFoundException('No projector state found');
+  //   }
+
+  //   const textUnitQueue = await this.textUnitQueueRepository.findOne({
+  //     where: { id: textUnitQueueId },
+  //   });
+
+  //   if (!textUnitQueue) {
+  //     throw new NotFoundException('No text unit queue found');
+  //   }
+
+  //   projectorState.textUnitQueue = textUnitQueue;
+
+  //   const newProjectorState =
+  //     this.displayStateRepository.create(projectorState);
+
+  //   await this.displayStateRepository.update(projectorState.id, newProjectorState);
+  //   this.projectorLastUpdateService.setLastUpdate(organizationId);
+  // }
 }

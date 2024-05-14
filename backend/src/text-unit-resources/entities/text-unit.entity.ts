@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 import { TextUnitTag } from './text-unit-tag.entity';
 import { AppBaseEntity } from 'src/common/base-entity';
 

@@ -9,15 +9,24 @@ import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ENVIRONMENT } from 'src/environment';
+import { seedOrganizations, seedUsers } from './seeding/seeding';
+import { Role } from './enums/role.enum';
 
 @Injectable()
 export class OrganizationAuthService {
 
     constructor(
-        private organizationRepository: Repository<Organization>,
-        private userRepository: Repository<User>,
+        @InjectRepository(Organization) private organizationRepository: Repository<Organization>,
+        @InjectRepository(User) private userRepository: Repository<User>,
         private jwtService: JwtService,
-    ) { }
+    ) {
+        if (ENVIRONMENT.SEED_ORGANIZATIONS) {
+            seedOrganizations(this);
+            seedUsers(this);
+        }
+    }
 
     async login(loginDto: LoginDto) {
 
@@ -91,5 +100,13 @@ export class OrganizationAuthService {
 
     async getOrganization(id: number) {
         return await this.organizationRepository.findOne({ where: { id } });
+    }
+
+    async deleteUser(id: number) {
+        return await this.userRepository.delete({ id });
+    }
+
+    async deleteOrganization(id: number) {
+        return await this.organizationRepository.delete({ id });
     }
 }

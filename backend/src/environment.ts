@@ -2,7 +2,7 @@ const devWindows = {
   DATABASE_URL: __dirname + '../../../database/db.sqlite',
   DATABASE_SYNCHRONIZE: true,
   DATABASE_LOGGING: false,
-  DROP_SCHEMA: false,
+  DROP_SCHEMA: true,
   LOAD_TEXT_UNITS: false,
   PORT: 3001,
   FILE_UPLOAD_PATH: __dirname + '../../../uploads/',
@@ -12,6 +12,10 @@ const devWindows = {
   PROD: false,
   FFMPEG_PATH: 'ffmpeg',
   FFPROBE_PATH: 'ffprobe',
+  ROOT_USER_EMAIL: 'test',
+  ROOT_USER_PASSWORD: 'test',
+  SEED_ORGANIZATIONS: true,
+  JWT_SECRET: '5b56bvn9053jvq34v43rvc4ewckewr90vu2894uVU40CUWEDOPKPE93R90V20403ir0v2309T698419V94-TVQREFJAOP4TBAUP985Y',
 };
 
 const deploy = {
@@ -28,6 +32,10 @@ const deploy = {
   PROD: true,
   FFMPEG_PATH: '/home/ec2-user/ffmpeg-release-amd64-static/ffmpeg',
   FFPROBE_PATH: '/home/ec2-user/ffmpeg-release-amd64-static/ffprobe',
+  ROOT_USER_EMAIL: 'test',
+  ROOT_USER_PASSWORD: 'test',
+  SEED_ORGANIZATIONS: true,
+  JWT_SECRET: '5b56bvn9053jvq34v43rvc4ewckewr90vu2894uVU40CUWEDOPKPE93R90V20403ir0v2309T698419V94-TVQREFJAOP4TBAUP985Y',
 };
 
 export const ENVIRONMENT: {
@@ -45,4 +53,7 @@ export const ENVIRONMENT: {
   FFMPEG_PATH: string;
   FFPROBE_PATH: string;
   JWT_SECRET: string;
+  ROOT_USER_EMAIL: string;
+  ROOT_USER_PASSWORD: string;
+  SEED_ORGANIZATIONS: boolean;
 } = { ...process.env, ...devWindows } as any;

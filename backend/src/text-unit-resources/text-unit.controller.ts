@@ -12,7 +12,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { SetCurrentTextUnitDto } from './dto/set-current-text-unit.dto';
 import { TextUnitDto } from './dto/text-unit.dto';
 import { TextUnitService } from './text-unit.service';
-import { AuthenticationData } from 'src/common/request-organization';
+import { AuthenticationData } from 'src/common/authentication-data';
 import { JwtAuthenticationData } from 'src/common/jwt-payload';
 import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
 
@@ -52,23 +52,23 @@ export class TextUnitController {
     this.textUnitService.remove(+id);
   }
 
-  @UseGuards(AuthGuard)
-  @Get('/current')
-  getCurrentTextUnit(
-    @AuthenticationData() authenticationData: JwtAuthenticationData,
-  ): Promise<TextUnitDto> {
-    return this.textUnitService.getCurrentTextUnit(+authenticationData.organizationId);
-  }
+  // @UseGuards(AuthGuard)
+  // @Get('/current')
+  // getCurrentTextUnit(
+  //   @AuthenticationData() authenticationData: JwtAuthenticationData,
+  // ): Promise<TextUnitDto> {
+  //   return this.textUnitService.getCurrentTextUnit(+authenticationData.organizationId);
+  // }
 
-  @UseGuards(AuthGuard)
-  @Patch('/current')
-  setCurrentTextUnit(
-    @Body() setCurrentTextUnitDto: SetCurrentTextUnitDto,
-    @AuthenticationData() authenticationData: JwtAuthenticationData,
-  ) {
-    return this.textUnitService.setCurrentTextUnit(
-      setCurrentTextUnitDto.id,
-      +authenticationData.organizationId,
-    );
-  }
+  // @UseGuards(AuthGuard)
+  // @Patch('/current')
+  // setCurrentTextUnit(
+  //   @Body() setCurrentTextUnitDto: SetCurrentTextUnitDto,
+  //   @AuthenticationData() authenticationData: JwtAuthenticationData,
+  // ) {
+  //   return this.textUnitService.setCurrentTextUnit(
+  //     setCurrentTextUnitDto.id,
+  //     +authenticationData.organizationId,
+  //   );
+  // }
 }

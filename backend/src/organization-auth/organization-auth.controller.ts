@@ -1,10 +1,15 @@
-import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post, UseGuards } from '@nestjs/common';
 import { OrganizationAuthService } from './organization-auth.service';
 import { LoginDto } from './dto/login.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from './guards/auth.guard';
+import { RequiredRole } from 'src/common/roles.decorator';
+import { Role } from './enums/role.enum';
 
+@ApiTags('organization-auth')
 @Controller('organization-auth')
 export class OrganizationAuthController {
   constructor(private readonly organizationAuthService: OrganizationAuthService) { }
@@ -19,6 +24,8 @@ export class OrganizationAuthController {
     return this.organizationAuthService.createUser(createUserDto);
   }
 
+  @UseGuards(AuthGuard)
+  @RequiredRole(Role.ADMIN)
   @Post("organization")
   createOrganization(@Body() createOrganizationDto: CreateOrganizationDto) {
     return this.organizationAuthService.createOrganization(createOrganizationDto);
@@ -52,6 +59,16 @@ export class OrganizationAuthController {
   @Get("organization/:id")
   getOrganization(id: number) {
     return this.organizationAuthService.getOrganization(id);
+  }
+
+  @Delete("user/:id")
+  deleteUser(id: number) {
+    return this.organizationAuthService.deleteUser(id);
+  }
+
+  @Delete("organization/:id")
+  deleteOrganization(id: number) {
+    return this.organizationAuthService.deleteOrganization(id);
   }
 }
 

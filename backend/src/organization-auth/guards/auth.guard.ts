@@ -8,14 +8,14 @@ import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { Role } from '../enums/role.enum';
-import { ROLES_KEY } from 'src/common/roles.decorator';
+import { ROLE_KEY as ROLE_KEY } from 'src/common/roles.decorator';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService, private reflector: Reflector) {}
+  constructor(private jwtService: JwtService, private reflector: Reflector) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
+    const requiredRole = this.reflector.getAllAndOverride<Role>(ROLE_KEY, [
       context.getHandler(),
       context.getClass(),
     ]);
@@ -28,8 +28,12 @@ export class AuthGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_SECRET,
       });
+      request['authenticationData'] = payload.organization;
 
-      request['organization'] = payload.organization;
+      if (requiredRole && requiredRole !== payload.role) {
+        throw new UnauthorizedException("You don't have the required role to access this resource.");
+      }
+
     } catch (error) {
       throw new UnauthorizedException(error);
     }

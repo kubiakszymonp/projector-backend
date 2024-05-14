@@ -23,7 +23,7 @@ import { Repository } from 'typeorm';
 import { DisplayType } from 'src/projector-management/enums/display-type.enum';
 import { DisplayState } from './entities/display-state.entity';
 import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
-import { AuthenticationData } from 'src/common/request-organization';
+import { AuthenticationData } from 'src/common/authentication-data';
 import { JwtAuthenticationData } from 'src/common/jwt-payload';
 
 @ApiTags('uploaded-files')

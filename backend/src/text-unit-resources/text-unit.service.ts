@@ -73,36 +73,36 @@ export class TextUnitService {
     });
   }
 
-  async setCurrentTextUnit(textUnitId: number, organizationId: number) {
-    const displayState = await this.displayStateRepository.findOne({
-      where: { organizationId },
-    });
+  // async setCurrentTextUnit(textUnitId: number, organizationId: number) {
+  //   const displayState = await this.displayStateRepository.findOne({
+  //     where: { organizationId },
+  //   });
 
-    if (!displayState) {
-      throw new Error('No display state found');
-    }
+  //   if (!displayState) {
+  //     throw new Error('No display state found');
+  //   }
 
-    displayState.textState.textUnitId = textUnitId;
-    displayState.textState.textUnitPart = 0;
-    displayState.textState.textUnitPartPage = 0;
-    displayState.displayType = DisplayType.TEXT;
+  //   displayState.textState.textUnitId = textUnitId;
+  //   displayState.textState.textUnitPart = 0;
+  //   displayState.textState.textUnitPartPage = 0;
+  //   displayState.displayType = DisplayType.TEXT;
 
-    const updated = this.displayStateRepository.create(displayState);
+  //   const updated = this.displayStateRepository.create(displayState);
 
-    await this.displayStateRepository.save(updated);
-    this.projectorLastUpdateService.setLastUpdate(organizationId);
-  }
+  //   await this.displayStateRepository.save(updated);
+  //   this.projectorLastUpdateService.setLastUpdate(organizationId);
+  // }
 
-  async loadTextUnitsFromDisc() {
-    const textUnits: { title: string; content: string }[] = [];
-    const dir = path.join(__dirname, RELATIVE_PATH);
-    const files = fs.readdirSync(dir);
-    for (const file of files) {
-      if (file.endsWith(FILE_EXTENSION)) {
-        const content = fs.readFileSync(path.join(dir, file), 'utf-8');
-        textUnits.push({ title: file.replace(FILE_EXTENSION, ''), content });
-      }
-    }
-    await this.textUnitRepository.insert(textUnits);
-  }
+  // async loadTextUnitsFromDisc() {
+  //   const textUnits: { title: string; content: string }[] = [];
+  //   const dir = path.join(__dirname, RELATIVE_PATH);
+  //   const files = fs.readdirSync(dir);
+  //   for (const file of files) {
+  //     if (file.endsWith(FILE_EXTENSION)) {
+  //       const content = fs.readFileSync(path.join(dir, file), 'utf-8');
+  //       textUnits.push({ title: file.replace(FILE_EXTENSION, ''), content });
+  //     }
+  //   }
+  //   await this.textUnitRepository.insert(textUnits);
+  // }
 }

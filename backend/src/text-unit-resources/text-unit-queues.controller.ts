@@ -11,7 +11,7 @@ import {
 import { TextUnitQueuesService } from './text-unit-queues.service';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
-import { AuthenticationData } from 'src/common/request-organization';
+import { AuthenticationData } from 'src/common/authentication-data';
 import { JwtAuthenticationData } from 'src/common/jwt-payload';
 import { TextUnitQueueDto } from './dto/text-unit-queue.dto';
 import { SetCurrentTextUnitQueueDto } from './dto/set-current-text-unit-queue.dto';
@@ -58,23 +58,23 @@ export class TextUnitQueuesController {
     return this.textUnitQueuesService.remove(+id);
   }
 
-  @UseGuards(AuthGuard)
-  @Patch('current')
-  setCurrentTextUnitQueue(
-    @AuthenticationData() authenticationData: JwtAuthenticationData,
-    @Body() setCurrentTextUnitQueueDto: SetCurrentTextUnitQueueDto,
-  ) {
-    return this.textUnitQueuesService.setCurrentTextUnitQueue(
-      +authenticationData.organizationId,
-      setCurrentTextUnitQueueDto.id,
-    );
-  }
+  // @UseGuards(AuthGuard)
+  // @Patch('current')
+  // setCurrentTextUnitQueue(
+  //   @AuthenticationData() authenticationData: JwtAuthenticationData,
+  //   @Body() setCurrentTextUnitQueueDto: SetCurrentTextUnitQueueDto,
+  // ) {
+  //   return this.textUnitQueuesService.setCurrentTextUnitQueue(
+  //     +authenticationData.organizationId,
+  //     setCurrentTextUnitQueueDto.id,
+  //   );
+  // }
 
-  @UseGuards(AuthGuard)
-  @Get('current')
-  getCurrentTextUnitQueue(
-    @AuthenticationData() authenticationData: JwtAuthenticationData,
-  ): Promise<TextUnitQueueDto> {
-    return this.textUnitQueuesService.getCurrentTextUnitQueue(+authenticationData.organizationId);
-  }
+  // @UseGuards(AuthGuard)
+  // @Get('current')
+  // getCurrentTextUnitQueue(
+  //   @AuthenticationData() authenticationData: JwtAuthenticationData,
+  // ): Promise<TextUnitQueueDto> {
+  //   return this.textUnitQueuesService.getCurrentTextUnitQueue(+authenticationData.organizationId);
+  // }
 }
