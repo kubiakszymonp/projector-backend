@@ -14,7 +14,7 @@ export class TextUnitTagService {
   constructor( @InjectRepository(TextUnitTag)  private textUnitTagRepository: Repository<TextUnitTag>) {
   }
 
-  async create(createTextUnitTagDto: CreateTextUnitTagDto, organizationId: number) {
+  async create(organizationId: number, createTextUnitTagDto: CreateTextUnitTagDto ) {
     const newTag = this.textUnitTagRepository.create({
       description: createTextUnitTagDto.description,
       name: createTextUnitTagDto.name,

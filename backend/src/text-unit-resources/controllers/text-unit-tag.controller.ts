@@ -30,8 +30,8 @@ export class TextUnitTagController {
     @AuthenticationData() authenticationData: JwtAuthenticationData,
   ) {
     return this.textUnitTagService.create(
-      createTextUnitTagDto,
       +authenticationData.organizationId,
+      createTextUnitTagDto,
     );
   }
 

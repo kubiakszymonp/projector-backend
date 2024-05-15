@@ -1,7 +1,7 @@
 const devWindows = {
   DATABASE_URL: __dirname + '../../../database/db.sqlite',
   DATABASE_SYNCHRONIZE: true,
-  DATABASE_LOGGING: false,
+  DATABASE_LOGGING: true,
   DROP_SCHEMA: true,
   LOAD_TEXT_UNITS: false,
   PORT: 3001,

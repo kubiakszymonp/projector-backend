@@ -43,8 +43,8 @@ export class DisplayQueuesController {
     @Body() createTextUnitQueueDto: CreateDisplayQueueDto,
   ) {
     return this.displayQueuesService.create(
-      createTextUnitQueueDto,
       authenticationData.organizationId,
+      createTextUnitQueueDto,
     );
   }
 

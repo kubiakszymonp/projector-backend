@@ -27,7 +27,7 @@ export class TextUnitResourcesModule {
     private textUnitService: TextUnitService) {
 
     if (ENVIRONMENT.SEED_TEXT_UNITS) {
-      seedTextUnits(this.textUnitService);
+      seedTextUnits(this.textUnitService, this.textUnitTagService, this.displayQueuesService);
     }
   }
 }
