@@ -52,13 +52,12 @@ export class DisplayQueuesService {
           return {
             id: queueTextUnit.id,
             title: queueTextUnit.textUnit.title,
+            position: queueTextUnit.position,
           };
         }),
       };
     });
   }
-
-
 
   async findOne(id: number): Promise<GetDisplayQueueDto> {
     const queue = await this.displayQueueRepository.findOne({
@@ -75,6 +74,7 @@ export class DisplayQueuesService {
         return {
           id: queueTextUnit.id,
           title: queueTextUnit.textUnit.title,
+          position: queueTextUnit.position,
         };
       }),
     };

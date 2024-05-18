@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToMany, ManyToOne } from 'typeorm';
 
 import { TextUnit } from './text-unit.entity';
-import { AppBaseEntity } from 'src/common/base-entity';
+import { AppBaseEntity } from '../../common/base-entity';
 
 @Entity()
 export class TextUnitTag extends AppBaseEntity {

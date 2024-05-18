@@ -1,4 +1,4 @@
-import { AppBaseEntity } from 'src/common/base-entity';
+import { AppBaseEntity } from '../../common/base-entity';
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { TextStrategy } from '../enums/text-strategy.enum';
 

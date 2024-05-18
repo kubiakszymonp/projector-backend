@@ -1,6 +1,6 @@
 import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 import { TextUnitTag } from './text-unit-tag.entity';
-import { AppBaseEntity } from 'src/common/base-entity';
+import { AppBaseEntity } from '../../common/base-entity';
 import { QueueTextUnit } from './queue-text-unit.entity';
 
 @Entity()

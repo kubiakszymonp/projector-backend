@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { TextUnitState as TextState } from '../structures/projector-state-text-state';
 import { UploadedFile } from './uploaded-file.entity';
-import { AppBaseEntity } from 'src/common/base-entity';
+import { AppBaseEntity } from '../../common/base-entity';
 import { DisplayQueue } from 'src/text-unit-resources/entities/display-queue.entity';
 import { DisplayType } from '../enums/display-type.enum';
 

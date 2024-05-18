@@ -24,4 +24,7 @@ export class GetDisplayQueueDtoQueueTextUnit {
 
     @ApiProperty()
     title: string;
+
+    @ApiProperty()
+    position: number;
 }

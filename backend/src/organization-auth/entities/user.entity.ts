@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { Role } from '../enums/role.enum';
 import { Organization } from './organization.entity';
-import { AppBaseEntity } from 'src/common/base-entity';
+import { AppBaseEntity } from '../../common/base-entity';
 
 @Entity()
 export class User extends AppBaseEntity {

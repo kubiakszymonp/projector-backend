@@ -2,6 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { QueueTextUnit } from "../entities/queue-text-unit.entity";
 import { InjectRepository } from "@nestjs/typeorm";
+import { last } from "rxjs";
 
 @Injectable()
 export class QueueTextUnitService {
@@ -29,7 +30,10 @@ export class QueueTextUnitService {
             order: { position: 'ASC' },
         });
 
-        const lastPosition = queueTextUnitsSorted[queueTextUnitsSorted.length - 1].position;
+        let lastPosition = 0;
+        if (queueTextUnitsSorted.length > 0) {
+            lastPosition = queueTextUnitsSorted[queueTextUnitsSorted.length - 1].position;
+        }
 
         const queueTextUnit = this.queueTextUnitRepository.create({
             displayQueue: { id: queueId },
@@ -42,5 +46,27 @@ export class QueueTextUnitService {
 
     async removeTextUnitFromQueue(queueId: number, textUnitId: number) {
         return this.queueTextUnitRepository.delete({ displayQueue: { id: queueId }, textUnit: { id: textUnitId } });
+    }
+
+    async setTextUnitToQueues(textUnitId: number, queueIds: number[]) {
+        const queueTextUnits = await this.queueTextUnitRepository.find({
+            relations: ['displayQueue'],
+            where: { textUnit: { id: textUnitId } },
+        });
+
+        const appendQueues = queueIds.filter(
+            queueId => !queueTextUnits.some(queueTextUnit => queueTextUnit.displayQueue.id === queueId)
+        );
+
+        const deleteQueues = queueTextUnits.filter(
+            queueTextUnit => !queueIds.includes(queueTextUnit.displayQueue.id)
+        );
+
+        const promises = appendQueues.map(queueId => this.appendTextUnitToQueue(queueId, textUnitId));
+        await Promise.all(promises);
+
+        if (deleteQueues.length !== 0) {
+            await this.queueTextUnitRepository.delete(deleteQueues.map(queueTextUnit => queueTextUnit.id))
+        }
     }
 }
