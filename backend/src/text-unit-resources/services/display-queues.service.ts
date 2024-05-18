@@ -6,6 +6,7 @@ import { UpdateDisplayQueueDto } from '../dto/update/update-display-queue.dto';
 import { GetDisplayQueueDto } from '../dto/get/get-display-queue.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QueueTextUnit } from '../entities/queue-text-unit.entity';
+import { GetQueueTextUnit } from '../dto/get/get-queue-text-unit.dto';
 
 @Injectable()
 export class DisplayQueuesService {
@@ -15,7 +16,7 @@ export class DisplayQueuesService {
     @InjectRepository(QueueTextUnit) private queueTextUnitRepository: Repository<QueueTextUnit>,
   ) { }
 
-  async create(organizationId: number, createTextUnitQueue: CreateDisplayQueueDto) {
+  async create(organizationId: number, createTextUnitQueue: CreateDisplayQueueDto): Promise<GetDisplayQueueDto> {
 
     const textUnitQueue = this.displayQueueRepository.create({
       name: createTextUnitQueue.name,
@@ -31,8 +32,8 @@ export class DisplayQueuesService {
       position: index,
     }));
     await this.queueTextUnitRepository.save(queueTextUnits);
-    
-    return displayQueue;
+
+    return this.findOne(displayQueue.id);
   }
 
   async findAll(organizationId: number): Promise<GetDisplayQueueDto[]> {
@@ -48,13 +49,7 @@ export class DisplayQueuesService {
         name: displayQueue.name,
         description: displayQueue.description,
         organizationId: displayQueue.organizationId,
-        queueTextUnits: displayQueue.queueTextUnits.map((queueTextUnit) => {
-          return {
-            id: queueTextUnit.id,
-            title: queueTextUnit.textUnit.title,
-            position: queueTextUnit.position,
-          };
-        }),
+        queueTextUnits: displayQueue.queueTextUnits.map(GetQueueTextUnit.fromQueueTextUnit),
       };
     });
   }
@@ -70,17 +65,11 @@ export class DisplayQueuesService {
       name: queue.name,
       description: queue.description,
       organizationId: queue.organizationId,
-      queueTextUnits: queue.queueTextUnits.map((queueTextUnit) => {
-        return {
-          id: queueTextUnit.id,
-          title: queueTextUnit.textUnit.title,
-          position: queueTextUnit.position,
-        };
-      }),
+      queueTextUnits: queue.queueTextUnits.map(GetQueueTextUnit.fromQueueTextUnit),
     };
   }
 
-  async update(id: number, updateTextUnitQueue: UpdateDisplayQueueDto) {
+  async update(id: number, updateTextUnitQueue: UpdateDisplayQueueDto): Promise<GetDisplayQueueDto> {
 
     const textUnitQueue = this.displayQueueRepository.create({
       name: updateTextUnitQueue.name,
@@ -88,7 +77,7 @@ export class DisplayQueuesService {
       queueTextUnits: updateTextUnitQueue.textUnitIds.map((id) => ({ id })),
     });
 
-    const displayQueue = await this.displayQueueRepository.update(id, textUnitQueue);
+    await this.displayQueueRepository.update(id, textUnitQueue);
 
     await this.queueTextUnitRepository.delete({
       displayQueue: { id },
@@ -102,7 +91,7 @@ export class DisplayQueuesService {
 
     await this.queueTextUnitRepository.save(queueTextUnits);
 
-    return displayQueue;
+    return this.findOne(id);
   }
 
   remove(id: number) {

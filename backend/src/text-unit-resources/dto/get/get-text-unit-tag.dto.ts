@@ -14,4 +14,13 @@ export class GetTextUnitTagDto extends BaseDto {
     @ApiProperty()
     @IsOptional()
     organizationId?: number;
+
+    static fromTextUnitTag(textUnitTag: GetTextUnitTagDto): GetTextUnitTagDto {
+        return {
+            id: textUnitTag.id,
+            name: textUnitTag.name,
+            description: textUnitTag.description,
+            organizationId: textUnitTag.organizationId,
+        }
+    }
 }

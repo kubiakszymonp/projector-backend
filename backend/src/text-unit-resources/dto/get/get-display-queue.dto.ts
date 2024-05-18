@@ -16,6 +16,8 @@ export class GetDisplayQueueDto extends BaseDto {
 
     @ApiProperty()
     queueTextUnits: GetDisplayQueueDtoQueueTextUnit[];
+
+    
 }
 
 export class GetDisplayQueueDtoQueueTextUnit {

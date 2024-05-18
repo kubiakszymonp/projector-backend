@@ -250,5 +250,4 @@ describe("QueueTextUnitTest", () => {
         expect(afterUpdateTextUnit1.queues).toHaveLength(1);
 
     }, TEST_TIMEOUT);
-
 });
