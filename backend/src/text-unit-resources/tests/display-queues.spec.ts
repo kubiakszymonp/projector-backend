@@ -7,7 +7,6 @@ import { TextUnit } from "../entities/text-unit.entity";
 import { DisplayQueue } from "../entities/display-queue.entity";
 import { TextUnitService } from "../services/text-unit.service";
 import { DisplayQueuesService } from "../services/display-queues.service";
-import e from "express";
 
 describe("QueueTextUnitTest", () => {
     let queueTextUnitService: QueueTextUnitService;
@@ -15,9 +14,6 @@ describe("QueueTextUnitTest", () => {
     let displayQueuesService: DisplayQueuesService;
 
     beforeEach(async () => {
-        jest.useFakeTimers({
-            legacyFakeTimers: true,
-        })
         const module = await Test.createTestingModule({
             imports: [
                 TypeOrmModule.forRoot(testDbConfig),
@@ -29,7 +25,7 @@ describe("QueueTextUnitTest", () => {
         queueTextUnitService = module.get(QueueTextUnitService);
         textUnitService = module.get(TextUnitService);
         displayQueuesService = module.get(DisplayQueuesService);
-    });
+    }, TEST_TIMEOUT);
 
     it("should be defined", () => {
         expect(queueTextUnitService).toBeDefined();

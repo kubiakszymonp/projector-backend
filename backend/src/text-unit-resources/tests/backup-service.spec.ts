@@ -41,7 +41,7 @@ describe("QueueTextUnitTest", () => {
         textUnitTagService = module.get(TextUnitTagService);
         backupService = module.get(BackupService);
         backupController = module.get(BackupController);
-    });
+    }, TEST_TIMEOUT);
 
     it("should be defined", () => {
         expect(queueTextUnitService).toBeDefined();
