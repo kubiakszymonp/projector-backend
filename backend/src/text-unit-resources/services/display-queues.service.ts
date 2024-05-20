@@ -40,7 +40,7 @@ export class DisplayQueuesService {
     const displayQueues = await this.displayQueueRepository.find({
       where: { organizationId },
       order: { updatedAt: 'desc' },
-      relations: ['queueTextUnits', 'queueTextUnits.textUnit']
+      relations: ['queueTextUnits', 'queueTextUnits.textUnit', "queueTextUnits.displayQueue"]
     });
 
     return displayQueues.map((displayQueue) => {
@@ -57,7 +57,7 @@ export class DisplayQueuesService {
   async findOne(id: number): Promise<GetDisplayQueueDto> {
     const queue = await this.displayQueueRepository.findOne({
       where: { id },
-      relations: ['queueTextUnits', 'queueTextUnits.textUnit']
+      relations: ['queueTextUnits', 'queueTextUnits.textUnit', "queueTextUnits.displayQueue"]
     });
 
     return {
@@ -65,6 +65,7 @@ export class DisplayQueuesService {
       name: queue.name,
       description: queue.description,
       organizationId: queue.organizationId,
+
       queueTextUnits: queue.queueTextUnits.map(GetQueueTextUnit.fromQueueTextUnit),
     };
   }

@@ -37,15 +37,14 @@ export class TextUnitService {
   }
 
   async findAll(organizationId: number): Promise<GetTextUnitDto[]> {
-    const query = this.textUnitRepository.createQueryBuilder('textUnit')
-      .leftJoinAndSelect('textUnit.tags', 'tags')
-      .leftJoinAndSelect('textUnit.queueTextUnits', 'queueTextUnits')
-      .leftJoinAndSelect('queueTextUnits.displayQueue', 'displayQueue')
-      .where('textUnit.organizationId = :organizationId', { organizationId })
-      .orWhere('textUnit.organizationId IS NULL')
-      .orderBy('textUnit.updatedAt', 'DESC');
+    const results = await this.textUnitRepository.find({
+      where: { organizationId },
+      relations: ['tags', 'queueTextUnits', 'queueTextUnits.displayQueue', 'queueTextUnits.textUnit'],
+      order: {
+        updatedAt: 'DESC'
+      }
+    });
 
-    const results = await query.getMany();
     return results.map((entity) => ({
       content: entity.content,
       description: entity.description,
@@ -58,13 +57,10 @@ export class TextUnitService {
   }
 
   async findOne(id: number): Promise<GetTextUnitDto> {
-    const query = this.textUnitRepository.createQueryBuilder('textUnit')
-      .leftJoinAndSelect('textUnit.tags', 'tags')
-      .leftJoinAndSelect('textUnit.queueTextUnits', 'queueTextUnits')
-      .leftJoinAndSelect('queueTextUnits.displayQueue', 'displayQueue')
-      .where('textUnit.id = :id', { id });
-
-    const entity = await query.getOne();
+    const entity = await this.textUnitRepository.findOne({
+      where: { id },
+      relations: ['tags', 'queueTextUnits', 'queueTextUnits.displayQueue', 'queueTextUnits.textUnit']
+    });
 
     if (!entity) {
       throw new Error(`Text unit with id ${id} not found`);

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseDto } from 'src/common/base-dto.dto';
+import { BaseDto } from '../../../common/base-dto.dto';
 
 export class UploadedFileDto extends BaseDto {
   @ApiProperty()

@@ -1,6 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { CreateTextUnitDto } from "../create/create-text-unit.dto";
-import { BaseDto } from "src/common/base-dto.dto";
+import { BaseDto } from "../../../common/base-dto.dto";
+import { GetQueueTextUnit } from "./get-queue-text-unit.dto";
+import { GetTextUnitTagDto } from "./get-text-unit-tag.dto";
 
 export class GetTextUnitDto extends BaseDto {
     @ApiProperty()
@@ -19,24 +21,8 @@ export class GetTextUnitDto extends BaseDto {
     title: string;
 
     @ApiProperty()
-    tags: GetTextUnitDtoTag[];
+    tags: GetTextUnitTagDto[];
 
     @ApiProperty()
-    queues: GetTextUnitDtoQueue[];
+    queues: GetQueueTextUnit[];
 }
-
-export class GetTextUnitDtoTag {
-    @ApiProperty()
-    id: number;
-
-    @ApiProperty()
-    name: string;
-}
-
-export class GetTextUnitDtoQueue {
-    @ApiProperty()
-    id: number;
-
-    @ApiProperty()
-    title: string;
-}   
