@@ -60,6 +60,8 @@ export class DisplayQueuesService {
       relations: ['queueTextUnits', 'queueTextUnits.textUnit', "queueTextUnits.displayQueue"]
     });
 
+    if (!queue) return null;
+
     return {
       id: queue.id,
       name: queue.name,

@@ -40,8 +40,14 @@ export class TextUnitController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.textUnitService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const res = await this.textUnitService.findOne(+id);
+
+    if (!res) {
+      throw new Error(`Text unit with id ${id} not found`);
+    }
+
+    return res;
   }
 
   @Patch()

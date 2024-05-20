@@ -62,9 +62,7 @@ export class TextUnitService {
       relations: ['tags', 'queueTextUnits', 'queueTextUnits.displayQueue', 'queueTextUnits.textUnit']
     });
 
-    if (!entity) {
-      throw new Error(`Text unit with id ${id} not found`);
-    }
+    if (!entity) return null;
 
     return {
       content: entity.content,
