@@ -24,9 +24,9 @@ import { QueueTextUnit } from './text-unit-resources/entities/queue-text-unit.en
       logging: ENVIRONMENT.DATABASE_LOGGING,
       dropSchema: ENVIRONMENT.DROP_SCHEMA,
     }),
-    OrganizationAuthModule,
-    TextUnitResourcesModule,
-    ProjectorManagementModule,
+    ENVIRONMENT.LOAD_ORGANIZATION_MODULE ? OrganizationAuthModule : null,
+    ENVIRONMENT.LOAD_TEXTS_MODULE ? TextUnitResourcesModule : null,
+    ENVIRONMENT.LOAD_PROJECTOR_MODULE ? ProjectorManagementModule : null,
   ],
 })
 export class AppModule { }

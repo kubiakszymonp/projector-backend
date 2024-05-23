@@ -6,6 +6,7 @@ import { DisplayQueue } from "../entities/display-queue.entity";
 import { TextUnitTag } from "../entities/text-unit-tag.entity";
 import { QueueTextUnit } from "../entities/queue-text-unit.entity";
 import { deflate, inflate } from "zlib";
+import { ENVIRONMENT } from "src/environment";
 
 export interface BackupData {
     textUnits: TextUnit[],
@@ -59,6 +60,8 @@ export class BackupService {
 
     async restoreForOrganization(organizationId: number, data: BackupData) {
 
+        if (!ENVIRONMENT.CAN_APPLY_BACKUP) return;
+        
         await this.textUnitTagRepository.save(data.textUnitTags.map((textUnitTag) => {
             textUnitTag.organizationId = organizationId;
             return textUnitTag;

@@ -10,6 +10,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DisplayStateService } from './display-state.service';
 import { GetMediaFileDto } from '../dto/get/get-media-file.dto';
 import { MediaFileStructure } from '../structures/media-file-structure';
+import { ENVIRONMENT } from 'src/environment';
+import { join } from 'path';
 
 @Injectable()
 export class MediaFilesService {
@@ -74,7 +76,7 @@ export class MediaFilesService {
   }
 
   private async storeMediaFiles(mediaFileStructures: MediaFileStructure[]) {
-    const mediaDirectory = '../upload';
+    const mediaDirectory = ENVIRONMENT.FILE_UPLOAD_PATH;
 
     if (!existsSync(mediaDirectory)) {
       mkdirSync(mediaDirectory, { recursive: true });
@@ -87,7 +89,7 @@ export class MediaFilesService {
   }
 
   private async removeStoredFile(url: string) {
-    const pathToRemove = `../upload/${url}`;
+    const pathToRemove = join(ENVIRONMENT.FILE_UPLOAD_PATH, url);
     if (await stat(pathToRemove)) {
       await rm(pathToRemove);
     }

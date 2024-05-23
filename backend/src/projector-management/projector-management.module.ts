@@ -13,7 +13,7 @@ import { TextUnitResourcesModule } from 'src/text-unit-resources/text-unit-resou
 import { DisplayStateController } from './controllers/display-state.controller';
 import { ProjectorSettingsController } from './controllers/projector-settings.controller';
 import { ProjectorController } from './controllers/projector.controller';
-import { MediaFilesController } from './controllers/uploaded-files.controller';
+import { MediaFilesController } from './controllers/media-files.controller';
 
 @Module({
   controllers: [DisplayStateController, ProjectorSettingsController, ProjectorController, MediaFilesController],

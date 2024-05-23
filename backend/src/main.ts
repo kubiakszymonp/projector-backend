@@ -1,9 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { join } from 'path';
 import { readFileSync } from 'fs';
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import { ENVIRONMENT } from './environment';
@@ -22,14 +21,12 @@ async function bootstrap() {
     httpsOptions,
   });
 
-  if (!ENVIRONMENT.PROD) {
-    app.useStaticAssets(join(__dirname, '../..', 'upload'), {
-      prefix: '/upload',
-      setHeaders: (res) => {
-        res.setHeader('Access-Control-Allow-Origin', '*');
-      },
-    });
-  }
+  app.useStaticAssets(ENVIRONMENT.FILE_UPLOAD_PATH, {
+    prefix: '/upload',
+    setHeaders: (res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+    },
+  });
 
   app.setGlobalPrefix('api');
 

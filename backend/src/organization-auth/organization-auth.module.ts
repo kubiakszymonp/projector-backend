@@ -30,7 +30,7 @@ export class OrganizationAuthModule {
     if (ENVIRONMENT.SEED_ORGANIZATIONS) {
       seedOrganizations(organizationsService);
     }
-    if (ENVIRONMENT.SEED_ORGANIZATIONS) {
+    if (ENVIRONMENT.SEED_USERS) {
       seedUsers(usersService);
     }
   }
