@@ -1,6 +1,5 @@
-export enum DisplayType {
+export enum DisplayTypeEnum {
   TEXT = 'TEXT',
   MEDIA = 'MEDIA',
-  HLS = 'HLS', 
   WEB_RTC = 'WEB_RTC',
 }

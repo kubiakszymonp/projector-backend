@@ -1,11 +1,11 @@
-import { Controller, Body, Patch, UseGuards, Get, Param } from '@nestjs/common';
-import { ProjectorSettingsService } from './projector-settings.service';
+import { Controller, Body, Patch, UseGuards, Get, Param, Post } from '@nestjs/common';
+import { ProjectorSettingsService } from '../services/projector-settings.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { ProjectorSettingsConfigurationDto } from 'src/projector-management/structures/projector-settings-configuration';
-import { PartialProjectorSettingsConfigurationDto } from './dto/partial-projector-settings.dto';
 import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
 import { AuthenticationData } from 'src/common/authentication-data';
 import { JwtAuthenticationData } from 'src/common/jwt-payload';
+import { UpdateProjectorSettingDto } from '../dto/update/update-projector-settings.dto';
+import { GetProjectorSettingsDto } from '../dto/get/get-projector-settings.dto';
 
 @ApiBearerAuth()
 @ApiTags('projector-settings')
@@ -19,7 +19,7 @@ export class ProjectorSettingsController {
   @Patch()
   update(
     @AuthenticationData() authenticationData: JwtAuthenticationData,
-    @Body() updateProjectorSettingDto: PartialProjectorSettingsConfigurationDto,
+    @Body() updateProjectorSettingDto: UpdateProjectorSettingDto,
   ) {
 
     return this.projectorSettingsService.update(
@@ -32,14 +32,22 @@ export class ProjectorSettingsController {
   @Get()
   getSetting(
     @AuthenticationData() authenticationData: JwtAuthenticationData,
-  ): Promise<ProjectorSettingsConfigurationDto> {
-    return this.projectorSettingsService.get(authenticationData.organizationId);
+  ): Promise<GetProjectorSettingsDto> {
+    return this.projectorSettingsService.findOne(authenticationData.organizationId);
   }
 
   @Get(':organizationId')
   getSettingsByOrganizationId(
     @Param('organizationId') organizationId: number,
-  ): Promise<ProjectorSettingsConfigurationDto> {
-    return this.projectorSettingsService.get(organizationId);
+  ): Promise<GetProjectorSettingsDto> {
+    return this.projectorSettingsService.findOne(organizationId);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post()
+  createF(
+    @AuthenticationData() authenticationData: JwtAuthenticationData,
+  ) {
+    return this.projectorSettingsService.create(authenticationData.organizationId);
   }
 }

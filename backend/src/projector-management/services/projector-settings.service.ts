@@ -1,21 +1,31 @@
 import { BadGatewayException, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { PartialProjectorSettingsConfigurationDto } from './dto/partial-projector-settings.dto';
-import { ProjectorSettings } from './entities/projector-settings.entity';
-import { ProjectorLastUpdateService } from './projector-last-update.service';
+import { ProjectorSettings } from '../entities/projector-settings.entity';
+import { GetProjectorSettingsDto } from '../dto/get/get-projector-settings.dto';
+import { UpdateProjectorSettingDto } from '../dto/update/update-projector-settings.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ProjectorSettingsService {
 
     constructor(
-        private projectorSettingsRepository: Repository<ProjectorSettings>,
-        private projectorLastUpdateService: ProjectorLastUpdateService,
+        @InjectRepository(ProjectorSettings) private projectorSettingsRepository: Repository<ProjectorSettings>,
     ) {
+    }
+
+    async create(organizationId: number) {
+        const projectorSettings = this.projectorSettingsRepository.create({
+            organizationId,
+        });
+
+        await this.projectorSettingsRepository.save(projectorSettings);
+
+        return this.findOne(organizationId);
     }
 
     async update(
         organizationId: number,
-        updateProjectorSettingDto: PartialProjectorSettingsConfigurationDto,
+        updateProjectorSettingDto: UpdateProjectorSettingDto,
     ) {
         const projectorSettings = await this.projectorSettingsRepository.findOne({
             where: { organizationId },
@@ -31,10 +41,10 @@ export class ProjectorSettingsService {
             organizationId,
         });
         await this.projectorSettingsRepository.save(newProjectorSettings);
-        this.projectorLastUpdateService.setLastUpdate(organizationId);
+        return this.findOne(organizationId);
     }
 
-    async get(organizationId: number): Promise<ProjectorSettings> {
+    async findOne(organizationId: number): Promise<GetProjectorSettingsDto> {
         return this.projectorSettingsRepository.findOne({
             where: { organizationId },
         });

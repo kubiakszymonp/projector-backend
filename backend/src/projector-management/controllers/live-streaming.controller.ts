@@ -4,11 +4,11 @@ import {
   Post,
   Param,
   Res,
-  UploadedFile,
   UseGuards,
   UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
-import { LiveStreamingService } from './live-streaming.service';
+import { LiveStreamingService } from '../services/live-streaming.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { ApiTags } from '@nestjs/swagger';

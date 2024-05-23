@@ -13,9 +13,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
 import { AuthenticationData } from 'src/common/authentication-data';
 import { JwtAuthenticationData } from 'src/common/jwt-payload';
-import { SetCurrentTextUnitQueueDto } from '../../projector-management/dto/set-current-text-unit-queue.dto';
 import { CreateDisplayQueueDto } from '../dto/create/create-display-queue.dto';
-import { GetTextUnitDto } from '../dto/get/get-text-unit.dto';
 import { GetDisplayQueueDto } from '../dto/get/get-display-queue.dto';
 import { UpdateDisplayQueueDto } from '../dto/update/update-display-queue.dto';
 

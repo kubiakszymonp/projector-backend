@@ -12,12 +12,14 @@ import { TextUnitTag } from './entities/text-unit-tag.entity';
 import { TextUnit } from './entities/text-unit.entity';
 import { ENVIRONMENT } from 'src/environment';
 import { seedTextUnits } from './seeding/seeding';
+import { QueueTextUnitService } from './services/queue-text-unit.service';
 
 
 @Module({
   controllers: [DisplayQueuesController, TextUnitTagController, TextUnitController],
-  providers: [DisplayQueuesService, TextUnitTagService, TextUnitService],
-  imports: [TypeOrmModule.forFeature([DisplayQueue, QueueTextUnit, TextUnitTag, TextUnit])]
+  providers: [DisplayQueuesService, TextUnitTagService, TextUnitService, QueueTextUnitService],
+  imports: [TypeOrmModule.forFeature([DisplayQueue, QueueTextUnit, TextUnitTag, TextUnit])],
+  exports: [TextUnitService, DisplayQueuesService, QueueTextUnitService]
 })
 export class TextUnitResourcesModule {
 

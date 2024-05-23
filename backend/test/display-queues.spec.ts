@@ -1,12 +1,12 @@
 import { Test } from "@nestjs/testing";
-import { QueueTextUnitService } from "../services/queue-text-unit.service";
+import { QueueTextUnitService } from "../src/text-unit-resources/services/queue-text-unit.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { TEST_TIMEOUT, testDbConfig } from "./test-db.config";
-import { QueueTextUnit } from "../entities/queue-text-unit.entity";
-import { TextUnit } from "../entities/text-unit.entity";
-import { DisplayQueue } from "../entities/display-queue.entity";
-import { TextUnitService } from "../services/text-unit.service";
-import { DisplayQueuesService } from "../services/display-queues.service";
+import { TEST_TIMEOUT, testDbConfig } from "../src/text-unit-resources/tests/test-db.config";
+import { QueueTextUnit } from "../src/text-unit-resources/entities/queue-text-unit.entity";
+import { TextUnit } from "../src/text-unit-resources/entities/text-unit.entity";
+import { DisplayQueue } from "../src/text-unit-resources/entities/display-queue.entity";
+import { TextUnitService } from "../src/text-unit-resources/services/text-unit.service";
+import { DisplayQueuesService } from "../src/text-unit-resources/services/display-queues.service";
 
 describe("QueueTextUnitTest", () => {
     let queueTextUnitService: QueueTextUnitService;

@@ -1,77 +1,89 @@
 import { AppBaseEntity } from '../../common/base-entity';
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
-import { TextStrategy } from '../enums/text-strategy.enum';
+import { TextStrategyEnum } from '../enums/text-strategy.enum';
 
 @Entity()
 export class ProjectorSettings extends AppBaseEntity {
-  @Column()
+  @Column({
+    default: 'black',
+  })
   backgroundColor: string;
 
-  @Column()
+  @Column({
+    default: 'white',
+  })
   fontColor: string;
 
-  @Column()
+  @Column({
+    default: 'Arial',
+  })
   fontFamily: string;
 
-  @Column()
+  @Column({
+    default: '60px',
+  })
   fontSize: string;
 
-  @Column()
+  @Column({
+    default: 'center',
+  })
   textAlign: string;
 
-  @Column()
+  @Column({
+    default: '0px',
+  })
   letterSpacing: string;
 
-  @Column()
+  @Column({
+    default: '0px',
+  })
   marginInline: string;
 
-  @Column()
+  @Column({
+    default: '0px',
+  })
   marginBlock: string;
 
-  @Column()
+  @Column({
+    default: '0px',
+  })
   paddingTop: string;
 
-  @Column()
+  @Column({
+    default: 30,
+  })
   charactersInLine: number;
 
-  @Column()
+  @Column({
+    default: 6,
+  })
   linesOnPage: number;
 
-  @Column()
+  @Column({
+    default: 'center',
+  })
   textVertically: string;
 
-  @Column()
+  @Column({
+    default: 1920,
+  })
   screenWidth: number;
 
-  @Column()
+  @Column({
+    default: 1080,
+  })
   screenHeight: number;
 
-  @Column()
+  @Column({
+    default: '1',
+  })
   lineHeight: string;
 
-  @Column()
-  textStrategy: TextStrategy;
+  @Column({
+    default: TextStrategyEnum.AUTOMATIC,
+  })
+  textStrategy: TextStrategyEnum;
 
   @Column()
-  organizationId: number | null;
+  organizationId: number;
 }
-
-export const defaultProjectorSettings: ProjectorSettings =
-  new ProjectorSettings();
-
-defaultProjectorSettings.backgroundColor = 'black';
-defaultProjectorSettings.fontColor = 'white';
-defaultProjectorSettings.fontFamily = 'Arial';
-defaultProjectorSettings.fontSize = '24px';
-defaultProjectorSettings.textAlign = 'center';
-defaultProjectorSettings.letterSpacing = '0px';
-defaultProjectorSettings.marginInline = '0px';
-defaultProjectorSettings.marginBlock = '0px';
-defaultProjectorSettings.paddingTop = '0px';
-defaultProjectorSettings.textVertically = 'center';
-defaultProjectorSettings.charactersInLine = 40;
-defaultProjectorSettings.linesOnPage = 20;
-defaultProjectorSettings.screenWidth = 1920;
-defaultProjectorSettings.screenHeight = 1080;
-defaultProjectorSettings.lineHeight = '1';
-defaultProjectorSettings.textStrategy = TextStrategy.FIXED_LINES;

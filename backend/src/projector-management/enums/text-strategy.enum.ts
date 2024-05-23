@@ -1,4 +1,4 @@
-export enum TextStrategy {
+export enum TextStrategyEnum {
   FIXED_LINES = 'FIXED_LINES',
   AUTOMATIC = 'AUTOMATIC',
   EXAMPLE_TEXT = 'EXAMPLE_TEXT',

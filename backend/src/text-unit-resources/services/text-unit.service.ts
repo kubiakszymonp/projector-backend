@@ -50,6 +50,7 @@ export class TextUnitService {
       description: entity.description,
       organizationId: entity.organizationId,
       title: entity.title,
+      partsOrder: entity.partsOrder,
       id: entity.id,
       tags: (entity.tags ?? []).map(GetTextUnitTagDto.fromTextUnitTag),
       queues: (entity.queueTextUnits ?? []).map(GetQueueTextUnit.fromQueueTextUnit),
@@ -70,6 +71,7 @@ export class TextUnitService {
       organizationId: entity.organizationId,
       title: entity.title,
       id: entity.id,
+      partsOrder: entity.partsOrder,
       tags: (entity.tags ?? []).map(GetTextUnitTagDto.fromTextUnitTag),
       queues: (entity.queueTextUnits ?? []).map(GetQueueTextUnit.fromQueueTextUnit),
     };

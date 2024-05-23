@@ -2,22 +2,27 @@ import { Column, Entity } from 'typeorm';
 import { AppBaseEntity } from '../../common/base-entity';
 
 @Entity()
-export class UploadedFile extends AppBaseEntity {
-  @Column()
+export class MediaFile extends AppBaseEntity {
+  @Column({
+    update: false,
+  })
   mimeType: string;
 
   @Column()
   name: string;
 
-  @Column()
+  @Column({
+    update: false,
+  })
   url: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   organizationId: number | null;
 
-  @Column()
+  @Column({
+    update: false,
+  })
   size: number;
-
-  @Column()
-  previewUrl: string;
 }

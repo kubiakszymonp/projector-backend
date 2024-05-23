@@ -1,13 +1,10 @@
 import { createHash } from 'crypto';
 
-const PREVIEW_FILE_PREFIX = '';
-
-export class CreateUploadedFileDto {
+export class MediaFileStructure {
   mimeType: string;
   name: string;
   url: string;
   size: number;
-  previewUrl: string;
   buffer: Buffer;
   organization: { id: number };
 
@@ -24,8 +21,6 @@ export class CreateUploadedFileDto {
     this.buffer = buffer;
     this.organization = { id: organizationId };
     this.url = this.createHashedName() + '.' + this.getExtension();
-    this.previewUrl =
-      this.createHashedName() + PREVIEW_FILE_PREFIX + '.' + this.getExtension();
   }
 
   createHashedName(): string {

@@ -26,4 +26,8 @@ export class CreateTextUnitDto {
     @IsArray()
     @IsNotEmpty()
     displayQueueIds: number[];
+
+    @ApiProperty()
+    @IsOptional()
+    partsOrder?: string;
 }

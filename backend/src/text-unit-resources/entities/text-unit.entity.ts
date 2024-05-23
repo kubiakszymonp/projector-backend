@@ -32,4 +32,9 @@ export class TextUnit extends AppBaseEntity {
 
   @OneToMany(() => QueueTextUnit, queueTextUnit => queueTextUnit.textUnit)
   queueTextUnits: QueueTextUnit[];
+
+  @Column({
+    nullable: true
+  })
+  partsOrder?: string;
 }
