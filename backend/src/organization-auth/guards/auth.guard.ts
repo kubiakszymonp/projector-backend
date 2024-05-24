@@ -59,7 +59,7 @@ export class AuthGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_SECRET,
       });
-      request[AUTHENTICATION_DATA_REQUEST_KEY] = tokenPayload.organization;
+      request[AUTHENTICATION_DATA_REQUEST_KEY] = tokenPayload;
 
       if (requiredRole && requiredRole !== payload.role) {
         throw new UnauthorizedException("You don't have the required role to access this resource.");

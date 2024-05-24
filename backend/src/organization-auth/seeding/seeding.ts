@@ -1,3 +1,4 @@
+import { ENVIRONMENT } from "src/environment";
 import { Role } from "../enums/role.enum";
 import { OrganizationsService } from "../services/organizations.service";
 import { UsersService } from "../services/users.service";
@@ -5,10 +6,10 @@ import { UsersService } from "../services/users.service";
 export const seedUsers = async (usersService: UsersService) => {
 
     const nonAdminUser = await usersService.createUser({
-        email: "kubiakszymon@gmail.com",
+        email: ENVIRONMENT.ROOT_USER_EMAIL,
         name: "Szymon",
         organizationId: 1,
-        password: "password",
+        password: ENVIRONMENT.ROOT_USER_PASSWORD,
         role: Role.USER,
     });
 

@@ -11,6 +11,9 @@ import { TextUnit } from './text-unit-resources/entities/text-unit.entity';
 import { DisplayQueue } from './text-unit-resources/entities/display-queue.entity';
 import { TextUnitTag } from './text-unit-resources/entities/text-unit-tag.entity';
 import { QueueTextUnit } from './text-unit-resources/entities/queue-text-unit.entity';
+import { MediaFile } from './projector-management/entities/media-file.entity';
+import { DisplayState } from './projector-management/entities/display-state.entity';
+import { ProjectorSettings } from './projector-management/entities/projector-settings.entity';
 
 @Module({
   imports: [
@@ -19,7 +22,7 @@ import { QueueTextUnit } from './text-unit-resources/entities/queue-text-unit.en
       type: 'sqlite',
       // relative path to the database file
       database: ENVIRONMENT.DATABASE_URL,
-      entities: [User, Organization, TextUnit, DisplayQueue, TextUnitTag, QueueTextUnit],
+      entities: [User, Organization, TextUnit, DisplayQueue, TextUnitTag, QueueTextUnit, MediaFile, DisplayState, ProjectorSettings],
       synchronize: ENVIRONMENT.DATABASE_SYNCHRONIZE,
       logging: ENVIRONMENT.DATABASE_LOGGING,
       dropSchema: ENVIRONMENT.DROP_SCHEMA,

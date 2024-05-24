@@ -1,31 +1,32 @@
 import { Injectable } from "@nestjs/common";
 import { WebRtcConnectionStructure } from "../structures/webrtc-connection-structure";
+import { WebRtcSdpDto } from "../dto/get/webrtc-sdp.dto";
 
 @Injectable()
 export class WebRtcSignalingService {
 
-    private organizationConnections: Map<string, any> = new Map<string, any>();
+    private organizationConnections: Map<string, WebRtcConnectionStructure> = new Map<string, WebRtcConnectionStructure>();
 
     constructor() {
     }
 
-    setOffer(organizationId: string, offer: any): WebRtcConnectionStructure {
+    setOffer(organizationId: string, offer: WebRtcSdpDto): WebRtcConnectionStructure {
 
         this.organizationConnections.set(organizationId, {
-            sdpOffer: offer,
-            sdpAnswer: null,
+            offer: offer.payload,
+            answer: null,
         });
 
         return this.organizationConnections.get(organizationId);
     }
 
-    getState(organizationId: string): any {
+    getState(organizationId: string): WebRtcConnectionStructure {
         return this.organizationConnections.get(organizationId);
     }
 
-    setAnswer(organizationId: string, answer: any) {
+    setAnswer(organizationId: string, answer: WebRtcSdpDto) {
         const connection = this.organizationConnections.get(organizationId);
-        connection.sdpAnswer = answer;
+        connection.answer = answer.payload;
         this.organizationConnections.set(organizationId, connection);
     }
 

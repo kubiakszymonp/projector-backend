@@ -12,6 +12,7 @@ import { MovePageDto } from '../dto/update/move-page.dto';
 import { MovePageDirectionEnum } from '../enums/move-page-direction.enum';
 import { GetProjectorSettingsDto } from '../dto/get/get-projector-settings.dto';
 import { LinesWrapperPaginator, OrderedParsedTextUnit, ParsedTextUnit } from 'text-parser';
+import { ProjectorChangeNotificationGateway } from './projector-change-notification.gateway';
 
 @Injectable()
 export class DisplayStateService {
@@ -20,6 +21,7 @@ export class DisplayStateService {
     @InjectRepository(DisplayState) private displayStateRepository: Repository<DisplayState>,
     private projectorSettingsService: ProjectorSettingsService,
     private textUnitService: TextUnitService,
+    private projectorChangeNotificationGateway: ProjectorChangeNotificationGateway,
   ) {
   }
 
@@ -52,7 +54,8 @@ export class DisplayStateService {
     });
 
     await this.displayStateRepository.save(newProjectorState);
-
+    
+    this.projectorChangeNotificationGateway.notifyOrganization(organizationId);
     return this.findOne(organizationId);
   }
 

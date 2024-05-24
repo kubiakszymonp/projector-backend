@@ -24,5 +24,6 @@ export class User extends AppBaseEntity {
   @JoinColumn({ name: 'organizationId' })
   organization: Organization | null;
 
+  @Column({ nullable: true })
   organizationId: number | null;
 }

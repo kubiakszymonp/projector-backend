@@ -5,6 +5,7 @@ import { AUTHENTICATION_DATA_REQUEST_KEY } from './consts';
 
 export const AuthenticationData = createParamDecorator(
   (_data, context: ExecutionContext) => {
-    return context.switchToHttp().getRequest()[AUTHENTICATION_DATA_REQUEST_KEY] as JwtAuthenticationData;
+    const request = context.switchToHttp().getRequest();
+    return request[AUTHENTICATION_DATA_REQUEST_KEY] as JwtAuthenticationData;
   },
 );

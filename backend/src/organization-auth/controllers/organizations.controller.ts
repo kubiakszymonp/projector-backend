@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Post, Body, Patch, Get, Delete } from "@nestjs/common";
+import { Controller, UseGuards, Post, Body, Patch, Get, Delete, Param } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { RequiredRole } from "src/common/roles.decorator";
 import { CreateOrganizationDto } from "../dto/create-organization.dto";
@@ -16,32 +16,32 @@ export class OrganizationController {
 
     @UseGuards(AuthGuard)
     @RequiredRole(Role.ADMIN)
-    @Post("organization")
+    @Post()
     createOrganization(@Body() createOrganizationDto: CreateOrganizationDto) {
         return this.organizationsService.createOrganization(createOrganizationDto);
     }
 
     @UseGuards(AuthGuard)
-    @Patch("organization")
+    @Patch()
     updateOrganization(@Body() createOrganizationDto: UpdateUserDto) {
         return this.organizationsService.updateOrganization(createOrganizationDto);
     }
 
     @UseGuards(AuthGuard)
-    @Get("organization")
+    @Get()
     getOrganizations() {
         return this.organizationsService.getOrganizations();
     }
 
     @UseGuards(AuthGuard)
-    @Get("organization/:id")
-    getOrganization(id: number) {
+    @Get(":id")
+    getOrganization(@Param('id') id: number) {
         return this.organizationsService.getOrganization(id);
     }
 
     @UseGuards(AuthGuard)
-    @Delete("organization/:id")
-    deleteOrganization(id: number) {
+    @Delete(":id")
+    deleteOrganization(@Param('id') id: number) {
         return this.organizationsService.deleteOrganization(id);
     }
 }

@@ -31,27 +31,6 @@ const devWindows = {
   JWT_ORGANIZATION_ID: 1
 };
 
-const deploy = {
-  DATABASE_URL: __dirname + '../../../database/db.sqlite',
-  DATABASE_SYNCHRONIZE: true,
-  DATABASE_LOGGING: false,
-  DROP_SCHEMA: false,
-  PORT: 3001,
-  FILE_UPLOAD_PATH: __dirname + '../../../uploads/',
-  CERT_PATH: '../cert/cert.pem',
-  KEY_PATH: '../cert/key.pem',
-  ENABLE_HTTPS: false,
-  ROOT_USER_EMAIL: 'kubiakszymonp@gmail.com',
-  ROOT_USER_PASSWORD: 'Password123!',
-  SEED_ORGANIZATIONS: true,
-  SEED_USERS: true,
-  SEED_TEXT_UNITS: true,
-  JWT_SECRET: '5b56bvn9053jvq34v43rvc4ewckewr90vu2894uVU40CUWEDOPKPE93R90V20403ir0v2309T698419V94-TVQREFJAOP4TBAUP985Y',
-  CAN_APPLY_BACKUP: true,
-  REQUIRE_JWT: true,
-  JWT_ORGANIZATION_ID: 1
-};
-
 export const ENVIRONMENT: {
   DATABASE_URL: string;
   DATABASE_SYNCHRONIZE: boolean;
