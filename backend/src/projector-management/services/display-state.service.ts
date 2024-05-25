@@ -115,7 +115,8 @@ export class DisplayStateService {
     }
 
     await this.displayStateRepository.save(displayState);
-
+    
+    this.projectorChangeNotificationGateway.notifyOrganization(organizationId);
     return this.findOne(organizationId);
   }
 

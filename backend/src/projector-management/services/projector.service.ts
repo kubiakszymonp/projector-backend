@@ -72,7 +72,7 @@ export class ProjectorService {
 
     let lines: string[] = [];
 
-    const order = textUnit.partsOrder.split(',').map((part) => parseInt(part, 10));
+    const order = (textUnit.partsOrder || "").split(',').map((part) => parseInt(part, 10));
     const orderedParsedText = new OrderedParsedTextUnit(textUnit.content, order);
 
     if (projectorSettings.textStrategy === TextStrategyEnum.AUTOMATIC) {

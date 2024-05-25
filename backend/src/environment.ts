@@ -16,7 +16,7 @@ const devWindows = {
 
   // SEEDING
   ROOT_USER_EMAIL: 'kubiakszymonp@gmail.com',
-  ROOT_USER_PASSWORD: 'Password123!',
+  ROOT_USER_PASSWORD: '123',
   SEED_ORGANIZATIONS: true,
   SEED_USERS: true,
   SEED_TEXT_UNITS: true,

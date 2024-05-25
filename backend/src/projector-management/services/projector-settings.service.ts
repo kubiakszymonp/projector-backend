@@ -4,12 +4,14 @@ import { ProjectorSettings } from '../entities/projector-settings.entity';
 import { GetProjectorSettingsDto } from '../dto/get/get-projector-settings.dto';
 import { UpdateProjectorSettingDto } from '../dto/update/update-projector-settings.dto';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ProjectorChangeNotificationGateway } from './projector-change-notification.gateway';
 
 @Injectable()
 export class ProjectorSettingsService {
 
     constructor(
         @InjectRepository(ProjectorSettings) private projectorSettingsRepository: Repository<ProjectorSettings>,
+        private projectorChangeNotificationGateway: ProjectorChangeNotificationGateway,
     ) {
     }
 
@@ -41,6 +43,7 @@ export class ProjectorSettingsService {
             organizationId,
         });
         await this.projectorSettingsRepository.save(newProjectorSettings);
+        this.projectorChangeNotificationGateway.notifyOrganization(organizationId);
         return this.findOne(organizationId);
     }
 
