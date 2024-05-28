@@ -72,6 +72,8 @@ export class ProjectorService {
 
     let lines: string[] = [];
 
+    if(textUnit) {
+
     const order = (textUnit.partsOrder || "").split(',').map((part) => parseInt(part, 10));
     const orderedParsedText = new OrderedParsedTextUnit(textUnit.content, order);
 
@@ -89,6 +91,7 @@ export class ProjectorService {
 
       lines = linesWrapperPaginator.getPage(displayState.textUnitPartPage);
     }
+  }
 
     return {
       displayType: DisplayTypeEnum.TEXT,

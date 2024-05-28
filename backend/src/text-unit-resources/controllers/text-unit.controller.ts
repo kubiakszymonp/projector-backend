@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -16,6 +17,7 @@ import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
 import { CreateTextUnitDto } from '../dto/create/create-text-unit.dto';
 import { GetTextUnitDto } from '../dto/get/get-text-unit.dto';
 import { UpdateTextUnitDto } from '../dto/update/update-text-unit.dto';
+import { NotFoundError } from 'rxjs';
 
 @ApiTags('text-units')
 @UseGuards(AuthGuard)
@@ -43,7 +45,7 @@ export class TextUnitController {
     const res = await this.textUnitService.findOne(+id);
 
     if (!res) {
-      throw new Error(`Text unit with id ${id} not found`);
+      throw new NotFoundException(`Text unit with id ${id} not found`);
     }
 
     return res;

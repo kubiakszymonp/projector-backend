@@ -78,7 +78,6 @@ export class TextUnitService {
   }
 
   async update(id: number, updateTextUnitDto: UpdateTextUnitDto) {
-
     const textUnit = this.textUnitRepository.create({
       content: updateTextUnitDto.content,
       title: updateTextUnitDto.title,

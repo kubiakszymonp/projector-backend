@@ -30,7 +30,7 @@ export class TextUnitTagController {
     @AuthenticationData() authenticationData: JwtAuthenticationData,
   ) {
     return this.textUnitTagService.create(
-      +authenticationData.organizationId,
+      authenticationData.organizationId,
       createTextUnitTagDto,
     );
   }
@@ -39,7 +39,7 @@ export class TextUnitTagController {
   findAll(
     @AuthenticationData() authenticationData: JwtAuthenticationData,
   ): Promise<GetTextUnitTagDto[]> {
-    return this.textUnitTagService.findAll(+authenticationData.organizationId);
+    return this.textUnitTagService.findAll(authenticationData.organizationId);
   }
 
   @Get(':id')

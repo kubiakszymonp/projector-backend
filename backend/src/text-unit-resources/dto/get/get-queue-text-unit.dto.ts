@@ -6,6 +6,12 @@ export class GetQueueTextUnit {
     id: number;
 
     @ApiProperty()
+    displayQueueId: number;
+
+    @ApiProperty()
+    textUnitId: number;
+
+    @ApiProperty()
     textTitle: string;
 
     @ApiProperty()
@@ -20,6 +26,8 @@ export class GetQueueTextUnit {
             textTitle: queueTextUnit.textUnit.title,
             queueName: queueTextUnit.displayQueue.name,
             position: queueTextUnit.position,
+            displayQueueId: queueTextUnit.displayQueue.id,
+            textUnitId: queueTextUnit.textUnit.id,
         }
     }
 }

@@ -22,7 +22,18 @@ export class MediaFilesService {
   }
 
   async upload(mediaFileStructures: MediaFileStructure[]) {
-    await this.mediaFilesRepository.insert(mediaFileStructures);
+    const mediaFiles = mediaFileStructures.map((mediaFileStructure) => {
+      return this.mediaFilesRepository.create({
+        name: mediaFileStructure.name,
+        url: mediaFileStructure.url,
+        mimeType: mediaFileStructure.mimeType,
+        size: mediaFileStructure.size,
+        organizationId: mediaFileStructure.organization.id,
+
+      });
+    });
+
+    await this.mediaFilesRepository.insert(mediaFiles);
     this.storeMediaFiles(mediaFileStructures);
   }
 

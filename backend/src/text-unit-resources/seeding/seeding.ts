@@ -9,17 +9,17 @@ export const seedTextUnits = async (
     displayQueuesService: DisplayQueuesService
 ) => {
 
-    const tag1 = await textUnitTagService.create(null, {
+    const tag1 = await textUnitTagService.create(1, {
         name: "Papieskie",
         description: "Teksty papieskie",
     });
 
-    const tag2 = await textUnitTagService.create(null, {
+    const tag2 = await textUnitTagService.create(1, {
         name: "Kolędy",
         description: "Polskie kolędy",
     });
 
-    const textUnit1 = await textUnitService.create(null, {
+    const textUnit1 = await textUnitService.create(1, {
         content: "Pan kiedyś stanął nad brzegiem",
         displayQueueIds: [],
         textUnitTagIds: [],
@@ -28,7 +28,7 @@ export const seedTextUnits = async (
         transposition: 0,
     });
 
-    const textUnit2 = await textUnitService.create(null, {
+    const textUnit2 = await textUnitService.create(1, {
         content: "Wśród nocnej ciszy",
         displayQueueIds: [],
         textUnitTagIds: [tag2.id],
@@ -37,7 +37,7 @@ export const seedTextUnits = async (
         transposition: 0,
     });
 
-    const textUnit3 = await textUnitService.create(null, {
+    const textUnit3 = await textUnitService.create(1, {
         content: "Bóg się rodzi",
         displayQueueIds: [],
         textUnitTagIds: [tag2.id, tag1.id],
@@ -46,19 +46,19 @@ export const seedTextUnits = async (
         transposition: 0,
     });
 
-    const displayQueue1 = await displayQueuesService.create(null, {
+    const displayQueue1 = await displayQueuesService.create(1, {
         name: "Playlista na niedzielę",
         textUnitIds: [textUnit1.id, textUnit2.id],
     });
 
-    const displayQueue2 = await displayQueuesService.create(null, {
+    const displayQueue2 = await displayQueuesService.create(1, {
         name: "Playlista na drugą niedzielę",
         description: "cos tam",
         textUnitIds: [textUnit2.id, textUnit1.id],
     });
     
 
-    const textUnit4 = await textUnitService.create(null, {
+    const textUnit4 = await textUnitService.create(1, {
         content: "Kiedy ranne wstają zorze",
         displayQueueIds: [displayQueue1.id],
         textUnitTagIds: [tag1.id],
@@ -66,5 +66,6 @@ export const seedTextUnits = async (
         description: "Kiedy ranne wstają zorze - tekst piosenki",
         transposition: 0,
     });
+    
 }
 

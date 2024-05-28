@@ -79,7 +79,7 @@ export class DisplayQueuesService {
       description: updateTextUnitQueue.description,
       queueTextUnits: updateTextUnitQueue.textUnitIds.map((id) => ({ id })),
     });
-
+    // TODO FIX THIS
     await this.displayQueueRepository.update(id, textUnitQueue);
 
     await this.queueTextUnitRepository.delete({
