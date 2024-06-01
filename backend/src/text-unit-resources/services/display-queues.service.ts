@@ -31,6 +31,7 @@ export class DisplayQueuesService {
       textUnit: { id },
       position: index,
     }));
+    
     await this.queueTextUnitRepository.save(queueTextUnits);
 
     return this.findOne(displayQueue.id);
@@ -77,9 +78,8 @@ export class DisplayQueuesService {
     const textUnitQueue = this.displayQueueRepository.create({
       name: updateTextUnitQueue.name,
       description: updateTextUnitQueue.description,
-      queueTextUnits: updateTextUnitQueue.textUnitIds.map((id) => ({ id })),
     });
-    // TODO FIX THIS
+
     await this.displayQueueRepository.update(id, textUnitQueue);
 
     await this.queueTextUnitRepository.delete({
@@ -87,7 +87,7 @@ export class DisplayQueuesService {
     });
 
     const queueTextUnits = updateTextUnitQueue.textUnitIds.map((id, index) => this.queueTextUnitRepository.create({
-      displayQueue: { id: id },
+      displayQueue: { id: updateTextUnitQueue.id },
       textUnit: { id },
       position: index,
     }));

@@ -8,6 +8,7 @@ import {
   UseInterceptors,
   UploadedFile,
   Body,
+  Delete,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthenticationData } from 'src/common/authentication-data';
@@ -16,6 +17,7 @@ import { AuthGuard } from 'src/organization-auth/guards/auth.guard';
 import { PLAYLIST_NAME } from 'src/common/consts';
 import { WebRtcSignalingService } from '../services/webrtc-signaling.service';
 import { WebRtcSdpDto } from '../dto/get/webrtc-sdp.dto';
+import { ExportWebRtcScreenDto } from '../dto/update/send-wer-rtc-screen.dto';
 
 @ApiTags('webrtc-stream')
 @Controller('webrtc-stream')
@@ -28,7 +30,7 @@ export class WebRtcController {
   async getState(
     @AuthenticationData() authenticationData: JwtAuthenticationData,
   ) {
-    this.webRtcSignalingService.getState(authenticationData.organizationId.toString());
+    return this.webRtcSignalingService.getState(authenticationData.organizationId.toString());
   }
 
   @UseGuards(AuthGuard)
@@ -48,4 +50,31 @@ export class WebRtcController {
   ) {
     await this.webRtcSignalingService.setAnswer(authenticationData.organizationId.toString(), answer);
   }
+
+  @UseGuards(AuthGuard)
+  @Post("screen")
+  async setScreen(
+    @AuthenticationData() authenticationData: JwtAuthenticationData,
+    @Body() exportWebRtcScreenDto: ExportWebRtcScreenDto,
+  ) {
+    await this.webRtcSignalingService.setWaitingScreen(authenticationData.organizationId.toString(), exportWebRtcScreenDto.screenId);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete("screen")
+  async removeScreen(
+    @AuthenticationData() authenticationData: JwtAuthenticationData,
+    @Body() exportWebRtcScreenDto: ExportWebRtcScreenDto,
+  ) {
+    await this.webRtcSignalingService.removeScreen(authenticationData.organizationId.toString(), exportWebRtcScreenDto.screenId);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete()
+  async clearOrganization(
+    @AuthenticationData() authenticationData: JwtAuthenticationData,
+  ) {
+    await this.webRtcSignalingService.clearOrganization(authenticationData.organizationId.toString());
+  }
+
 }

@@ -6,7 +6,7 @@ import { DisplayQueue } from "../entities/display-queue.entity";
 import { TextUnitTag } from "../entities/text-unit-tag.entity";
 import { QueueTextUnit } from "../entities/queue-text-unit.entity";
 import { deflate, inflate } from "zlib";
-import { ENVIRONMENT } from "src/environment";
+import { ENVIRONMENT } from "../../../src/environment";
 
 export interface BackupData {
     textUnits: TextUnit[],

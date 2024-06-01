@@ -21,5 +21,5 @@ export class GetDisplayDto {
 
     @ApiProperty()
     @IsOptional()
-    webRtcState?: WebRtcConnectionStructure;
+    webRtcState?: Array<WebRtcConnectionStructure>;
 }

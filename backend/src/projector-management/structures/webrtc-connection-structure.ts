@@ -9,4 +9,8 @@ export class WebRtcConnectionStructure {
     @ApiProperty()
     @IsOptional()
     answer?: any | null;
+
+    @ApiProperty()
+    @IsOptional()
+    screenId: string;
 }

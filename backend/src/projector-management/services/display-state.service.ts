@@ -71,7 +71,7 @@ export class DisplayStateService {
       textUnitId: displayState.textUnitId,
       textUnitPart: displayState.textUnitPart,
       textUnitPartPage: displayState.textUnitPartPage,
-      mediaFileId: displayState.mediaFile?.id,
+      mediaFileId: displayState.mediaFileId,
       textUnitQueueId: displayState.textUnitQueueId,
       id: displayState.id,
       createdAt: displayState.createdAt,
@@ -100,8 +100,9 @@ export class DisplayStateService {
       throw new NotFoundException('No song found');
     }
 
-    const order = currentTextUnit.partsOrder.split(',').map((part) => parseInt(part, 10));
+    const order = currentTextUnit.partsOrder?.split(',').map((part) => parseInt(part, 10)) ?? [];
     const orderedParsedTextUnit = new OrderedParsedTextUnit(currentTextUnit.content, order);
+    
 
     if (movePageDto.direction === MovePageDirectionEnum.NEXT) {
       this.goToNextPage(
@@ -129,8 +130,8 @@ export class DisplayStateService {
     const numberOfOrderedParts = orderedParsedTextUnit.orderedTextUnitParts.length;
 
     if (projectorSettings.textStrategy === TextStrategyEnum.AUTOMATIC) {
-      if (displayState.textUnitPartPage < numberOfOrderedParts - 1) {
-        displayState.textUnitPartPage++;
+      if (displayState.textUnitPart < numberOfOrderedParts - 1) {
+        displayState.textUnitPart++;
       }
     }
     if (projectorSettings.textStrategy === TextStrategyEnum.FIXED_LINES) {

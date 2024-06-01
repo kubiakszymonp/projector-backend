@@ -39,6 +39,11 @@ export class DisplayState extends AppBaseEntity {
   organizationId: number;
 
   @OneToOne(() => MediaFile)
-  @JoinColumn()
+  @JoinColumn({ name: 'mediaFileId' })
   mediaFile?: MediaFile | null;
+
+  @Column({
+    nullable: true
+  })
+  mediaFileId?: number | null;
 }

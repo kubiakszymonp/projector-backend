@@ -1,3 +1,4 @@
+import { fstat, readFileSync } from "fs";
 import { DisplayQueuesService } from "../services/display-queues.service";
 import { TextUnitTagService } from "../services/text-unit-tag.service";
 import { TextUnitService } from "../services/text-unit.service";
@@ -20,7 +21,7 @@ export const seedTextUnits = async (
     });
 
     const textUnit1 = await textUnitService.create(1, {
-        content: "Pan kiedyś stanął nad brzegiem",
+        content: readFileSync("C:\\Users\\kubia\\Desktop\\dev\\projector-backend\\songs\\Barka.txt", "utf-8"),
         displayQueueIds: [],
         textUnitTagIds: [],
         title: "Barka",
@@ -56,7 +57,7 @@ export const seedTextUnits = async (
         description: "cos tam",
         textUnitIds: [textUnit2.id, textUnit1.id],
     });
-    
+
 
     const textUnit4 = await textUnitService.create(1, {
         content: "Kiedy ranne wstają zorze",
@@ -66,6 +67,6 @@ export const seedTextUnits = async (
         description: "Kiedy ranne wstają zorze - tekst piosenki",
         transposition: 0,
     });
-    
+
 }
 

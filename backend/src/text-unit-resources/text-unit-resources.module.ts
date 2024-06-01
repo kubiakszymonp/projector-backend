@@ -22,7 +22,6 @@ import { QueueTextUnitService } from './services/queue-text-unit.service';
   exports: [TextUnitService, DisplayQueuesService, QueueTextUnitService]
 })
 export class TextUnitResourcesModule {
-
   constructor(
     private displayQueuesService: DisplayQueuesService,
     private textUnitTagService: TextUnitTagService,

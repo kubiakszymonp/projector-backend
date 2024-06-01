@@ -6,31 +6,90 @@ import { ProjectorChangeNotificationGateway } from "./projector-change-notificat
 @Injectable()
 export class WebRtcSignalingService {
 
-    private organizationConnections: Map<string, WebRtcConnectionStructure> = new Map<string, WebRtcConnectionStructure>();
+    private organizationConnections: Map<string, Set<WebRtcConnectionStructure>> = new Map();
 
     constructor(private projectorChangeNotificationGateway: ProjectorChangeNotificationGateway) {
     }
 
-    setOffer(organizationId: string, offer: WebRtcSdpDto): WebRtcConnectionStructure {
 
-        this.organizationConnections.set(organizationId, {
-            offer: offer.payload,
+    setWaitingScreen(organizationId: string, screenId: string): WebRtcConnectionStructure {
+
+        if (!this.organizationConnections.has(organizationId)) {
+            this.organizationConnections.set(organizationId, new Set());
+        }
+        this.organizationConnections.get(organizationId).add({
+            offer: null,
             answer: null,
+            screenId: screenId,
         });
         this.projectorChangeNotificationGateway.notifyOrganization(organizationId);
-        return this.organizationConnections.get(organizationId);
+        return this.getForOrganzationAndScreen(organizationId, screenId);
     }
 
-    getState(organizationId: string): WebRtcConnectionStructure {
-        return this.organizationConnections.get(organizationId);
+    getForOrganzationAndScreen(organizationId: string, screenId: string): WebRtcConnectionStructure {
+        const connections = this.organizationConnections.get(organizationId);
+        for (const connection of connections) {
+            if (connection.screenId === screenId) {
+                return connection;
+            }
+        }
+        return null;
     }
 
-    setAnswer(organizationId: string, answer: WebRtcSdpDto) {
-        const connection = this.organizationConnections.get(organizationId);
-        connection.answer = answer.payload;
-        this.organizationConnections.set(organizationId, connection);
+    setOffer(organizationId: string, offer: WebRtcSdpDto): Set<WebRtcConnectionStructure> {
+
+        const connection = this.getForOrganzationAndScreen(organizationId, offer.screenId);
+
+        if (!connection) {
+            console.log("No connection found for screenId: ", offer.screenId, " organizationId: ", organizationId);
+            return;
+        }
+
+        connection.offer = offer.payload;
+
         this.projectorChangeNotificationGateway.notifyOrganization(organizationId);
         return this.organizationConnections.get(organizationId);
+    }
+
+
+    getState(organizationId: string): Array<WebRtcConnectionStructure> {
+        return Array.from(this.organizationConnections.get(organizationId));
+    }
+
+    setAnswer(organizationId: string, answer: WebRtcSdpDto): Set<WebRtcConnectionStructure> {
+
+        const connection = this.getForOrganzationAndScreen(organizationId, answer.screenId);
+
+        if (!connection) {
+            console.log("No connection found for screenId: ", answer.screenId, " organizationId: ", organizationId);
+            return;
+        }
+
+
+        connection.answer = answer.payload;
+
+        this.projectorChangeNotificationGateway.notifyOrganization(organizationId);
+        return this.organizationConnections.get(organizationId);
+    }
+
+    removeScreen(organizationId: string, screenId: string): Set<WebRtcConnectionStructure> {
+        const organizationConnections = this.organizationConnections.get(organizationId);
+        organizationConnections.forEach((connection) => {
+            if (connection.screenId === screenId) {
+                organizationConnections.delete(connection);
+            }
+        });
+
+        return this.organizationConnections.get(organizationId);
+    }
+
+    clearOrganization(organizationId: string) {
+        const connectionsForOrganizations = this.organizationConnections.get(organizationId);
+        connectionsForOrganizations.forEach(rtc => {
+            rtc.answer = null
+            rtc.offer = null
+        });
+           
     }
 
     private generateRandomString(): string {

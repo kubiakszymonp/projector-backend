@@ -10,8 +10,8 @@ import { Request } from 'express';
 import { Role } from '../enums/role.enum';
 import { ROLE_KEY as ROLE_KEY } from '../../common/roles.decorator';
 import { decode } from 'jsonwebtoken';
-import { ENVIRONMENT } from 'src/environment';
 import { AUTHENTICATION_DATA_REQUEST_KEY } from 'src/common/consts';
+import { ENVIRONMENT } from 'src/environment';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -24,6 +24,7 @@ export class AuthGuard implements CanActivate {
     ]);
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
+
 
     if (ENVIRONMENT.REQUIRE_JWT) {
       return this.jwtRequired(token, request, requiredRole);

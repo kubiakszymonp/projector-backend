@@ -18,7 +18,6 @@ export class ProjectorChangeNotificationGateway
 
   @WebSocketServer()
   private server: Server;
-  private clientMap = new Map<string, Set<string>>();
 
   handleConnection(client: Socket): void {
     const organizationId = client.handshake.query.organizationId as string;
@@ -28,21 +27,14 @@ export class ProjectorChangeNotificationGateway
       return;
     }
 
-    if (!this.clientMap.has(organizationId)) {
-      this.clientMap.set(organizationId, new Set());
-    }
-    this.clientMap.get(organizationId).add(client.id);
-
     client.join(organizationId);
   }
 
   handleDisconnect(client: Socket): void {
-    this.clientMap.forEach((clients, orgId) => {
-      clients.delete(client.id);
-    });
+
   }
 
   notifyOrganization(organizationId: string | number): void {
-    this.server.to(organizationId.toString()).emit(ORGANIZATION_UPDATE_EVENT_NAME);
+    this.server?.to(organizationId.toString()).emit(ORGANIZATION_UPDATE_EVENT_NAME);
   }
 }
