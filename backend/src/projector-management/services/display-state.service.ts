@@ -55,7 +55,7 @@ export class DisplayStateService {
 
     await this.displayStateRepository.save(newProjectorState);
     
-    this.projectorChangeNotificationGateway.notifyOrganization(organizationId);
+    this.projectorChangeNotificationGateway.notifyUpdateOrganization(organizationId);
     return this.findOne(organizationId);
   }
 
@@ -117,7 +117,7 @@ export class DisplayStateService {
 
     await this.displayStateRepository.save(displayState);
     
-    this.projectorChangeNotificationGateway.notifyOrganization(organizationId);
+    this.projectorChangeNotificationGateway.notifyUpdateOrganization(organizationId);
     return this.findOne(organizationId);
   }
 

@@ -7,7 +7,7 @@ const devWindows = {
   // DATABASE
   DATABASE_URL: "C:\\Users\\kubia\\Desktop\\dev\\projector-backend\\database\\db.sqlite",
   DATABASE_SYNCHRONIZE: true,
-  DATABASE_LOGGING: true,
+  DATABASE_LOGGING: false,
   DROP_SCHEMA: true,
 
   // SERVER

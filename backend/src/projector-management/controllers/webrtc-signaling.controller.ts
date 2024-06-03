@@ -18,12 +18,14 @@ import { PLAYLIST_NAME } from 'src/common/consts';
 import { WebRtcSignalingService } from '../services/webrtc-signaling.service';
 import { WebRtcSdpDto } from '../dto/get/webrtc-sdp.dto';
 import { ExportWebRtcScreenDto } from '../dto/update/send-wer-rtc-screen.dto';
+import { ProjectorChangeNotificationGateway } from '../services/projector-change-notification.gateway';
 
 @ApiTags('webrtc-stream')
 @Controller('webrtc-stream')
 export class WebRtcController {
 
-  constructor(private webRtcSignalingService: WebRtcSignalingService) { }
+  constructor(private webRtcSignalingService: WebRtcSignalingService,
+    private projectorChangeNotificationGateway: ProjectorChangeNotificationGateway) { }
 
   @UseGuards(AuthGuard)
   @Get()
@@ -40,6 +42,7 @@ export class WebRtcController {
     @Body() offer: WebRtcSdpDto,
   ) {
     await this.webRtcSignalingService.setOffer(authenticationData.organizationId.toString(), offer);
+    this.projectorChangeNotificationGateway.notifyWebRtcOffer(authenticationData.organizationId.toString(), offer.screenId, offer);
   }
 
   @UseGuards(AuthGuard)
@@ -49,6 +52,7 @@ export class WebRtcController {
     @Body() answer: WebRtcSdpDto,
   ) {
     await this.webRtcSignalingService.setAnswer(authenticationData.organizationId.toString(), answer);
+    this.projectorChangeNotificationGateway.notifyWebRtcAnswer(authenticationData.organizationId.toString(), answer.screenId, answer);
   }
 
   @UseGuards(AuthGuard)
@@ -58,6 +62,7 @@ export class WebRtcController {
     @Body() exportWebRtcScreenDto: ExportWebRtcScreenDto,
   ) {
     await this.webRtcSignalingService.setWaitingScreen(authenticationData.organizationId.toString(), exportWebRtcScreenDto.screenId);
+    this.projectorChangeNotificationGateway.notifyUpdateOrganization(authenticationData.organizationId.toString());
   }
 
   @UseGuards(AuthGuard)
@@ -67,6 +72,8 @@ export class WebRtcController {
     @Body() exportWebRtcScreenDto: ExportWebRtcScreenDto,
   ) {
     await this.webRtcSignalingService.removeScreen(authenticationData.organizationId.toString(), exportWebRtcScreenDto.screenId);
+
+    //this.projectorChangeNotificationGateway.notifyUpdateOrganization(authenticationData.organizationId.toString());
   }
 
   @UseGuards(AuthGuard)
@@ -75,6 +82,7 @@ export class WebRtcController {
     @AuthenticationData() authenticationData: JwtAuthenticationData,
   ) {
     await this.webRtcSignalingService.clearOrganization(authenticationData.organizationId.toString());
+   // this.projectorChangeNotificationGateway.notifyUpdateOrganization(authenticationData.organizationId.toString());
   }
 
 }
