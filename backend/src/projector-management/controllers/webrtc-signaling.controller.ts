@@ -32,7 +32,7 @@ export class WebRtcController {
   async getState(
     @AuthenticationData() authenticationData: JwtAuthenticationData,
   ) {
-    return this.webRtcSignalingService.getState(authenticationData.organizationId.toString());
+    // return this.webRtcSignalingService.getState(authenticationData.organizationId.toString());
   }
 
   @UseGuards(AuthGuard)
@@ -41,8 +41,8 @@ export class WebRtcController {
     @AuthenticationData() authenticationData: JwtAuthenticationData,
     @Body() offer: WebRtcSdpDto,
   ) {
-    await this.webRtcSignalingService.setOffer(authenticationData.organizationId.toString(), offer);
-    this.projectorChangeNotificationGateway.notifyWebRtcOffer(authenticationData.organizationId.toString(), offer.screenId, offer);
+    // await this.webRtcSignalingService.setOffer(authenticationData.organizationId.toString(), offer);
+    // this.projectorChangeNotificationGateway.notifyWebRtcOffer(authenticationData.organizationId.toString(), offer.screenId, offer);
   }
 
   @UseGuards(AuthGuard)
@@ -51,8 +51,8 @@ export class WebRtcController {
     @AuthenticationData() authenticationData: JwtAuthenticationData,
     @Body() answer: WebRtcSdpDto,
   ) {
-    await this.webRtcSignalingService.setAnswer(authenticationData.organizationId.toString(), answer);
-    this.projectorChangeNotificationGateway.notifyWebRtcAnswer(authenticationData.organizationId.toString(), answer.screenId, answer);
+    // await this.webRtcSignalingService.setAnswer(authenticationData.organizationId.toString(), answer);
+    // this.projectorChangeNotificationGateway.notifyWebRtcAnswer(authenticationData.organizationId.toString(), answer.screenId, answer);
   }
 
   @UseGuards(AuthGuard)
@@ -61,7 +61,7 @@ export class WebRtcController {
     @AuthenticationData() authenticationData: JwtAuthenticationData,
     @Body() exportWebRtcScreenDto: ExportWebRtcScreenDto,
   ) {
-    await this.webRtcSignalingService.setWaitingScreen(authenticationData.organizationId.toString(), exportWebRtcScreenDto.screenId);
+    // await this.webRtcSignalingService.setWaitingScreen(authenticationData.organizationId.toString(), exportWebRtcScreenDto.screenId);
     this.projectorChangeNotificationGateway.notifyUpdateOrganization(authenticationData.organizationId.toString());
   }
 
@@ -71,7 +71,7 @@ export class WebRtcController {
     @AuthenticationData() authenticationData: JwtAuthenticationData,
     @Body() exportWebRtcScreenDto: ExportWebRtcScreenDto,
   ) {
-    await this.webRtcSignalingService.removeScreen(authenticationData.organizationId.toString(), exportWebRtcScreenDto.screenId);
+    // await this.webRtcSignalingService.removeScreen(authenticationData.organizationId.toString(), exportWebRtcScreenDto.screenId);
 
     //this.projectorChangeNotificationGateway.notifyUpdateOrganization(authenticationData.organizationId.toString());
   }
@@ -81,7 +81,7 @@ export class WebRtcController {
   async clearOrganization(
     @AuthenticationData() authenticationData: JwtAuthenticationData,
   ) {
-    await this.webRtcSignalingService.clearOrganization(authenticationData.organizationId.toString());
+    // await this.webRtcSignalingService.clearOrganization(authenticationData.organizationId.toString());
    // this.projectorChangeNotificationGateway.notifyUpdateOrganization(authenticationData.organizationId.toString());
   }
 

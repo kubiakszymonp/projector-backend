@@ -63,7 +63,7 @@ export class ProjectorService {
     return {
       displayType: DisplayTypeEnum.WEB_RTC,
       emptyDisplay: displayState.emptyDisplay,
-      webRtcState: this.webRtcSignalingService.getState(displayState.organizationId.toString()),
+      // webRtcState: this.webRtcSignalingService.getState(displayState.organizationId.toString()),
     }
   }
 
