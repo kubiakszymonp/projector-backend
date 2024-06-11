@@ -14,7 +14,7 @@ export class TextUnitTagService {
   constructor(@InjectRepository(TextUnitTag) private textUnitTagRepository: Repository<TextUnitTag>) {
   }
 
-  async create(organizationId: number, createTextUnitTagDto: CreateTextUnitTagDto): Promise<GetTextUnitTagDto> {
+  async create(organizationId: string, createTextUnitTagDto: CreateTextUnitTagDto): Promise<GetTextUnitTagDto> {
     const newTag = this.textUnitTagRepository.create({
       description: createTextUnitTagDto.description,
       name: createTextUnitTagDto.name,
@@ -25,7 +25,7 @@ export class TextUnitTagService {
     return this.findOne(addedTag.id);
   }
 
-  async findAll(organizationId: number): Promise<GetTextUnitTagDto[]> {
+  async findAll(organizationId: string): Promise<GetTextUnitTagDto[]> {
     const allTagsForOrganization = await this.textUnitTagRepository.find({
       where: { organizationId },
     });
@@ -33,7 +33,7 @@ export class TextUnitTagService {
     return allTagsForOrganization.map(GetTextUnitTagDto.fromTextUnitTag);
   }
 
-  async findOne(id: number): Promise<GetTextUnitTagDto> {
+  async findOne(id: string): Promise<GetTextUnitTagDto> {
     const tag = await this.textUnitTagRepository.findOne({
       where: { id },
     });
@@ -41,13 +41,13 @@ export class TextUnitTagService {
     return GetTextUnitTagDto.fromTextUnitTag(tag);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const deleteResult = await this.textUnitTagRepository.delete({ id });
 
     return deleteResult;
   }
 
-  async update(id: number, updateTextUnitTagDto: UpdateTextUnitTagDto): Promise<GetTextUnitTagDto> {
+  async update(id: string, updateTextUnitTagDto: UpdateTextUnitTagDto): Promise<GetTextUnitTagDto> {
     const tag = this.textUnitTagRepository.create(updateTextUnitTagDto);
     await this.textUnitTagRepository.save({ id, ...tag });
 

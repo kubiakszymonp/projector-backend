@@ -13,7 +13,7 @@ export class GetDisplayQueueDto extends BaseDto {
 
     @ApiProperty()
     @IsOptional()
-    organizationId?: number;
+    organizationId?: string;
 
     @ApiProperty()
     queueTextUnits: GetQueueTextUnit[];

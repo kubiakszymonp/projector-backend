@@ -1,6 +1,6 @@
 export interface JwtAuthenticationData {
     email: string;
-    id: number;
+    id: string;
     role: string;
-    organizationId: number;
+    organizationId: string;
 }

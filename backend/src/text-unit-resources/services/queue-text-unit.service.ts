@@ -9,11 +9,11 @@ export class QueueTextUnitService {
     constructor(@InjectRepository(QueueTextUnit) private queueTextUnitRepository: Repository<QueueTextUnit>) {
     }
 
-    async deleteFromQueue(queueId: number) {
+    async deleteFromQueue(queueId: string) {
         return this.queueTextUnitRepository.delete({ displayQueue: { id: queueId } });
     }
 
-    async addTextUnitsToQueue(queueId: number, textUnitIds: number[]) {
+    async addTextUnitsToQueue(queueId: string, textUnitIds: string[]) {
 
         const queueTextUnits = textUnitIds.map((id, index) => this.queueTextUnitRepository.create({
             displayQueue: { id: queueId },
@@ -24,7 +24,7 @@ export class QueueTextUnitService {
         await this.queueTextUnitRepository.save(queueTextUnits);
     }
 
-    async appendTextUnitToQueue(queueId: number, textUnitId: number) {
+    async appendTextUnitToQueue(queueId: string, textUnitId: string) {
         const queueTextUnitsSorted = await this.queueTextUnitRepository.find({
             where: { displayQueue: { id: queueId } },
             order: { position: 'ASC' },
@@ -44,11 +44,11 @@ export class QueueTextUnitService {
         return await this.queueTextUnitRepository.save(queueTextUnit);
     }
 
-    async removeTextUnitFromQueue(queueId: number, textUnitId: number) {
+    async removeTextUnitFromQueue(queueId: string, textUnitId: string) {
         return this.queueTextUnitRepository.delete({ displayQueue: { id: queueId }, textUnit: { id: textUnitId } });
     }
 
-    async setTextUnitToQueues(textUnitId: number, queueIds: number[]) {
+    async setTextUnitToQueues(textUnitId: string, queueIds: string[]) {
         const queueTextUnits = await this.queueTextUnitRepository.find({
             relations: ['displayQueue'],
             where: { textUnit: { id: textUnitId } },

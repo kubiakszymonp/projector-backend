@@ -22,7 +22,7 @@ export class ProjectorService {
   ) {
   }
 
-  async getState(organizationId: number): Promise<GetDisplayDto> {
+  async getState(organizationId: string): Promise<GetDisplayDto> {
     const projectorSettings = await this.projectorSettingsService.findOne(organizationId);
 
     if (!projectorSettings) {

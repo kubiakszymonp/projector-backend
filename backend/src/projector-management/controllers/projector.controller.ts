@@ -25,7 +25,7 @@ export class ProjectorController {
 
   @Get(':organizationId')
   async getProjectorStateByOrganizationId(
-    @Param('organizationId') organizationId: number,
+    @Param('organizationId') organizationId: string,
   ): Promise<GetDisplayDto> {
     return this.projectorService.getState(organizationId);
   }

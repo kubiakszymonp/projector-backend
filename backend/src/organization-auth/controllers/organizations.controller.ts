@@ -35,13 +35,13 @@ export class OrganizationController {
 
     @UseGuards(AuthGuard)
     @Get(":id")
-    getOrganization(@Param('id') id: number) {
+    getOrganization(@Param('id') id: string) {
         return this.organizationsService.getOrganization(id);
     }
 
     @UseGuards(AuthGuard)
     @Delete(":id")
-    deleteOrganization(@Param('id') id: number) {
+    deleteOrganization(@Param('id') id: string) {
         return this.organizationsService.deleteOrganization(id);
     }
 }

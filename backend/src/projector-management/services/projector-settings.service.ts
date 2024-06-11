@@ -15,7 +15,7 @@ export class ProjectorSettingsService {
     ) {
     }
 
-    async create(organizationId: number) {
+    async create(organizationId: string) {
         const projectorSettings = this.projectorSettingsRepository.create({
             organizationId,
         });
@@ -26,7 +26,7 @@ export class ProjectorSettingsService {
     }
 
     async update(
-        organizationId: number,
+        organizationId: string,
         updateProjectorSettingDto: UpdateProjectorSettingDto,
     ) {
         const projectorSettings = await this.projectorSettingsRepository.findOne({
@@ -47,7 +47,7 @@ export class ProjectorSettingsService {
         return this.findOne(organizationId);
     }
 
-    async findOne(organizationId: number): Promise<GetProjectorSettingsDto> {
+    async findOne(organizationId: string): Promise<GetProjectorSettingsDto> {
         return this.projectorSettingsRepository.findOne({
             where: { organizationId },
         });

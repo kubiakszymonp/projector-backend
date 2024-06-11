@@ -43,8 +43,8 @@ export class ProjectorManagementModule {
     mediaFilesService: MediaFilesService,
     webRtcSignalingService: WebRtcSignalingService) {
 
-      await displayStateService.create(1);
-      await projectorSettingsService.create(1);
+      await displayStateService.create("1");
+      await projectorSettingsService.create("1");
   }
 
 }

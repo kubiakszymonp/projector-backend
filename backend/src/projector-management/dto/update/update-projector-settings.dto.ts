@@ -6,5 +6,5 @@ export class UpdateProjectorSettingDto extends PartialType(GetProjectorSettingsD
 
     @ApiProperty()
     @IsNotEmpty()
-    id: number;
+    id: string;
 }

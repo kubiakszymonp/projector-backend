@@ -16,7 +16,7 @@ export class DisplayQueue extends AppBaseEntity {
   @Column({
     nullable: true
   })
-  organizationId?: number;
+  organizationId?: string;
 
   @OneToMany(() => QueueTextUnit, queueTextUnit => queueTextUnit.displayQueue)
   queueTextUnits: QueueTextUnit[];

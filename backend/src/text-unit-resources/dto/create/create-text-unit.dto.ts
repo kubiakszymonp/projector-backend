@@ -20,12 +20,12 @@ export class CreateTextUnitDto {
 
     @ApiProperty()
     @IsArray()
-    textUnitTagIds: number[];
+    textUnitTagIds: string[];
 
     @ApiProperty()
     @IsArray()
     @IsNotEmpty()
-    displayQueueIds: number[];
+    displayQueueIds: string[];
 
     @ApiProperty()
     @IsOptional()

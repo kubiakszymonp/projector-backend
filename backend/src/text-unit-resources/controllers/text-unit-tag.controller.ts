@@ -47,7 +47,7 @@ export class TextUnitTagController {
     @Param('id') id: string,
     @AuthenticationData() authenticationData: JwtAuthenticationData,
   ): Promise<GetTextUnitTagDto> {
-    return this.textUnitTagService.findOne(+id);
+    return this.textUnitTagService.findOne(id);
   }
 
   @Patch(':id')
@@ -55,11 +55,11 @@ export class TextUnitTagController {
     @Param('id') id: string,
     @Body() updateTextUnitTagDto: UpdateTextUnitTagDto,
   ) {
-    return this.textUnitTagService.update(+id, updateTextUnitTagDto);
+    return this.textUnitTagService.update(id, updateTextUnitTagDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.textUnitTagService.remove(+id);
+    return this.textUnitTagService.remove(id);
   }
 }

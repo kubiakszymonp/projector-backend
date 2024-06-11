@@ -13,5 +13,5 @@ export class CreateDisplayQueueDto {
     @ApiProperty()
     @IsArray()
     @IsNotEmpty()
-    textUnitIds: number[];
+    textUnitIds: string[];
 }

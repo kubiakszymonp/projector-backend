@@ -13,7 +13,7 @@ export class DisplayState extends AppBaseEntity {
   @Column({
     default: 0
   })
-  textUnitId: number;
+  textUnitId: string;
 
   @Column({
     default: 0
@@ -28,7 +28,7 @@ export class DisplayState extends AppBaseEntity {
   @Column({
     default: 0
   })
-  textUnitQueueId: number;
+  textUnitQueueId: string;
 
   @Column({
     default: true
@@ -36,7 +36,7 @@ export class DisplayState extends AppBaseEntity {
   emptyDisplay: boolean;
 
   @Column()
-  organizationId: number;
+  organizationId: string;
 
   @OneToOne(() => MediaFile)
   @JoinColumn({ name: 'mediaFileId' })
@@ -45,5 +45,5 @@ export class DisplayState extends AppBaseEntity {
   @Column({
     nullable: true
   })
-  mediaFileId?: number | null;
+  mediaFileId?: string | null;
 }

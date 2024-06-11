@@ -38,7 +38,7 @@ export class ProjectorSettingsController {
 
   @Get(':organizationId')
   getSettingsByOrganizationId(
-    @Param('organizationId') organizationId: number,
+    @Param('organizationId') organizationId: string,
   ): Promise<GetProjectorSettingsDto> {
     return this.projectorSettingsService.findOne(organizationId);
   }

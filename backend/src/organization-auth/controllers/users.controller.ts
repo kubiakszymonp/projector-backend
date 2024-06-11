@@ -30,13 +30,13 @@ export class UserController {
 
     @UseGuards(AuthGuard)
     @Get(":id")
-    getUser(@Param('id') id: number) {
+    getUser(@Param('id') id: string) {
         return this.usersService.getUser(id);
     }
 
     @UseGuards(AuthGuard)
     @Delete(":id")
-    deleteUser(@Param('id') id: number) {
+    deleteUser(@Param('id') id: string) {
         return this.usersService.deleteUser(id);
     }
 }

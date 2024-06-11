@@ -5,7 +5,7 @@ export class UpdateMediaFileDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  id: number;
+  id: string;
 
   @ApiProperty()
   @IsNotEmpty()

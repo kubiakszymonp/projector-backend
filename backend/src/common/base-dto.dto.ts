@@ -3,7 +3,7 @@ import { IsOptional } from 'class-validator';
 
 export class BaseDto {
   @ApiProperty()
-  id: number;
+  id: string;
 
   @ApiProperty()
   @IsOptional()

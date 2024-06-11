@@ -7,7 +7,7 @@ const devWindows = {
   // DATABASE
   DATABASE_URL: "C:\\Users\\kubia\\Desktop\\dev\\projector-backend\\database\\db.sqlite",
   DATABASE_SYNCHRONIZE: true,
-  DATABASE_LOGGING: false,
+  DATABASE_LOGGING: true,
   DROP_SCHEMA: true,
 
   // SERVER
@@ -18,7 +18,6 @@ const devWindows = {
   ROOT_USER_EMAIL: 'kubiakszymonp@gmail.com',
   ROOT_USER_PASSWORD: '123',
   SEED_ORGANIZATIONS: true,
-  SEED_USERS: true,
   SEED_TEXT_UNITS: true,
 
   // MODULES
@@ -45,7 +44,6 @@ export const ENVIRONMENT: {
   ROOT_USER_EMAIL: string;
   ROOT_USER_PASSWORD: string;
   SEED_ORGANIZATIONS: boolean;
-  SEED_USERS: boolean;
   SEED_TEXT_UNITS: boolean;
   LOAD_TEXTS_MODULE: boolean,
   LOAD_PROJECTOR_MODULE: boolean,

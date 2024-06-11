@@ -6,7 +6,6 @@ import { Repository } from "typeorm";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { UpdateUserDto } from "../dto/update-user.dto";
 import { User } from "../entities/user.entity";
-import { seedUsers } from "../seeding/seeding";
 
 
 @Injectable()
@@ -35,12 +34,12 @@ export class UsersService {
         return await this.userRepository.find();
     }
 
-    async getUser(id: number) {
+    async getUser(id: string) {
         return await this.userRepository.findOne({ where: { id } });
     }
 
 
-    async deleteUser(id: number) {
+    async deleteUser(id: string) {
         return await this.userRepository.delete({ id });
     }
 }

@@ -5,7 +5,6 @@ import { Repository } from "typeorm";
 import { CreateOrganizationDto } from "../dto/create-organization.dto";
 import { UpdateOrganizationDto } from "../dto/update-organization.dto";
 import { Organization } from "../entities/organization.entity";
-import { seedOrganizations } from "../seeding/seeding";
 
 @Injectable()
 export class OrganizationsService {
@@ -32,11 +31,11 @@ export class OrganizationsService {
         return await this.organizationRepository.find();
     }
 
-    async getOrganization(id: number) {
+    async getOrganization(id: string) {
         return await this.organizationRepository.findOne({ where: { id } });
     }
 
-    async deleteOrganization(id: number) {
+    async deleteOrganization(id: string) {
         return await this.organizationRepository.delete({ id });
     }
 }

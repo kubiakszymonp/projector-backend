@@ -3,13 +3,13 @@ import { QueueTextUnit } from "src/text-unit-resources/entities/queue-text-unit.
 
 export class GetQueueTextUnit {
     @ApiProperty()
-    id: number;
+    id: string;
 
     @ApiProperty()
-    displayQueueId: number;
+    displayQueueId: string;
 
     @ApiProperty()
-    textUnitId: number;
+    textUnitId: string;
 
     @ApiProperty()
     textTitle: string;

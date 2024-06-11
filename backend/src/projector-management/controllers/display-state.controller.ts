@@ -19,7 +19,7 @@ export class DisplayStateController {
     @AuthenticationData() authenticationData: JwtAuthenticationData,
     @Body() movePageDto: MovePageDto,
   ) {
-    return this.displayStateService.movePage(+authenticationData.organizationId, movePageDto);
+    return this.displayStateService.movePage(authenticationData.organizationId, movePageDto);
   }
 
   @UseGuards(AuthGuard)
@@ -29,7 +29,7 @@ export class DisplayStateController {
     @Body() updateDisplayStateDto: UpdateDisplayStateDto,
   ) {
     return this.displayStateService.update(
-      +authenticationData.organizationId,
+      authenticationData.organizationId,
       updateDisplayStateDto,
     );
   }
@@ -39,7 +39,7 @@ export class DisplayStateController {
   getDisplayState(
     @AuthenticationData() authenticationData: JwtAuthenticationData,
   ) {
-    return this.displayStateService.findOne(+authenticationData.organizationId);
+    return this.displayStateService.findOne(authenticationData.organizationId);
   }
 
   @UseGuards(AuthGuard)
@@ -47,6 +47,6 @@ export class DisplayStateController {
   createDisplayState(
     @AuthenticationData() authenticationData: JwtAuthenticationData,
   ) {
-    return this.displayStateService.create(+authenticationData.organizationId);
+    return this.displayStateService.create(authenticationData.organizationId);
   }
 }

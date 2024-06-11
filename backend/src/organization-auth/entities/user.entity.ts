@@ -25,5 +25,5 @@ export class User extends AppBaseEntity {
   organization: Organization | null;
 
   @Column({ nullable: true })
-  organizationId: number | null;
+  organizationId: string | null;
 }

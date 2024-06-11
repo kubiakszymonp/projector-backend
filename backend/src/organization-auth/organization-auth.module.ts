@@ -10,7 +10,7 @@ import { AuthController } from './controllers/auth.controller';
 import { OrganizationsService } from './services/organizations.service';
 import { UsersService } from './services/users.service';
 import { AuthService } from './services/auth.service';
-import { seedOrganizations, seedUsers } from './seeding/seeding';
+import { seedData } from './seeding/seeding';
 
 @Module({
   controllers: [OrganizationController, UserController, AuthController],
@@ -32,10 +32,7 @@ export class OrganizationAuthModule {
 
   async seed(organizationsService: OrganizationsService, usersService: UsersService) {
     if (ENVIRONMENT.SEED_ORGANIZATIONS) {
-      await seedOrganizations(organizationsService);
-    }
-    if (ENVIRONMENT.SEED_USERS) {
-      await seedUsers(usersService);
+      await seedData(usersService, organizationsService);
     }
   }
 }

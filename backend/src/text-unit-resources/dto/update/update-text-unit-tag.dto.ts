@@ -5,5 +5,5 @@ import { IsNotEmpty } from "class-validator";
 export class UpdateTextUnitTagDto extends PartialType(CreateTextUnitTagDto) {
     @ApiProperty()
     @IsNotEmpty()
-    id: number;
+    id: string;
 }

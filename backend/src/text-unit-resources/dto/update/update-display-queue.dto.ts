@@ -5,5 +5,5 @@ import { CreateDisplayQueueDto } from "../create/create-display-queue.dto";
 export class UpdateDisplayQueueDto extends PartialType(CreateDisplayQueueDto) {
     @ApiProperty()
     @IsNotEmpty()
-    id: number;
+    id: string;
 }

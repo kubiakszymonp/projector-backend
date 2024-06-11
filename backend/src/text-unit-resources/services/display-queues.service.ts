@@ -16,7 +16,7 @@ export class DisplayQueuesService {
     @InjectRepository(QueueTextUnit) private queueTextUnitRepository: Repository<QueueTextUnit>,
   ) { }
 
-  async create(organizationId: number, createTextUnitQueue: CreateDisplayQueueDto): Promise<GetDisplayQueueDto> {
+  async create(organizationId: string, createTextUnitQueue: CreateDisplayQueueDto): Promise<GetDisplayQueueDto> {
 
     const textUnitQueue = this.displayQueueRepository.create({
       name: createTextUnitQueue.name,
@@ -37,7 +37,7 @@ export class DisplayQueuesService {
     return this.findOne(displayQueue.id);
   }
 
-  async findAll(organizationId: number): Promise<GetDisplayQueueDto[]> {
+  async findAll(organizationId: string): Promise<GetDisplayQueueDto[]> {
     const displayQueues = await this.displayQueueRepository.find({
       where: { organizationId },
       order: { updatedAt: 'desc' },
@@ -55,7 +55,7 @@ export class DisplayQueuesService {
     });
   }
 
-  async findOne(id: number): Promise<GetDisplayQueueDto> {
+  async findOne(id: string): Promise<GetDisplayQueueDto> {
     const queue = await this.displayQueueRepository.findOne({
       where: { id },
       relations: ['queueTextUnits', 'queueTextUnits.textUnit', "queueTextUnits.displayQueue"]
@@ -73,7 +73,7 @@ export class DisplayQueuesService {
     };
   }
 
-  async update(id: number, updateTextUnitQueue: UpdateDisplayQueueDto): Promise<GetDisplayQueueDto> {
+  async update(id: string, updateTextUnitQueue: UpdateDisplayQueueDto): Promise<GetDisplayQueueDto> {
 
     const textUnitQueue = this.displayQueueRepository.create({
       name: updateTextUnitQueue.name,
@@ -97,7 +97,7 @@ export class DisplayQueuesService {
     return this.findOne(id);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.displayQueueRepository.delete(id);
   }
 }

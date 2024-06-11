@@ -19,7 +19,7 @@
 //     }, 60_000);
 //   }
 
-//   async stopStream(organizationId: number) {
+//   async stopStream(organizationId: string) {
 //     const displayState = await this.displayStateRepository.findOne({
 //       where: { organizationId },
 //     });
@@ -32,7 +32,7 @@
 //     await this.displayStateRepository.save(newDisplayState);
 //   }
 
-//   async startStream(organizationId: number) {
+//   async startStream(organizationId: string) {
 //     const displayState = await this.displayStateRepository.findOne({
 //       where: { organizationId },
 //     });
@@ -96,15 +96,15 @@
 //     } catch (e) { }
 //   }
 
-//   getPlaylistPath(organizationId: number) {
+//   getPlaylistPath(organizationId: string) {
 //     return `${HLS_DIRECTORY}/${organizationId}/${PLAYLIST_NAME}`;
 //   }
 
-//   getChunkDirectory(organizationId: number) {
+//   getChunkDirectory(organizationId: string) {
 //     return `${HLS_DIRECTORY}/${organizationId}/chunks`;
 //   }
 
-//   async uploadStreamChunk(fileBuffer: Buffer, organizationId: number) {
+//   async uploadStreamChunk(fileBuffer: Buffer, organizationId: string) {
 //     const playlistPath = this.getPlaylistPath(organizationId);
 //     const chunkDirectory = this.getChunkDirectory(organizationId);
 //     const fileName = `${new Date().getTime().toString()}`;

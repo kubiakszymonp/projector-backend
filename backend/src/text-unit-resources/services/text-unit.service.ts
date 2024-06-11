@@ -21,7 +21,7 @@ export class TextUnitService {
   ) {
   }
 
-  async create(organizationId: number, createTextUnitDto: CreateTextUnitDto) {
+  async create(organizationId: string, createTextUnitDto: CreateTextUnitDto) {
     const textUnit = await this.textUnitRepository.save({
       content: createTextUnitDto.content,
       title: createTextUnitDto.title,
@@ -36,7 +36,7 @@ export class TextUnitService {
     return textUnit;
   }
 
-  async findAll(organizationId: number): Promise<GetTextUnitDto[]> {
+  async findAll(organizationId: string): Promise<GetTextUnitDto[]> {
     const results = await this.textUnitRepository.find({
       where: { organizationId },
       relations: ['tags', 'queueTextUnits', 'queueTextUnits.displayQueue', 'queueTextUnits.textUnit'],
@@ -58,7 +58,7 @@ export class TextUnitService {
     }));
   }
 
-  async findOne(id: number): Promise<GetTextUnitDto> {
+  async findOne(id: string): Promise<GetTextUnitDto> {
     const entity = await this.textUnitRepository.findOne({
       where: { id },
       relations: ['tags', 'queueTextUnits', 'queueTextUnits.displayQueue', 'queueTextUnits.textUnit']
@@ -78,7 +78,7 @@ export class TextUnitService {
     };
   }
 
-  async update(id: number, updateTextUnitDto: UpdateTextUnitDto) {
+  async update(id: string, updateTextUnitDto: UpdateTextUnitDto) {
     const textUnit = this.textUnitRepository.create({
       content: updateTextUnitDto.content,
       title: updateTextUnitDto.title,
@@ -93,7 +93,7 @@ export class TextUnitService {
     return this.findOne(id);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.textUnitRepository.delete({ id });
   }
 }

@@ -85,5 +85,5 @@ export class ProjectorSettings extends AppBaseEntity {
   textStrategy: TextStrategyEnum;
 
   @Column()
-  organizationId: number;
+  organizationId: string;
 }

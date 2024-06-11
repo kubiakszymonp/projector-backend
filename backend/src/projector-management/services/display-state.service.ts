@@ -26,7 +26,7 @@ export class DisplayStateService {
   }
 
 
-  async create(organizationId: number) {
+  async create(organizationId: string) {
     const displayState = this.displayStateRepository.create({
       organizationId,
     });
@@ -37,7 +37,7 @@ export class DisplayStateService {
   }
 
   async update(
-    organizationId: number,
+    organizationId: string,
     updateDisplayDto: UpdateDisplayStateDto,
   ) {
     const displayState = await this.displayStateRepository.findOne({
@@ -59,7 +59,7 @@ export class DisplayStateService {
     return this.findOne(organizationId);
   }
 
-  async findOne(organizationId: number): Promise<GetDisplayStateDto> {
+  async findOne(organizationId: string): Promise<GetDisplayStateDto> {
     const displayState = await this.displayStateRepository.findOne({
       where: { organizationId },
       relations: ['mediaFile'],
@@ -79,7 +79,7 @@ export class DisplayStateService {
     };
   }
 
-  async movePage(organizationId: number, movePageDto: MovePageDto) {
+  async movePage(organizationId: string, movePageDto: MovePageDto) {
     const displayState = await this.displayStateRepository.findOne({
       where: { organizationId },
     });

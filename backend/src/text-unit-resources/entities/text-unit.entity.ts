@@ -21,7 +21,7 @@ export class TextUnit extends AppBaseEntity {
   @Column({
     nullable: true
   })
-  organizationId?: number;
+  organizationId?: string;
 
   @Column()
   title: string;

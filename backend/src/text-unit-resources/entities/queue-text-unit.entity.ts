@@ -8,14 +8,14 @@ import { AppBaseEntity } from "../../common/base-entity";
 export class QueueTextUnit extends AppBaseEntity {
 
     @Column()
-    displayQueueId: number;
+    displayQueueId: string;
 
     @ManyToOne(() => DisplayQueue, queue => queue.queueTextUnits)
     @JoinColumn({ name: 'displayQueueId' })
     displayQueue: DisplayQueue;
 
     @Column()
-    textUnitId: number;
+    textUnitId: string;
 
     @ManyToOne(() => TextUnit, textUnit => textUnit.queueTextUnits)
     @JoinColumn({ name: 'textUnitId' })

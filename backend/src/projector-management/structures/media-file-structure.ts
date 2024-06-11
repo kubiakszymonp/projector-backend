@@ -6,14 +6,14 @@ export class MediaFileStructure {
   url: string;
   size: number;
   buffer: Buffer;
-  organization: { id: number };
+  organization: { id: string };
 
   constructor(
     name: string,
     mimeType: string,
     sizeBytes: number,
     buffer: Buffer,
-    organizationId: number,
+    organizationId: string,
   ) {
     this.name = name;
     this.mimeType = mimeType;

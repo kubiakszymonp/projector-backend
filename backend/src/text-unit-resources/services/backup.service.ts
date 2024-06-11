@@ -27,7 +27,7 @@ export class BackupService {
 
 
 
-    async backupForOrganization(organizationId: number) {
+    async backupForOrganization(organizationId: string) {
 
         const textUnits = await this.textUnitRepository.find({
             where: { organizationId },
@@ -58,7 +58,7 @@ export class BackupService {
         }
     }
 
-    async restoreForOrganization(organizationId: number, data: BackupData) {
+    async restoreForOrganization(organizationId: string, data: BackupData) {
 
         if (!ENVIRONMENT.CAN_APPLY_BACKUP) return;
         
@@ -83,7 +83,7 @@ export class BackupService {
         }));
     }
 
-    async removeAllRelatedToOrganization(organizationId: number) {
+    async removeAllRelatedToOrganization(organizationId: string) {
         const queueTextUnits = await this.queueTextUnitRepository.find({
             relations: ['displayQueue'],
             where: {

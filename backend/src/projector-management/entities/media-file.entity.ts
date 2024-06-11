@@ -19,7 +19,7 @@ export class MediaFile extends AppBaseEntity {
   @Column({
     nullable: true,
   })
-  organizationId: number | null;
+  organizationId: string | null;
 
   @Column({
     update: false,

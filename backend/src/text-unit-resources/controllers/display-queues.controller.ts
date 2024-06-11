@@ -32,7 +32,7 @@ export class DisplayQueuesController {
 
   @Get(':id')
   findOne(@Param('id') id: string): Promise<GetDisplayQueueDto> {
-    return this.displayQueuesService.findOne(+id);
+    return this.displayQueuesService.findOne(id);
   }
 
   @Post()
@@ -56,6 +56,6 @@ export class DisplayQueuesController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.displayQueuesService.remove(+id);
+    return this.displayQueuesService.remove(id);
   }
 }

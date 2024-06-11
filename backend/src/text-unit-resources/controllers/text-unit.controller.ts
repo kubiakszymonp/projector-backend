@@ -42,7 +42,7 @@ export class TextUnitController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const res = await this.textUnitService.findOne(+id);
+    const res = await this.textUnitService.findOne(id);
 
     if (!res) {
       throw new NotFoundException(`Text unit with id ${id} not found`);
@@ -53,11 +53,11 @@ export class TextUnitController {
 
   @Patch()
   update(@Body() updateTextUnitDto: UpdateTextUnitDto) {
-    this.textUnitService.update(+updateTextUnitDto.id, updateTextUnitDto);
+    this.textUnitService.update(updateTextUnitDto.id, updateTextUnitDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    this.textUnitService.remove(+id);
+    this.textUnitService.remove(id);
   }
 }

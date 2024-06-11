@@ -12,7 +12,7 @@ export class GetDisplayStateDto extends BaseDto {
     emptyDisplay: boolean;
 
     @ApiProperty()
-    textUnitId: number;
+    textUnitId: string;
 
     @ApiProperty()
     textUnitPart: number;
@@ -21,8 +21,8 @@ export class GetDisplayStateDto extends BaseDto {
     textUnitPartPage: number;
 
     @ApiProperty()
-    mediaFileId: number | null;
+    mediaFileId: string | null;
 
     @ApiProperty()
-    textUnitQueueId: number;
+    textUnitQueueId: string;
 }

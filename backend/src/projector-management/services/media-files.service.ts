@@ -37,7 +37,7 @@ export class MediaFilesService {
     this.storeMediaFiles(mediaFileStructures);
   }
 
-  async getMediaFile(id: number): Promise<GetMediaFileDto> {
+  async getMediaFile(id: string): Promise<GetMediaFileDto> {
     const mediaFile = await this.mediaFilesRepository.findOne({
       where: { id },
     });
@@ -61,14 +61,14 @@ export class MediaFilesService {
     return this.getMediaFile(updateMediaFileDto.id);
   }
 
-  async findAllForOrganization(organizationId: number): Promise<GetMediaFileDto[]> {
+  async findAllForOrganization(organizationId: string): Promise<GetMediaFileDto[]> {
     return this.mediaFilesRepository.find({
       where: { organizationId },
       order: { createdAt: 'DESC' },
     });
   }
 
-  async delete(id: number, organizationId: number) {
+  async delete(id: string, organizationId: string) {
     const displayState = await this.displayStateService.findOne(organizationId);
 
     if (displayState.mediaFileId === id) {

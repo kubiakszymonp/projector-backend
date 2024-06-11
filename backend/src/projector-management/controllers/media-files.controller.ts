@@ -70,6 +70,6 @@ export class MediaFilesController {
     @Param('id') id: string,
     @AuthenticationData() authenticationData: JwtAuthenticationData,
   ) {
-    return this.mediaFilesService.delete(+id, +authenticationData.organizationId);
+    return this.mediaFilesService.delete(id, authenticationData.organizationId);
   }
 }

@@ -16,7 +16,7 @@ export class GetTextUnitDto extends BaseDto {
     transposition?: number;
 
     @ApiProperty()
-    organizationId?: number;
+    organizationId?: string;
 
     @ApiProperty()
     title: string;
