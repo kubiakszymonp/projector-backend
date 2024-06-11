@@ -20,6 +20,31 @@ export const seedTextUnits = async (
         description: "Polskie kolędy",
     });
 
+    const tag3 = await textUnitTagService.create(1, {
+        name: "Polskie",
+        description: "Polskie teksty",
+    });
+
+    const tag4 = await textUnitTagService.create(1, {
+        name: "Maryjne",
+        description: "Angielskie teksty",
+    });
+
+    const tag5 = await textUnitTagService.create(1, {
+        name: "Wielkopostne",
+        description: "Angielskie teksty",
+    });
+
+    const tag6 = await textUnitTagService.create(1, {
+        name: "Bożonarodzeniowe",
+        description: "Angielskie teksty",
+    });
+
+    const tag7 = await textUnitTagService.create(1, {
+        name: "Wielkanocne",
+        description: "Angielskie teksty",
+    });
+
     const textUnit1 = await textUnitService.create(1, {
         content: readFileSync("C:\\Users\\kubia\\Desktop\\dev\\projector-backend\\songs\\Barka.txt", "utf-8"),
         displayQueueIds: [],

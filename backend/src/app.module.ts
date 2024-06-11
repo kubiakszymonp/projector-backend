@@ -14,6 +14,7 @@ import { QueueTextUnit } from './text-unit-resources/entities/queue-text-unit.en
 import { MediaFile } from './projector-management/entities/media-file.entity';
 import { DisplayState } from './projector-management/entities/display-state.entity';
 import { ProjectorSettings } from './projector-management/entities/projector-settings.entity';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -31,5 +32,6 @@ import { ProjectorSettings } from './projector-management/entities/projector-set
     ENVIRONMENT.LOAD_TEXTS_MODULE ? TextUnitResourcesModule : null,
     ENVIRONMENT.LOAD_PROJECTOR_MODULE ? ProjectorManagementModule : null,
   ],
+  controllers: [AppController],
 })
 export class AppModule { }

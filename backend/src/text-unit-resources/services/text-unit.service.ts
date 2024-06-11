@@ -40,6 +40,7 @@ export class TextUnitService {
     const results = await this.textUnitRepository.find({
       where: { organizationId },
       relations: ['tags', 'queueTextUnits', 'queueTextUnits.displayQueue', 'queueTextUnits.textUnit'],
+      select: ['title', 'id', 'queueTextUnits', 'tags'],
       order: {
         updatedAt: 'DESC'
       }
