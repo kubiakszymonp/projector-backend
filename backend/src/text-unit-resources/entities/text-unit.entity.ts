@@ -30,7 +30,7 @@ export class TextUnit extends AppBaseEntity {
   @ManyToMany(() => TextUnitTag)
   tags: TextUnitTag[];
 
-  @OneToMany(() => QueueTextUnit, queueTextUnit => queueTextUnit.textUnit)
+  @OneToMany(() => QueueTextUnit, queueTextUnit => queueTextUnit.textUnit, { onDelete: 'CASCADE' })
   queueTextUnits: QueueTextUnit[];
 
   @Column({

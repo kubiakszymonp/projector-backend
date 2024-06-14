@@ -18,6 +18,6 @@ export class DisplayQueue extends AppBaseEntity {
   })
   organizationId?: string;
 
-  @OneToMany(() => QueueTextUnit, queueTextUnit => queueTextUnit.displayQueue)
+  @OneToMany(() => QueueTextUnit, queueTextUnit => queueTextUnit.displayQueue, { onDelete: 'CASCADE' })
   queueTextUnits: QueueTextUnit[];
 }

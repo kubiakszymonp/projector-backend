@@ -10,14 +10,14 @@ export class QueueTextUnit extends AppBaseEntity {
     @Column()
     displayQueueId: string;
 
-    @ManyToOne(() => DisplayQueue, queue => queue.queueTextUnits)
+    @ManyToOne(() => DisplayQueue, queue => queue.queueTextUnits, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'displayQueueId' })
     displayQueue: DisplayQueue;
 
     @Column()
     textUnitId: string;
 
-    @ManyToOne(() => TextUnit, textUnit => textUnit.queueTextUnits)
+    @ManyToOne(() => TextUnit, textUnit => textUnit.queueTextUnits, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'textUnitId' })
     textUnit: TextUnit;
 
