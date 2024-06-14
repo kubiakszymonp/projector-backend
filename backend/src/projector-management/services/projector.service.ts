@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { DisplayTypeEnum } from 'src/projector-management/enums/display-type.enum';
 import { TextStrategyEnum } from 'src/projector-management/enums/text-strategy.enum';
@@ -29,13 +29,13 @@ export class ProjectorService {
     let projectorSettings = await this.projectorSettingsService.findOne(organizationId);
 
     if (!projectorSettings) {
-      projectorSettings = await this.projectorSettingsService.create(organizationId);
+      throw new NotFoundException('No projector settings found');
     }
 
     let displayState = await this.displayStateService.findOne(organizationId);
 
     if (!displayState) {
-      displayState = await this.displayStateService.create(organizationId);
+      throw new NotFoundException('No projector state found');
     }
 
     if (displayState.displayType === DisplayTypeEnum.MEDIA) {

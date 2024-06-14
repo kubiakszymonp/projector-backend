@@ -6,6 +6,7 @@ import { Repository } from "typeorm";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { UpdateUserDto } from "../dto/update-user.dto";
 import { User } from "../entities/user.entity";
+import { Role } from "../enums/role.enum";
 
 
 @Injectable()
@@ -42,4 +43,18 @@ export class UsersService {
     async deleteUser(id: string) {
         return await this.userRepository.delete({ id });
     }
+
+    async seedUser(uuid: string, email: string, password: string) {
+        const user = await this.userRepository.save({
+            email,
+            password,
+            name: "local admin",
+            role: Role.USER,
+            organizationId: uuid,
+        });
+
+        console.log('Seeded user', user);
+        return user;
+    }
 }
+

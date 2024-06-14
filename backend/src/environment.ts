@@ -15,10 +15,9 @@ const devWindows = {
   ENABLE_HTTPS: true,
 
   // SEEDING
-  ROOT_USER_EMAIL: 'kubiakszymonp@gmail.com',
-  ROOT_USER_PASSWORD: '123',
-  SEED_ORGANIZATIONS: true,
-  SEED_TEXT_UNITS: true,
+  ROOT_USER_EMAIL: 'admin@admin.com',
+  ROOT_USER_PASSWORD: 'admin',
+  ORGANIZATION_UUID: '1',
 
   // MODULES
   LOAD_TEXTS_MODULE: true,
@@ -43,8 +42,7 @@ export const ENVIRONMENT: {
   JWT_SECRET: string;
   ROOT_USER_EMAIL: string;
   ROOT_USER_PASSWORD: string;
-  SEED_ORGANIZATIONS: boolean;
-  SEED_TEXT_UNITS: boolean;
+  ORGANIZATION_UUID: string;
   LOAD_TEXTS_MODULE: boolean,
   LOAD_PROJECTOR_MODULE: boolean,
   LOAD_ORGANIZATION_MODULE: boolean,

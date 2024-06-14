@@ -15,6 +15,7 @@ import { ProjectorSettingsController } from './controllers/projector-settings.co
 import { ProjectorController } from './controllers/projector.controller';
 import { MediaFilesController } from './controllers/media-files.controller';
 import { WebRtcController } from './controllers/webrtc-signaling.controller';
+import { ENVIRONMENT } from 'src/environment';
 
 @Module({
   controllers: [DisplayStateController, ProjectorSettingsController, ProjectorController, MediaFilesController, WebRtcController],
@@ -34,17 +35,13 @@ export class ProjectorManagementModule {
     private mediaFilesService: MediaFilesService,
     private webRtcSignalingService: WebRtcSignalingService
   ) {
-    this.seed(displayStateService, projectorSettingsService, projectorService, mediaFilesService, webRtcSignalingService);
+    this.seed();
   }
 
-  async seed(displayStateService: DisplayStateService,
-    projectorSettingsService: ProjectorSettingsService,
-    projectorService: ProjectorService,
-    mediaFilesService: MediaFilesService,
-    webRtcSignalingService: WebRtcSignalingService) {
+  async seed() {
 
-      await displayStateService.create("1");
-      await projectorSettingsService.create("1");
+    await this.displayStateService.create(ENVIRONMENT.ORGANIZATION_UUID);
+    await this.projectorSettingsService.create(ENVIRONMENT.ORGANIZATION_UUID);
   }
 
 }

@@ -27,12 +27,15 @@ import { seedData } from './seeding/seeding';
 export class OrganizationAuthModule {
 
   constructor(private organizationsService: OrganizationsService, private usersService: UsersService) {
-    this.seed(organizationsService, usersService);
+    this.seed();
   }
 
-  async seed(organizationsService: OrganizationsService, usersService: UsersService) {
-    if (ENVIRONMENT.SEED_ORGANIZATIONS) {
-      await seedData(usersService, organizationsService);
-    }
+  async seed() {
+    await this.organizationsService.seedOrganiation(ENVIRONMENT.ORGANIZATION_UUID);
+    await this.usersService.seedUser(
+      ENVIRONMENT.ORGANIZATION_UUID,
+      ENVIRONMENT.ROOT_USER_EMAIL,
+      ENVIRONMENT.ROOT_USER_PASSWORD
+    );
   }
 }

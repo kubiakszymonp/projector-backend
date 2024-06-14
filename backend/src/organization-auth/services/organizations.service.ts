@@ -38,4 +38,18 @@ export class OrganizationsService {
     async deleteOrganization(id: string) {
         return await this.organizationRepository.delete({ id });
     }
+
+    async seedOrganiation(uuid: string) {
+        const org = await this.organizationRepository.save({
+            id: uuid,
+            name: 'Initial org data',
+            description: 'Initial org data',
+            phoneNumber: 'Initial org data',
+            paymentData: 'Initial org data',
+            contactData: 'Initial org data',
+        });
+
+        console.log('Seeded organization', org);
+        return org;
+    }
 }
