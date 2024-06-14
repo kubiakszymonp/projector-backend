@@ -29,7 +29,6 @@ export class TextUnitTagService {
     const allTagsForOrganization = await this.textUnitTagRepository.find({
       where: { organizationId },
     });
-
     return allTagsForOrganization.map(GetTextUnitTagDto.fromTextUnitTag);
   }
 

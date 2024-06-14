@@ -10,6 +10,8 @@ import { ProjectorSettingsService } from './projector-settings.service';
 import { GetProjectorSettingsDto } from '../dto/get/get-projector-settings.dto';
 import { TextUnitService } from 'src/text-unit-resources/services/text-unit.service';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DisplayStateService } from './display-state.service';
+import { GetDisplayStateDto } from '../dto/get/get-display-state.dto';
 
 @Injectable()
 export class ProjectorService {
@@ -19,23 +21,21 @@ export class ProjectorService {
     private projectorSettingsService: ProjectorSettingsService,
     private textUnitService: TextUnitService,
     private webRtcSignalingService: WebRtcSignalingService,
+    private displayStateService: DisplayStateService,
   ) {
   }
 
   async getState(organizationId: string): Promise<GetDisplayDto> {
-    const projectorSettings = await this.projectorSettingsService.findOne(organizationId);
+    let projectorSettings = await this.projectorSettingsService.findOne(organizationId);
 
     if (!projectorSettings) {
-      throw new Error('No projector settings found');
+      projectorSettings = await this.projectorSettingsService.create(organizationId);
     }
 
-    const displayState = await this.displayStateRepository.findOne({
-      where: { organizationId },
-      relations: ['mediaFile'],
-    });
+    let displayState = await this.displayStateService.findOne(organizationId);
 
     if (!displayState) {
-      throw new Error('No display state found');
+      displayState = await this.displayStateService.create(organizationId);
     }
 
     if (displayState.displayType === DisplayTypeEnum.MEDIA) {
@@ -51,7 +51,7 @@ export class ProjectorService {
     }
   }
 
-  async getStateMedia(displayState: DisplayState): Promise<GetDisplayDto> {
+  async getStateMedia(displayState: GetDisplayStateDto): Promise<GetDisplayDto> {
     return {
       displayType: DisplayTypeEnum.MEDIA,
       emptyDisplay: displayState.emptyDisplay,
@@ -59,39 +59,38 @@ export class ProjectorService {
     }
   }
 
-  async getStateWebRtc(displayState: DisplayState): Promise<GetDisplayDto> {
+  async getStateWebRtc(displayState: GetDisplayStateDto): Promise<GetDisplayDto> {
     return {
       displayType: DisplayTypeEnum.WEB_RTC,
       emptyDisplay: displayState.emptyDisplay,
-      // webRtcState: this.webRtcSignalingService.getState(displayState.organizationId.toString()),
     }
   }
 
-  async getStateText(displayState: DisplayState, projectorSettings: GetProjectorSettingsDto): Promise<GetDisplayDto> {
+  async getStateText(displayState: GetDisplayStateDto, projectorSettings: GetProjectorSettingsDto): Promise<GetDisplayDto> {
     const textUnit = await this.textUnitService.findOne(displayState.textUnitId);
 
     let lines: string[] = [];
 
-    if(textUnit) {
+    if (textUnit) {
 
-    const order = (textUnit.partsOrder || "").split(',').map((part) => parseInt(part, 10));
-    const orderedParsedText = new OrderedParsedTextUnit(textUnit.content, order);
+      const order = (textUnit.partsOrder || "").split(',').map((part) => parseInt(part, 10));
+      const orderedParsedText = new OrderedParsedTextUnit(textUnit.content, order);
 
-    if (projectorSettings.textStrategy === TextStrategyEnum.AUTOMATIC) {
-      lines = orderedParsedText.getPartByOrder(displayState.textUnitPart).lines;
+      if (projectorSettings.textStrategy === TextStrategyEnum.AUTOMATIC) {
+        lines = orderedParsedText.getPartByOrder(displayState.textUnitPart).lines;
+      }
+
+      if (projectorSettings.textStrategy === TextStrategyEnum.FIXED_LINES) {
+
+        const linesWrapperPaginator = new LinesWrapperPaginator(
+          orderedParsedText.getPartByOrder(displayState.textUnitPart).lines,
+          projectorSettings.charactersInLine,
+          projectorSettings.linesOnPage,
+        );
+
+        lines = linesWrapperPaginator.getPage(displayState.textUnitPartPage);
+      }
     }
-
-    if (projectorSettings.textStrategy === TextStrategyEnum.FIXED_LINES) {
-
-      const linesWrapperPaginator = new LinesWrapperPaginator(
-        orderedParsedText.getPartByOrder(displayState.textUnitPart).lines,
-        projectorSettings.charactersInLine,
-        projectorSettings.linesOnPage,
-      );
-
-      lines = linesWrapperPaginator.getPage(displayState.textUnitPartPage);
-    }
-  }
 
     return {
       displayType: DisplayTypeEnum.TEXT,

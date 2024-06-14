@@ -85,6 +85,8 @@ export class TextUnitService {
       transposition: updateTextUnitDto.transposition,
       id,
       tags: updateTextUnitDto.textUnitTagIds.map((id) => ({ id })),
+      partsOrder: updateTextUnitDto.partsOrder,
+      queueTextUnits: updateTextUnitDto.displayQueueIds.map((id) => ({ displayQueueId: id })),
     });
 
     await this.queueTextUnitService.setTextUnitToQueues(id, updateTextUnitDto.displayQueueIds);

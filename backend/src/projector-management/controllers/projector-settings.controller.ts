@@ -30,17 +30,29 @@ export class ProjectorSettingsController {
 
   @UseGuards(AuthGuard)
   @Get()
-  getSetting(
+  async getSetting(
     @AuthenticationData() authenticationData: JwtAuthenticationData,
   ): Promise<GetProjectorSettingsDto> {
-    return this.projectorSettingsService.findOne(authenticationData.organizationId);
+    const settings = await this.projectorSettingsService.findOne(authenticationData.organizationId);
+    if (settings) {
+      return settings;
+    }
+    else {
+      return this.projectorSettingsService.create(authenticationData.organizationId);
+    }
   }
 
   @Get(':organizationId')
-  getSettingsByOrganizationId(
+  async getSettingsByOrganizationId(
     @Param('organizationId') organizationId: string,
   ): Promise<GetProjectorSettingsDto> {
-    return this.projectorSettingsService.findOne(organizationId);
+    const settings = await this.projectorSettingsService.findOne(organizationId);
+    if (settings) {
+      return settings;
+    }
+    else {
+      return this.projectorSettingsService.create(organizationId);
+    }
   }
 
   @UseGuards(AuthGuard)

@@ -23,6 +23,9 @@ export class GetDisplayStateDto extends BaseDto {
     @ApiProperty()
     mediaFileId: string | null;
 
+    @ApiProperty({ type: () => GetMediaFileDto, required: false })
+    mediaFile: GetMediaFileDto;
+
     @ApiProperty()
     textUnitQueueId: string;
 }

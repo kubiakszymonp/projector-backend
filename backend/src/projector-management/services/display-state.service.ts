@@ -54,7 +54,7 @@ export class DisplayStateService {
     });
 
     await this.displayStateRepository.save(newProjectorState);
-    
+
     this.projectorChangeNotificationGateway.notifyUpdateOrganization(organizationId);
     return this.findOne(organizationId);
   }
@@ -65,6 +65,8 @@ export class DisplayStateService {
       relations: ['mediaFile'],
     });
 
+    if (!displayState) { return null; }
+
     return {
       displayType: displayState.displayType,
       emptyDisplay: displayState.emptyDisplay,
@@ -72,6 +74,7 @@ export class DisplayStateService {
       textUnitPart: displayState.textUnitPart,
       textUnitPartPage: displayState.textUnitPartPage,
       mediaFileId: displayState.mediaFileId,
+      mediaFile: displayState.mediaFile,
       textUnitQueueId: displayState.textUnitQueueId,
       id: displayState.id,
       createdAt: displayState.createdAt,
@@ -102,7 +105,7 @@ export class DisplayStateService {
 
     const order = currentTextUnit.partsOrder?.split(',').map((part) => parseInt(part, 10)) ?? [];
     const orderedParsedTextUnit = new OrderedParsedTextUnit(currentTextUnit.content, order);
-    
+
 
     if (movePageDto.direction === MovePageDirectionEnum.NEXT) {
       this.goToNextPage(
@@ -116,7 +119,7 @@ export class DisplayStateService {
     }
 
     await this.displayStateRepository.save(displayState);
-    
+
     this.projectorChangeNotificationGateway.notifyUpdateOrganization(organizationId);
     return this.findOne(organizationId);
   }

@@ -15,10 +15,10 @@ export class GetTextUnitTagDto extends BaseDto {
 
     static fromTextUnitTag(textUnitTag: GetTextUnitTagDto): GetTextUnitTagDto {
         return {
-            id: textUnitTag.id,
-            name: textUnitTag.name,
-            description: textUnitTag.description,
-            organizationId: textUnitTag.organizationId,
+            id: textUnitTag?.id,
+            name: textUnitTag?.name,
+            description: textUnitTag?.description,
+            organizationId: textUnitTag?.organizationId,
         }
     }
 }

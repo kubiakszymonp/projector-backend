@@ -54,6 +54,7 @@ export class TextUnitController {
   @Patch()
   update(@Body() updateTextUnitDto: UpdateTextUnitDto) {
     this.textUnitService.update(updateTextUnitDto.id, updateTextUnitDto);
+    return this.textUnitService.findOne(updateTextUnitDto.id);
   }
 
   @Delete(':id')
