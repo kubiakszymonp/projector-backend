@@ -5,6 +5,7 @@ import { JwtAuthenticationData } from "../../common/jwt-payload";
 import { AuthGuard } from "../../organization-auth/guards/auth.guard";
 import { BackupData, BackupService } from "../services/backup.service";
 import { deflate, deflateSync } from "zlib";
+import { ApplyBackupDto } from "../dto/update/apply-backup.dto";
 
 
 @ApiTags('backup')
@@ -15,10 +16,10 @@ export class BackupController {
 
     @Post()
     applyBackup(
-        @Body() backupData: string,
+        @Body() backupData: ApplyBackupDto,
         @AuthenticationData() authenticationData: JwtAuthenticationData,
     ): void {
-        const backupDataParsed = JSON.parse(backupData);
+        const backupDataParsed = JSON.parse(backupData.backup);
         this.backupService.restoreForOrganization(authenticationData.organizationId, backupDataParsed);
     }
 
@@ -32,10 +33,10 @@ export class BackupController {
 
     @Post("compressed")
     async applyBackupCompressed(
-        @Body() backupDataCompressed: string,
+        @Body() backupDataCompressed: ApplyBackupDto,
         @AuthenticationData() authenticationData: JwtAuthenticationData,
     ): Promise<void> {
-        const backupData = await this.backupService.decompressString(backupDataCompressed);
+        const backupData = await this.backupService.decompressString(backupDataCompressed.backup);
         const backupDataParsed = JSON.parse(backupData);
         this.backupService.restoreForOrganization(authenticationData.organizationId, backupDataParsed);
     }

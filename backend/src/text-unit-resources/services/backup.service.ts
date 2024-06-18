@@ -7,12 +7,14 @@ import { TextUnitTag } from "../entities/text-unit-tag.entity";
 import { QueueTextUnit } from "../entities/queue-text-unit.entity";
 import { deflate, inflate } from "zlib";
 import { ENVIRONMENT } from "../../../src/environment";
+import { User } from "src/organization-auth/entities/user.entity";
 
 export interface BackupData {
     textUnits: TextUnit[],
     displayQueues: DisplayQueue[],
     queueTextUnits: QueueTextUnit[],
     textUnitTags: TextUnitTag[],
+    users: User[]
 }
 
 @Injectable()
@@ -23,11 +25,12 @@ export class BackupService {
         @InjectRepository(DisplayQueue) private displayQueueRepository: Repository<DisplayQueue>,
         @InjectRepository(QueueTextUnit) private queueTextUnitRepository: Repository<QueueTextUnit>,
         @InjectRepository(TextUnitTag) private textUnitTagRepository: Repository<TextUnitTag>,
+        @InjectRepository(User) private userRepository: Repository<User>,
     ) { }
 
 
 
-    async backupForOrganization(organizationId: string) {
+    async backupForOrganization(organizationId: string): Promise<BackupData> {
 
         const textUnits = await this.textUnitRepository.find({
             where: { organizationId },
@@ -50,18 +53,21 @@ export class BackupService {
             where: { organizationId },
         });
 
+        const users = await this.userRepository.find({
+            where: { organizationId },
+        });
+
         return {
             textUnits,
             displayQueues,
             queueTextUnits,
             textUnitTags,
+            users
         }
     }
 
     async restoreForOrganization(organizationId: string, data: BackupData) {
 
-        if (!ENVIRONMENT.CAN_APPLY_BACKUP) return;
-        
         await this.textUnitTagRepository.save(data.textUnitTags.map((textUnitTag) => {
             textUnitTag.organizationId = organizationId;
             return textUnitTag;
@@ -81,33 +87,38 @@ export class BackupService {
             queueTextUnit.displayQueue.organizationId = organizationId;
             return queueTextUnit;
         }));
+
+        await this.userRepository.save(data.users.map((user) => {
+            user.organizationId = organizationId;
+            return user;
+        }));
     }
 
-    async removeAllRelatedToOrganization(organizationId: string) {
-        const queueTextUnits = await this.queueTextUnitRepository.find({
-            relations: ['displayQueue'],
-            where: {
-                displayQueue: {
-                    organizationId
-                }
-            }
-        });
-        if (queueTextUnits.length > 0) {
-            await this.queueTextUnitRepository.delete(queueTextUnits.map((q) => q.id));
-        }
+    // async removeAllRelatedToOrganization(organizationId: string) {
+    //     const queueTextUnits = await this.queueTextUnitRepository.find({
+    //         relations: ['displayQueue'],
+    //         where: {
+    //             displayQueue: {
+    //                 organizationId
+    //             }
+    //         }
+    //     });
+    //     if (queueTextUnits.length > 0) {
+    //         await this.queueTextUnitRepository.delete(queueTextUnits.map((q) => q.id));
+    //     }
 
-        await this.textUnitRepository.delete({
-            organizationId
-        });
+    //     await this.textUnitRepository.delete({
+    //         organizationId
+    //     });
 
-        await this.displayQueueRepository.delete({
-            organizationId
-        });
+    //     await this.displayQueueRepository.delete({
+    //         organizationId
+    //     });
 
-        await this.textUnitTagRepository.delete({
-            organizationId
-        });
-    }
+    //     await this.textUnitTagRepository.delete({
+    //         organizationId
+    //     });
+    // }
 
     async compressString(data: string): Promise<string> {
         return new Promise((resolve, reject) => {

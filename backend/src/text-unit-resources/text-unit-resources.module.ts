@@ -13,12 +13,15 @@ import { TextUnit } from './entities/text-unit.entity';
 import { ENVIRONMENT } from 'src/environment';
 import { seedTextUnits } from './seeding/seeding';
 import { QueueTextUnitService } from './services/queue-text-unit.service';
+import { User } from 'src/organization-auth/entities/user.entity';
+import { BackupController } from './controllers/backup.controller';
+import { BackupService } from './services/backup.service';
 
 
 @Module({
-  controllers: [DisplayQueuesController, TextUnitTagController, TextUnitController],
-  providers: [DisplayQueuesService, TextUnitTagService, TextUnitService, QueueTextUnitService],
-  imports: [TypeOrmModule.forFeature([DisplayQueue, QueueTextUnit, TextUnitTag, TextUnit])],
+  controllers: [DisplayQueuesController, TextUnitTagController, TextUnitController, BackupController],
+  providers: [DisplayQueuesService, TextUnitTagService, TextUnitService, QueueTextUnitService, BackupService],
+  imports: [TypeOrmModule.forFeature([DisplayQueue, QueueTextUnit, TextUnitTag, TextUnit, User])],
   exports: [TextUnitService, DisplayQueuesService, QueueTextUnitService]
 })
 export class TextUnitResourcesModule {
