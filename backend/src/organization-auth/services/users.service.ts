@@ -17,7 +17,13 @@ export class UsersService {
     ) {
     }
 
-    async createUser(user: CreateUserDto) {
+    async createUser(user: {
+        name: string;
+        email: string;
+        password: string;
+        organizationId: string;
+        role: Role;
+    }) {
         const createdUser = this.userRepository.create(user);
         return await this.userRepository.save(createdUser);
     }
@@ -31,8 +37,10 @@ export class UsersService {
         return await this.userRepository.save(updateUserDto);
     }
 
-    async getUsers() {
-        return await this.userRepository.find();
+    async getUsersForOrganization(organizationId: string) {
+        return await this.userRepository.find({
+            where: { organizationId }
+        });
     }
 
     async getUser(id: string) {

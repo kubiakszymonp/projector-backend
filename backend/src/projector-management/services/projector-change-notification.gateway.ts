@@ -29,7 +29,7 @@ export class ProjectorChangeNotificationGateway
 
   handleConnection(client: Socket): void {
     const organizationId = client.handshake.query.organizationId as string;
-    const role = client.handshake.query.role as Role;
+    const role = client.handshake.query.role as RTCRole;
 
     if (!organizationId) {
       client.disconnect(true);
@@ -71,7 +71,7 @@ export class ProjectorChangeNotificationGateway
       return;
     }
 
-    const senderClients = this.connectedClients.filter((c) => c.organizationId === clientData.organizationId && c.role === Role.SENDER);
+    const senderClients = this.connectedClients.filter((c) => c.organizationId === clientData.organizationId && c.role === RTCRole.SENDER);
     const senderClient = senderClients[senderClients.length - 1];
     if (!senderClient) {
       return;
@@ -90,7 +90,7 @@ export class ProjectorChangeNotificationGateway
 
     console.log(`Get state request from ${client.id} about ${clientData.organizationId} organization`)
 
-    const recieverClients = this.connectedClients.filter((c) => c.organizationId === clientData.organizationId && c.role === Role.RECIEVER);
+    const recieverClients = this.connectedClients.filter((c) => c.organizationId === clientData.organizationId && c.role === RTCRole.RECIEVER);
 
     client.emit("get-state", recieverClients);
   }
@@ -103,7 +103,7 @@ export interface ConnectedClient {
   role: string;
 }
 
-export enum Role {
+export enum RTCRole {
   SENDER = 'SENDER',
   RECIEVER = 'RECIEVER'
 }

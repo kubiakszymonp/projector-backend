@@ -8,15 +8,6 @@ export class Organization extends AppBaseEntity {
   @Column()
   name: string;
 
-  @Column()
-  phoneNumber: string;
-
-  @Column()
-  paymentData: string;
-
-  @Column()
-  contactData: string;
-
   @OneToMany(() => User, (user) => user.organization)
   users: User[];
 }

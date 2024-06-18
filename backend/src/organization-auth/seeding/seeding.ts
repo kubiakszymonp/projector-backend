@@ -6,9 +6,6 @@ import { UsersService } from "../services/users.service";
 export const seedData = async (usersService: UsersService, organizationsService: OrganizationsService) => {
 
     const organization = await organizationsService.createOrganization({
-        contactData: "Ostrów Wielkopolski, Konopnickiej 18/9",
-        paymentData: "Płatność gotówką",
-        phoneNumber: "123456789",
         name: "Test organization",
     });
 

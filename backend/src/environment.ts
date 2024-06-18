@@ -13,6 +13,7 @@ const devWindows = {
   // SERVER
   PORT: 3001,
   ENABLE_HTTPS: true,
+  
 
   // SEEDING
   ROOT_USER_EMAIL: 'admin@admin.com',
