@@ -67,6 +67,8 @@ export class BackupService {
     }
 
     async restoreForOrganization(organizationId: string, data: BackupData) {
+        await this.removeAllRelatedToOrganization(organizationId);
+
 
         await this.textUnitTagRepository.save(data.textUnitTags.map((textUnitTag) => {
             textUnitTag.organizationId = organizationId;
@@ -94,31 +96,35 @@ export class BackupService {
         }));
     }
 
-    // async removeAllRelatedToOrganization(organizationId: string) {
-    //     const queueTextUnits = await this.queueTextUnitRepository.find({
-    //         relations: ['displayQueue'],
-    //         where: {
-    //             displayQueue: {
-    //                 organizationId
-    //             }
-    //         }
-    //     });
-    //     if (queueTextUnits.length > 0) {
-    //         await this.queueTextUnitRepository.delete(queueTextUnits.map((q) => q.id));
-    //     }
+    async removeAllRelatedToOrganization(organizationId: string) {
+        const queueTextUnits = await this.queueTextUnitRepository.find({
+            relations: ['displayQueue'],
+            where: {
+                displayQueue: {
+                    organizationId
+                }
+            }
+        });
+        if (queueTextUnits.length > 0) {
+            await this.queueTextUnitRepository.delete(queueTextUnits.map((q) => q.id));
+        }
 
-    //     await this.textUnitRepository.delete({
-    //         organizationId
-    //     });
+        await this.textUnitRepository.delete({
+            organizationId
+        });
 
-    //     await this.displayQueueRepository.delete({
-    //         organizationId
-    //     });
+        await this.displayQueueRepository.delete({
+            organizationId
+        });
 
-    //     await this.textUnitTagRepository.delete({
-    //         organizationId
-    //     });
-    // }
+        await this.textUnitTagRepository.delete({
+            organizationId
+        });
+
+        await this.userRepository.delete({
+            organizationId
+        });
+    }
 
     async compressString(data: string): Promise<string> {
         return new Promise((resolve, reject) => {

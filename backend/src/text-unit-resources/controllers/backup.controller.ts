@@ -26,9 +26,11 @@ export class BackupController {
     @Get()
     async fetchBackup(
         @AuthenticationData() authenticationData: JwtAuthenticationData,
-    ): Promise<string> {
+    ): Promise<ApplyBackupDto> {
         const backupData = await this.backupService.backupForOrganization(authenticationData.organizationId);
-        return JSON.stringify(backupData);
+        return {
+            backup: JSON.stringify(backupData)
+        };
     }
 
     @Post("compressed")
@@ -44,9 +46,9 @@ export class BackupController {
     @Get("compressed")
     async fetchBackupCompressed(
         @AuthenticationData() authenticationData: JwtAuthenticationData,
-    ) {
+    ): Promise<ApplyBackupDto> {
         const backupData = await this.backupService.backupForOrganization(authenticationData.organizationId);
-        return this.backupService.compressString(JSON.stringify(backupData));
+        return { backup: await this.backupService.compressString(JSON.stringify(backupData)) };
     }
 
 }

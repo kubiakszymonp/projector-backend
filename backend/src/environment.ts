@@ -29,6 +29,7 @@ const devWindows = {
   JWT_ORGANIZATION_ID: 1
 };
 
+
 export const ENVIRONMENT: {
   DATABASE_URL: string;
   DATABASE_SYNCHRONIZE: boolean;
