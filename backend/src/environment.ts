@@ -1,7 +1,5 @@
 const devWindows = {
   FILE_UPLOAD_PATH: "C:\\Users\\kubia\\Desktop\\dev\\projector-backend\\upload",
-  CERT_PATH: 'C:\\Users\\kubia\\Desktop\\dev\\projector-backend\\cert\\cert.pem',
-  KEY_PATH: 'C:\\Users\\kubia\\Desktop\\dev\\projector-backend\\cert\\key.pem',
   JWT_SECRET: '5b56bvn9053jvq34v43rvc4ewckewr90vu2894uVU40CUWEDOPKPE93R90V20403ir0v2309T698419V94-TVQREFJAOP4TBAUP985Y',
 
   // DATABASE
@@ -12,7 +10,6 @@ const devWindows = {
 
   // SERVER
   PORT: 3001,
-  ENABLE_HTTPS: true,
 
   // SEEDING
   ROOT_USER_EMAIL: 'admin@admin.com',
@@ -37,8 +34,6 @@ export const ENVIRONMENT: {
   DROP_SCHEMA: boolean;
   PORT: number;
   FILE_UPLOAD_PATH: string;
-  CERT_PATH: string;
-  KEY_PATH: string;
   ENABLE_HTTPS: boolean;
   JWT_SECRET: string;
   ROOT_USER_EMAIL: string;

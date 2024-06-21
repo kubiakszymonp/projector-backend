@@ -8,18 +8,8 @@ import { IoAdapter } from '@nestjs/platform-socket.io';
 import { ENVIRONMENT } from './environment';
 
 async function bootstrap() {
-  let httpsOptions = undefined;
 
-  if (ENVIRONMENT.ENABLE_HTTPS) {
-    httpsOptions = {
-      key: readFileSync('../cert/key.pem'),
-      cert: readFileSync('../cert/cert.pem'),
-    };
-  }
-
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    httpsOptions,
-  });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.useStaticAssets(ENVIRONMENT.FILE_UPLOAD_PATH, {
     prefix: '/upload',
