@@ -5,7 +5,7 @@ const devWindows = {
   // DATABASE
   DATABASE_URL: "C:\\Users\\kubia\\Desktop\\dev\\projector-backend\\database\\db.sqlite",
   DATABASE_SYNCHRONIZE: true,
-  DATABASE_LOGGING: true,
+  DATABASE_LOGGING: false,
   DROP_SCHEMA: true,
 
   // SERVER
@@ -22,8 +22,8 @@ const devWindows = {
   LOAD_ORGANIZATION_MODULE: true,
 
   CAN_APPLY_BACKUP: true,
-  REQUIRE_JWT: true,
-  JWT_ORGANIZATION_ID: 1
+  // REQUIRE_JWT: true,
+  // JWT_ORGANIZATION_ID: 1
 };
 
 
@@ -43,6 +43,6 @@ export const ENVIRONMENT: {
   LOAD_PROJECTOR_MODULE: boolean,
   LOAD_ORGANIZATION_MODULE: boolean,
   CAN_APPLY_BACKUP: boolean,
-  REQUIRE_JWT: boolean,
-  JWT_ORGANIZATION_ID: number
+  // REQUIRE_JWT: boolean,
+  // JWT_ORGANIZATION_ID: number
 } = { ...process.env, ...devWindows } as any;

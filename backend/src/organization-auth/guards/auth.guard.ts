@@ -26,12 +26,12 @@ export class AuthGuard implements CanActivate {
     const token = this.extractTokenFromHeader(request);
 
 
-    if (ENVIRONMENT.REQUIRE_JWT) {
+    // if (ENVIRONMENT.REQUIRE_JWT) {
       return this.jwtRequired(token, request, requiredRole);
-    }
-    else {
-      return this.jwtNotRequired(request);
-    }
+    // }
+    // else {
+    //   return this.jwtNotRequired(request);
+    // }
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
@@ -40,15 +40,15 @@ export class AuthGuard implements CanActivate {
   }
 
 
-  private async jwtNotRequired(request: any) {
-    request[AUTHENTICATION_DATA_REQUEST_KEY] = {
-      organization: {
-        id: ENVIRONMENT.JWT_ORGANIZATION_ID,
-        role: Role.ADMIN,
-      },
-    }
-    return true;
-  }
+  // private async jwtNotRequired(request: any) {
+  //   request[AUTHENTICATION_DATA_REQUEST_KEY] = {
+  //     organization: {
+  //       id: ENVIRONMENT.JWT_ORGANIZATION_ID,
+  //       role: Role.ADMIN,
+  //     },
+  //   }
+  //   return true;
+  // }
 
   private async jwtRequired(token: string, request: any, requiredRole: Role) {
     if (!token) {
