@@ -9,6 +9,9 @@ import { ENVIRONMENT } from './environment';
 
 async function bootstrap() {
 
+  console.log('ENVIRONMENT', ENVIRONMENT)
+  console.log("process.env", process.env)
+
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.useStaticAssets(ENVIRONMENT.FILE_UPLOAD_PATH, {

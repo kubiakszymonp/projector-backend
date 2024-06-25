@@ -20,10 +20,6 @@ const devWindows = {
   LOAD_TEXTS_MODULE: true,
   LOAD_PROJECTOR_MODULE: true,
   LOAD_ORGANIZATION_MODULE: true,
-
-  CAN_APPLY_BACKUP: true,
-  // REQUIRE_JWT: true,
-  // JWT_ORGANIZATION_ID: 1
 };
 
 
@@ -42,7 +38,4 @@ export const ENVIRONMENT: {
   LOAD_TEXTS_MODULE: boolean,
   LOAD_PROJECTOR_MODULE: boolean,
   LOAD_ORGANIZATION_MODULE: boolean,
-  CAN_APPLY_BACKUP: boolean,
-  // REQUIRE_JWT: boolean,
-  // JWT_ORGANIZATION_ID: number
-} = { ...process.env, ...devWindows } as any;
+} = { ...devWindows, ...process.env } as any;
